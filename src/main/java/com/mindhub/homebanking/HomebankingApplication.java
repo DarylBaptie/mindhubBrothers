@@ -2,15 +2,20 @@ package com.mindhub.homebanking;
 
 import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
+import com.mindhub.homebanking.models.Transaction;
+import com.mindhub.homebanking.models.TransactionType;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
+import com.mindhub.homebanking.repositories.TransactionRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import java.time.LocalDate;
+
 import java.time.LocalDateTime;
+
+import static com.mindhub.homebanking.models.TransactionType.CREDIT;
 
 
 @SpringBootApplication
@@ -30,7 +35,7 @@ public class HomebankingApplication {
 
 
 	@Bean
-	public CommandLineRunner initData(ClientRepository repositoryClient, AccountRepository repositoryAccount) {
+	public CommandLineRunner initData(ClientRepository repositoryClient, AccountRepository repositoryAccount, TransactionRepository repositoryTransaction) {
 		return (args) -> {
 			Account firstAccount = new Account("VIN001", this.localDateTime, 5000);
 			Account secondAccount = new Account("VIN002", this.localDateTimeNextDay, 7500);
@@ -38,6 +43,12 @@ public class HomebankingApplication {
 			Account fourthAccount = new Account("VIN004", this.localDateTimeThreeDays, 900);
 			Client melbaMorel = new Client("Melba", "Morel", "melba@mindhub.com");
 			Client darylBaptie = new Client("Daryl", "Baptie", "darylBaptie@gmail.com");
+			Transaction transaction1 = new Transaction(TransactionType.CREDIT, this.localDateTime, 3000, "salary"  );
+			Transaction transaction2 = new Transaction(TransactionType.DEBIT, this.localDateTime, -80, "supermarket"  );
+			Transaction transaction3 = new Transaction(TransactionType.DEBIT, this.localDateTime, -25, "Energy payment"  );
+			Transaction transaction4 = new Transaction(TransactionType.CREDIT, this.localDateTime, 2250, "salary"  );
+			Transaction transaction5 = new Transaction(TransactionType.DEBIT, this.localDateTime, -35.75, "Gas Station"  );
+			Transaction transaction6 = new Transaction(TransactionType.DEBIT, this.localDateTime, -125, "Student loan"  );
 			repositoryClient.save(melbaMorel);
 			repositoryClient.save(darylBaptie);
 			melbaMorel.addAccount(firstAccount);
@@ -48,7 +59,18 @@ public class HomebankingApplication {
 			repositoryAccount.save(secondAccount);
 			repositoryAccount.save(thirdAccount);
 			repositoryAccount.save(fourthAccount);
-			;
+			firstAccount.addTransaction(transaction1);
+			firstAccount.addTransaction(transaction2);
+			firstAccount.addTransaction(transaction3);
+			secondAccount.addTransaction(transaction4);
+			secondAccount.addTransaction(transaction5);
+			secondAccount.addTransaction(transaction6);
+			repositoryTransaction.save(transaction1);
+			repositoryTransaction.save(transaction2);
+			repositoryTransaction.save(transaction3);
+			repositoryTransaction.save(transaction4);
+			repositoryTransaction.save(transaction5);
+			repositoryTransaction.save(transaction6);
 		};
 	}
 

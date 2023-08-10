@@ -37,7 +37,7 @@ public class Client {
         this.clientEmail = email;
     }
 
-    public void setId() {
+    public void setId(long id) {
         this.id = id;
     }
     public long getId() {
@@ -69,7 +69,7 @@ public class Client {
     }
 
     public String toString() {
-        return firstName + " " + lastName;
+        return id + " " + firstName + " " + lastName + " " + clientEmail;
     }
 
     public Set<Account> getAccounts() {

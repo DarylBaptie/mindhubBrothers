@@ -32,7 +32,7 @@ const { createApp } = Vue
             this.cleanForm()
         },
         postClient() {
-axios.post('/clients', {
+axios.post('/api/clients', {
     firstName: this.formData.firstName,
     lastName: this.formData.lastName,
     clientEmail: this.formData.clientEmail,

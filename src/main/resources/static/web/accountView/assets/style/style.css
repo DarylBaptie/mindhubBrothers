@@ -1,0 +1,213 @@
+html {
+height: 100%
+}
+
+body {
+padding:0 !important;
+margin:0 !important;
+box-sizing: border-box;
+height: 100% !important;
+background-color: #FFFFF0 !important;
+font-family: 'Playfair Display', serif !important;
+}
+
+.navbar, footer, #tableHeader, .dropdown-menu, .showBalanceBtn {
+background-color: #F7E7CE !important;
+}
+
+#logo {
+position:relative;
+top:-2px
+}
+
+.exit {
+color: black;}
+
+.exit:hover {
+transition: 0.2s !important;
+transform: scale(1.15) !important;
+}
+
+.cardAccount:hover, .quickLinkCard:hover, nav-link:hover {
+transition: 0.3s !important;
+transform: scale(1.15) !important;
+}
+
+h1 {
+ font-style: italic;
+}
+
+#carouselPic {
+height: 20rem;
+opacity: 0.5;
+object-fit: cover;
+object-position: 60% 42%;
+}
+
+.cardAccount {
+background-image: url('forest.jpg') !important;
+background-size: 100% 100%;
+box-shadow: 0px 5px 10px !important;
+
+ }
+
+.socialsLinks {
+text-decoration: none !important;
+color: black !important;
+}
+
+.socialsLinks:hover {
+transition: 0.3s !important;
+transform: scale(1.10) !important;
+}
+
+
+
+@media only screen and (min-width:768px) {
+#welcomeText {
+   margin-left: 2rem !important;
+  }
+
+}
+
+
+
+.nav-link:hover, .navbar-brand:hover {
+opacity: 1 !important;
+text-decoration: underline !important;
+transition: 0.3s !important;
+transform: scale(1.10) !important;
+}
+
+.table {
+--bs-table-bg: none !important;
+box-shadow: 5px 5px 10px !important;
+}
+
+.debitColor {
+color: red !important;
+}
+
+.creditColor {
+color: green !important;
+}
+
+.creditRow {
+  background-color: #f0f3bd !important;
+}
+
+.debitRow {
+background-color: #edddd4 !important;
+}
+
+
+.cardAccount:hover, .quickLinkCard:hover, nav-link:hover {
+transition: 0.3s !important;
+transform: scale(1.15) !important;
+}
+
+.quickLinkCard {
+height: 8rem !important}
+
+.carouselImg1, .carouselImg2, .carouselImg3
+   {
+    width: 100%;
+    height: 15rem;
+    object-fit: cover;
+}
+
+.carouselImg1 {
+    object-position: 60% 10%;
+}
+
+.carouselImg2 {
+    object-position: 60% 30%;
+}
+
+.carouselImg3 {
+    object-position: 60% 2.5%;
+}
+
+
+#investment {
+ background-image: url('investment.jpg') !important;
+background-size: 100% 100%;
+color: white;
+}
+
+#payment {
+ background-image: url('payment.jpg') !important;
+background-size: 100% 100%;
+color: white;
+}
+
+#transfer {
+ background-image: url('transfer.jpg') !important;
+background-size: 100% 100%;
+color: white;
+}
+
+#openAccounts {
+ background-image: url('accounts.jpg') !important;
+background-size: 100% 100%;
+color: white;
+--bs-card-title-spacer-y: 0 !important;
+}
+
+.socialsLinks {
+text-decoration: none !important;
+color: black !important;
+}
+
+.socialsLinks:hover {
+transition: 0.3s !important;
+transform: scale(1.10) !important;
+}
+
+
+@media only screen and (min-width:320px) and (max-width:767px)  {
+
+#copyright{
+padding-bottom: 1rem !important;
+}
+
+#carouselPic {
+height: 10rem;
+object-position: 30% 10%;
+margin-top: 1rem;
+}
+
+h1 {
+text-align: center;
+padding-bottom: 3rem !important;
+margin-top: 2rem !important;
+}
+
+.carouselImg1, .carouselImg2, .carouselImg3 {
+height: 10rem;}
+
+#openAccounts {
+--bs-card-title-spacer-y: 0 !important;
+}
+
+}
+
+@media only screen and (min-width:768px) {
+.showBalanceBtn {
+margin-left: 1rem;
+}
+.otherAccount {
+text-align: center !important;
+}
+}
+
+@media only screen and (min-width:768px) {
+.showBalanceBtn {
+margin-left: 5rem;
+}
+}
+
+@media only screen and (min-width:1440px) {
+.cardAccount {
+text-align: center !important;
+}

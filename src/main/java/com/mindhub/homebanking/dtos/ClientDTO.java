@@ -33,7 +33,7 @@ for (Account account: client.getAccounts()) {
 this.accounts.add(new AccountDTO(account));
 }
     }
-    public void setId() {
+    public void setId(long id) {
         this.id = id;
     }
     public long getId() {

@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
@@ -31,6 +33,9 @@ public class Account {
     @JoinColumn(name="client_id")
     private Client client;
 
+    @OneToMany(mappedBy="account", fetch=FetchType.EAGER)
+    Set<Transaction> transactions = new HashSet<>();
+
     public Account() { }
 
     public Account(String num, LocalDateTime createDate, double bal) {
@@ -39,7 +44,7 @@ public class Account {
         this.balance = bal;
     }
 
-    public void setId() {
+    public void setId(long id) {
         this.id = id;
     }
     public long getId() {
@@ -80,7 +85,16 @@ public class Account {
     }
 
     public String toString() {
-        return number + " " + creationDate + " " + balance;
+        return id + " " + number + " " + creationDate + " " + balance;
+    }
+
+    public Set<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    public void addTransaction(Transaction transaction) {
+        transaction.setAccount(this);
+        transactions.add(transaction);
     }
 
 }
