@@ -13,12 +13,11 @@ createApp({
   created() {
     this.loadData();
     this.accountsOfClient();
-
   },
   methods: {
     loadData() {
-            let urlParams = new URLSearchParams(document.location.search);
-            let idParam = urlParams.get('id');
+      let urlParams = new URLSearchParams(document.location.search);
+      let idParam = urlParams.get('id');
       axios({
         method: "get",
         url: `/api/accounts/${idParam}`,
@@ -29,51 +28,66 @@ createApp({
     },
     changeDate(data) {
         for (let account of data) {
-        let newDate = account.creationDate
-        newDate = newDate + "Z"
-        account.newDate = new Date(newDate).toLocaleDateString('en-US')
-        for (let transaction of account.transactions) {
-        let newDate = transaction.date
-        newDate = newDate + "Z"
-        transaction.newDate = new Date(newDate).toLocaleString('en-US')
-                }
+            let newDate = account.creationDate
+            newDate = newDate + "Z"
+            account.newDate = new Date(newDate).toLocaleDateString('en-US')
+            for (let transaction of account.transactions) {
+                let newDate = transaction.date
+                newDate = newDate + "Z"
+                transaction.newDate = new Date(newDate).toLocaleString('en-US')
             }
-        },
-        sortTransactions(data) {
+        }
+    },
+    sortTransactions(data) {
         for (let account of data) {
         account.transactions.sort((a, b) => {
-                                           if(a.id > b.id){
-                                              return -1;
-                                           }
-                                           if(a.id < b.id){
-                                              return 1;
-                                           }
-                                           return 0;
-                                         });
+            if(a.id > b.id){
+                return -1;
+            }
+            if(a.id < b.id){
+                return 1;
+            }
+            return 0;
+        });
         }
-        },
-            showBalance() {
-             this.show = !this.show;
-            },
-        accountsOfClient() {
-             axios({
-                 method: "get",
-                 url: "/api/clients/1",
-                  }).then(response =>
-                  this.client = [response.data]
-                    );
-
-                  },
-
-        changeDateClient(client) {
-                for (let customer of client) {
-                for (account of customer.accounts) {
-                        let newDate = account.creationDate
-                        newDate = newDate + "Z"
-                        account.newCreationDate = new Date(newDate).toLocaleDateString('en-US')
-
-                }
-                }
+    },
+    showBalance() {
+        this.show = !this.show;
+    },
+    accountsOfClient() {
+        axios({
+            method: "get",
+            url: "/api/clients/1",
+        }).then(response =>
+            this.client = [response.data]
+            );
+    },
+    changeDateClient(client) {
+        for (let customer of client) {
+            for (let account of customer.accounts) {
+                let newDate = account.creationDate
+                newDate = newDate + "Z"
+                account.newCreationDate = new Date(newDate).toLocaleDateString('en-US')
+            }
         }
-    }
+    },
+    formatAccountBalance(data) {
+        for(let account of data) {
+            account.formattedBalance = account.balance.toLocaleString("en-US", {
+                style: "currency",
+                currency: "USD",
+                maximumFractionDigits: 0,
+            })
+        }
+    },
+    formatAmountAccount(data) {
+        for (let account of data) {
+          for (let transaction of account.transactions) {
+            transaction.formattedAmount = transaction.amount.toLocaleString("en-US", {
+                maximumFractionDigits: 0,
+            })
+          }
+        }
+    },
+  }
 }).mount("#app");

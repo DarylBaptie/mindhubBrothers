@@ -37,6 +37,19 @@ h1 {
 background-size: 100% 100%;
  }
 
+.Personal {
+  background-image: url('../images/personal.jpg') !important;
+  background-size: 100% 100%;
+ }
+.Mortgage {
+  background-image: url('../images/mortgage.jpg') !important;
+  background-size: 100% 100%;
+ }
+.Car {
+  background-image: url('../images/car.jpg') !important;
+  background-size: 100% 100%;
+ }
+
 #investment {
  background-image: url('../images/investment.jpg') !important;
 background-size: 100% 100%;
@@ -82,7 +95,7 @@ transition: 0.2s !important;
 transform: scale(1.15) !important;
 }
 
-.cardAccount:hover, .quickLinkCard:hover, nav-link:hover {
+.cardAccount:hover, .quickLinkCard:hover, nav-link:hover, .cardLoan:hover {
 transition: 0.3s !important;
 transform: scale(1.15) !important;
 }
@@ -156,7 +169,7 @@ height: 10rem;}
 
 
 @media only screen and (min-width:1440px) {
-.cardAccount {
+.cardAccount, .cardLoan {
 text-align: center !important;
 }
 }

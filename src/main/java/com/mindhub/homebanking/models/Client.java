@@ -95,6 +95,12 @@ public class Client {
         clientLoan.setClient(this);
         clientLoans.add(clientLoan);
     }
+
+    public Set<ClientLoan> getClientLoans() {
+        return clientLoans;
+    }
+
+
     @JsonIgnore
     public List<Client> getClients() {
         return clientLoans.stream().map(sub -> sub.getClient()).collect(toList());

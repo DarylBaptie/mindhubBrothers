@@ -49,9 +49,9 @@ public class HomebankingApplication {
 			Transaction transaction4 = new Transaction(TransactionType.CREDIT, this.localDateTime, 2250, "salary"  );
 			Transaction transaction5 = new Transaction(TransactionType.DEBIT, this.localDateTime, -35.75, "Gas Station"  );
 			Transaction transaction6 = new Transaction(TransactionType.DEBIT, this.localDateTime, -125, "Student loan"  );
-			Loan mortgage = new Loan("mortgage", 500000, this.payments1);
-			Loan personal = new Loan("personal", 100000, this.payments2);
-			Loan car = new Loan("car", 300000, this.payments3);
+			Loan mortgage = new Loan("Mortgage", 500000, this.payments1);
+			Loan personal = new Loan("Personal", 100000, this.payments2);
+			Loan car = new Loan("Car", 300000, this.payments3);
 			ClientLoan clientLoanMortgage = new ClientLoan(400000, 60, melbaMorel, mortgage);
 			ClientLoan clientLoanPersonal = new ClientLoan(50000, 12, melbaMorel, personal);
 			ClientLoan clientLoanPersonal2 = new ClientLoan(100000, 24, darylBaptie, personal);

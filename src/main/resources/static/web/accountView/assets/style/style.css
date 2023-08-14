@@ -21,7 +21,8 @@ top:-2px
 }
 
 .exit {
-color: black;}
+color: black;
+}
 
 .exit:hover {
 transition: 0.2s !important;
@@ -48,8 +49,7 @@ object-position: 60% 42%;
 background-image: url('forest.jpg') !important;
 background-size: 100% 100%;
 box-shadow: 0px 5px 10px !important;
-
- }
+}
 
 .socialsLinks {
 text-decoration: none !important;
@@ -67,10 +67,7 @@ transform: scale(1.10) !important;
 #welcomeText {
    margin-left: 2rem !important;
   }
-
 }
-
-
 
 .nav-link:hover, .navbar-brand:hover {
 opacity: 1 !important;
@@ -91,6 +88,8 @@ color: red !important;
 .creditColor {
 color: green !important;
 }
+
+
 
 .creditRow {
   background-color: #f0f3bd !important;
@@ -164,6 +163,11 @@ transition: 0.3s !important;
 transform: scale(1.10) !important;
 }
 
+@media only screen and (min-width:320px) and (max-width:424px){
+.table>:not(caption)>*>* {
+padding: 0.5rem 0 !important;
+}
+}
 
 @media only screen and (min-width:320px) and (max-width:767px)  {
 
@@ -198,6 +202,10 @@ margin-left: 1rem;
 }
 .otherAccount {
 text-align: center !important;
+}
+
+.tableContainer {
+--bs-gutter-x: 1rem !important;
 }
 }
 

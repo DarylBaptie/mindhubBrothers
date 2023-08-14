@@ -1,10 +1,15 @@
 package com.mindhub.homebanking.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import org.springframework.web.bind.annotation.RestController;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
-import javax.persistence.*;
 
 @Entity
 
@@ -25,15 +30,14 @@ public class ClientLoan {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="loan_id")
     private Loan loan;
-    private int amount;
+    private double amount;
 
     private int payment;
 
 
-
     public ClientLoan() {}
 
-    public ClientLoan(int amount, int payment, Client client, Loan loan) {
+    public ClientLoan(double amount, int payment, Client client, Loan loan) {
         this.amount = amount;
         this.payment = payment;
         this.client = client;
@@ -45,7 +49,7 @@ public class ClientLoan {
 
     public void setAmount(int amount) {this.amount = amount;}
 
-    public int getAmount() {return amount;}
+    public double getAmount() {return amount;}
 
     public void setPayment(int payment) {this.payment = payment;}
 
@@ -61,6 +65,7 @@ public class ClientLoan {
 
 
     public Loan getLoan() {return loan;}
+
 
     public String toString() {
         return id + " " + amount + " " + payment + " " + client + " " + loan;

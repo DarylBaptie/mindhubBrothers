@@ -24,6 +24,8 @@
         {{changeDate(data)}}
         {{changeDateClient(client)}}
         {{sortTransactions(data)}}
+        {{formatAccountBalance(data)}}
+        {{formatAmountAccount(data)}}
     </template>
 
     <header>
@@ -106,7 +108,7 @@
                                     <div class="card-body">
                                         <h5 class="card-title">Account: {{account.number}}</h5>
                                         <p v-if="!show" class="card-text pt-2">Balance: $****</p>
-                                        <p v-else class="card-text pt-2">Balance: $<span class="fs-4">{{account.balance}}</span> </p>
+                                        <p v-else class="card-text pt-2">Balance: <span class="fs-4">{{account.formattedBalance}}</span> </p>
                                         <p class="card-text rounded text-light"><small>Account Creation Date:
                                             {{account.newDate}}</small></p>
                                         <a href="#" class="stretched-link"></a>
@@ -117,8 +119,8 @@
                     </template>
                 </div>
 
-                <div class="container g-0 d-flex table-responsive col-md-8 col-lg-6  justify-content-md-center">
-                    <table class="align-middle d-flex table table-bordered text-center align-items-center justify-content-end justify-content-md-center w-100 d-block d-md-table">
+                <div class="container tableContainer g-0 d-flex table-responsive col-md-8 col-lg-6  justify-content-md-center">
+                    <table class="align-middle d-flex table table-bordered text-center align-items-center justify-content-center justify-content-md-center w-100 d-block d-md-table">
                         <tbody>
                         <tr id="tableHeader">
 
@@ -133,7 +135,7 @@
                                     <td :class="transaction.type == 'CREDIT' ? 'creditColor' : 'debitColor'">
                                         {{transaction.type}}
                                     </td>
-                                    <td>{{transaction.amount}}</td>
+                                    <td>{{transaction.formattedAmount}}</td>
                                     <td>{{transaction.newDate}}</td>
                                     <td>{{transaction.description}}</td>
                                 </tr>
@@ -166,7 +168,6 @@
                     </template>
                 </template>
             </div>
-
 
             <div>
                 <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">

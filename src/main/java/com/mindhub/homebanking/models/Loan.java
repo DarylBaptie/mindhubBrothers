@@ -5,6 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -29,15 +30,16 @@ public class Loan {
 
     private String name;
 
-    private int maxAmount;
+    private double maxAmount;
 
     @ElementCollection
-    private List<Integer> payments;
+    @Column(name="Payment")
+    private List<Integer> payments = new ArrayList<>();
 
 
     public Loan() {}
 
-public Loan(String name, int maxAmount, List<Integer> payments) {
+public Loan(String name, double maxAmount, List<Integer> payments) {
         this.name = name;
         this.maxAmount = maxAmount;
         this.payments = payments;
@@ -51,9 +53,9 @@ public void setName(String name) {this.name = name;}
 
 public String getName() {return name;}
 
-public void setMaxAmount(int maxAmount) {this.maxAmount = maxAmount;}
+public void setMaxAmount(double maxAmount) {this.maxAmount = maxAmount;}
 
-public int getMaxAmount() {return maxAmount;}
+public double getMaxAmount() {return maxAmount;}
 
 public void setPayments(List<Integer> payments) {
         this.payments = payments;
