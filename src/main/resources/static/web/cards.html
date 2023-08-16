@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" type="image/png" sizes="32x32" href="pages/images/favicon.png">
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css
+    "
+    />
+    <link rel="stylesheet" href="pages/style/cardsStyle.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;1,500&display=swap"
+          rel="stylesheet">
+    <title>Cards</title>
+</head>
+<body class="d-flex flex-column h-100">
+<div id="app">
+    <header>
+        <nav class="navbar fixed-top navbar-expand-lg">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Mindhub Brothers
+                    <svg id="logo" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                         class="bi bi-bank" viewBox="0 0 16 16">
+                        <path d="m8 0 6.61 3h.89a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H15v7a.5.5 0 0 1 .485.38l.5 2a.498.498 0 0 1-.485.62H.5a.498.498 0 0 1-.485-.62l.5-2A.501.501 0 0 1 1 13V6H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 3h.89L8 0ZM3.777 3h8.447L8 1 3.777 3ZM2 6v7h1V6H2Zm2 0v7h2.5V6H4Zm3.5 0v7h1V6h-1Zm2 0v7H12V6H9.5ZM13 6v7h1V6h-1Zm2-1V4H1v1h14Zm-.39 9H1.39l-.25 1h13.72l-.25-1Z"/>
+                    </svg>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="./pages/home">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="accounts.html">Accounts</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">Cards</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./pages/loans">Loans</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Transactions
+                            </a>
+                            <ul class="dropdown-menu">
+                                <template v-for="client of clients">
+                                    <template v-for="account of client.accounts">
+                                        <template v-if="account.id != accountNumber">
+                                            <li><a class="dropdown-item" v-bind:href="'http://localhost:8080/web/account.html?id='+account.id">{{account.number}}</a></li>
+                                        </template>
+                                    </template>
+                                </template>
+                            </ul>
+                        </li>
+                    </ul>
+                    <a href="">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                             class="bi bi-box-arrow-right exit" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                  d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
+                            <path fill-rule="evenodd"
+                                  d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+    <div class="container-fluid d-flex flex-column p-0 shadow-lg">
+        <div class="card text-bg-dark rounded-0 border-0 mb-4 mt-4">
+            <img src="pages/images/cardsImage.jpg" class="card-img rounded-0 border-0"
+                 id="carouselPic" alt="...">
+            <div class="card-img-overlay">
+                    <h1 class=" pt-5" id="welcomeText">Cards</h1>
+            </div>
+        </div>
+        <h2 class="text-center mb-3 display-3">Your Cards</h2>
+
+        <template v-for="card of cards">
+            <template v-if="card.cardType == 'DEBIT'">
+        <div class="container-fluid p-3 my-3">
+            <div class="height-100 d-flex justify-content-center align-items-center">
+                <div class="card p-3 cardClient">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <img src="pages/images/chip.png" width="50" />
+                        <h1>VISA</h1>
+                    </div>
+                    <div class="px-2 number mt-3 d-flex justify-content-between align-items-center">
+                        <span>1234</span>
+                        <span>5678</span>
+                        <span>8910</span>
+                        <span>1112</span>
+                    </div>
+                    <div class="p-4 card-border mt-4">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="cardholder">Card Holder</span>
+                            <span class="expires">Expires</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="name">Allice William</span>
+                            <span class="date">10/20</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            </template>
+        </template>
+
+
+    </div>
+
+
+
+    </main>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js
+    "></script>
+<script src="pages/JS/cards.js"></script>
+</body>
+</html>
