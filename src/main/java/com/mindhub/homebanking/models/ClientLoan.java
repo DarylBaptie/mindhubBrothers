@@ -48,7 +48,7 @@ public class ClientLoan {
         this.loan = loan;
     }
 
-    public void setId(long id) {this.id = id;}
+
     public long getId() {return id;}
 
     public void setAmount(int amount) {this.amount = amount;}

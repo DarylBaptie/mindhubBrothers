@@ -8,10 +8,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.mindhub.homebanking.models.CardColor.*;
+import static com.mindhub.homebanking.models.CardType.CREDIT;
+import static com.mindhub.homebanking.models.CardType.DEBIT;
 
 
 @SpringBootApplication
@@ -22,6 +26,9 @@ public class HomebankingApplication {
 	private LocalDateTime localDateTimeNextDay = localDateTime.plusDays(1) ;
 	private LocalDateTime localDateTimeTwoDays = localDateTime.plusDays(2) ;
 	private LocalDateTime localDateTimeThreeDays = localDateTime.plusDays(3) ;
+
+	private LocalDate cardEmissionDate = LocalDate.now();
+	private LocalDate cardExpiryDate = cardEmissionDate.plusYears(5);
 
 	private List<Integer> payments1 = Arrays.asList(12,24,36,48,60);
 	private List<Integer> payments2 = Arrays.asList(6,12,24);
@@ -35,7 +42,7 @@ public class HomebankingApplication {
 
 
 	@Bean
-	public CommandLineRunner initData(ClientRepository repositoryClient, AccountRepository repositoryAccount, TransactionRepository repositoryTransaction, LoanRepository repositoryLoan, ClientLoanRepository repositoryClientLoan) {
+	public CommandLineRunner initData(ClientRepository repositoryClient, AccountRepository repositoryAccount, TransactionRepository repositoryTransaction, LoanRepository repositoryLoan, ClientLoanRepository repositoryClientLoan, CardRepository repositoryCard) {
 		return (args) -> {
 			Account firstAccount = new Account("VIN001", this.localDateTime, 5000);
 			Account secondAccount = new Account("VIN002", this.localDateTimeNextDay, 7500);
@@ -93,6 +100,18 @@ public class HomebankingApplication {
 			repositoryClientLoan.save(clientLoanPersonal);
 			repositoryClientLoan.save(clientLoanPersonal2);
 			repositoryClientLoan.save(clientLoanCar);
+
+			Card card1 = new Card(melbaMorel.getFirstName() + " " + melbaMorel.getLastName(), DEBIT, GOLD, "4582 8954 3594 3458", (short) 567, this.cardEmissionDate, this.cardExpiryDate);
+			melbaMorel.addCard(card1);
+			repositoryCard.save(card1);
+
+			Card card2 = new Card(melbaMorel.getFirstName() + " " + melbaMorel.getLastName(), CREDIT, TITANIUM, "7685 9204 9384 4637", (short) 283, this.cardEmissionDate, this.cardExpiryDate);
+			melbaMorel.addCard(card2);
+			repositoryCard.save(card2);
+
+			Card card3 = new Card(darylBaptie.getFirstName() + " " + darylBaptie.getLastName(), CREDIT, SILVER, "2839 5349 9384 1024", (short) 749, this.cardEmissionDate, this.cardExpiryDate);
+			darylBaptie.addCard(card3);
+			repositoryCard.save(card3);
 		};
 
 	}

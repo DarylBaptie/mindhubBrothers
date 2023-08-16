@@ -42,9 +42,6 @@ public class Account {
         this.balance = bal;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
     public long getId() {
         return id;
     }

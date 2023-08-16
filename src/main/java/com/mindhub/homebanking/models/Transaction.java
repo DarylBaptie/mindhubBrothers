@@ -36,7 +36,7 @@ public class Transaction {
         this.description = description;
     }
 
-    public void setId(long id) {this.id = id;}
+
 
     public long getId() {
         return this.id;

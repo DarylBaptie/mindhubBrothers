@@ -18,7 +18,6 @@ public class AccountDTO {
     Set<TransactionDTO> transactions = new HashSet<>();
 
 
-    public AccountDTO() {}
     public AccountDTO(Account account) {
 
         this.id = account.getId();

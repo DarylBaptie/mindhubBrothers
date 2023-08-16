@@ -45,7 +45,7 @@ public Loan(String name, double maxAmount, List<Integer> payments) {
         this.payments = payments;
 }
 
-public void setId(long id) {this.id = id;}
+
 
 public long getId() {return id;}
 
