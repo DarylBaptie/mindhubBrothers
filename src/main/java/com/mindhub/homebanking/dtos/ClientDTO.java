@@ -16,11 +16,10 @@ public class ClientDTO {
 
     private String clientEmail;
 
-    Set<ClientLoanDTO> loans = new HashSet<>();
+    private Set<ClientLoanDTO> loans;
 
-    Set<AccountDTO> accounts = new HashSet<>();
+    private Set<AccountDTO> accounts;
 
-    public ClientDTO() {}
     public ClientDTO(Client client) {
 
         this.id = client.getId();

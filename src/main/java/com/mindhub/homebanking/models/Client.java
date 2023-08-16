@@ -15,7 +15,6 @@ import static java.util.stream.Collectors.toList;
 
 @Entity
 
-@RestController
 
 public class Client {
 
@@ -33,10 +32,10 @@ public class Client {
 
 
     @OneToMany(mappedBy="client", fetch=FetchType.EAGER)
-    Set<Account> accounts = new HashSet<>();
+    private Set<Account> accounts = new HashSet<>();
 
     @OneToMany(mappedBy="client", fetch=FetchType.EAGER)
-    Set<ClientLoan> clientLoans;
+    private Set<ClientLoan> clientLoans = new HashSet<>();
 
     public Client() { }
 
@@ -46,9 +45,7 @@ public class Client {
         this.clientEmail = email;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
+
     public long getId() {
         return id;
     }
@@ -102,7 +99,7 @@ public class Client {
 
 
     @JsonIgnore
-    public List<Client> getClients() {
+    public List<Client> getLoans() {
         return clientLoans.stream().map(sub -> sub.getClient()).collect(toList());
     }
 

@@ -14,7 +14,7 @@ import static java.util.stream.Collectors.toList;
 
 
 @Entity
-@RestController
+
 
 public class Loan {
 
@@ -26,15 +26,15 @@ public class Loan {
     private long id;
 
     @OneToMany(mappedBy="loan", fetch=FetchType.EAGER)
-    Set<ClientLoan> clientLoans;
+    private Set<ClientLoan> clientLoans = new HashSet<>();
 
     private String name;
 
     private double maxAmount;
 
     @ElementCollection
-    @Column(name="Payment")
-    private List<Integer> payments = new ArrayList<>();
+    @Column(name="Payments")
+    private List<Integer> payments;
 
 
     public Loan() {}
@@ -73,7 +73,9 @@ public List<Integer> getPayments() {return payments;}
     }
 
     @JsonIgnore
-    public List<Loan> getLoans() {
-        return clientLoans.stream().map(sub -> sub.getLoan()).collect(toList());
+    public List<Client> getClients() {
+        return clientLoans.stream().map(sub -> sub.getClient()).collect(toList());
+
+
     }
 }

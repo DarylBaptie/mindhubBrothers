@@ -12,8 +12,6 @@ import java.util.Set;
 
 @Entity
 
-@RestController
-
 
 public class Account {
 

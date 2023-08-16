@@ -13,7 +13,6 @@ import javax.persistence.ManyToOne;
 
 @Entity
 
-@RestController
 
 public class ClientLoan {
 
@@ -36,6 +35,11 @@ public class ClientLoan {
 
 
     public ClientLoan() {}
+
+    public ClientLoan(double amount, int payment) {
+        this.amount = amount;
+        this.payment = payment;
+    }
 
     public ClientLoan(double amount, int payment, Client client, Loan loan) {
         this.amount = amount;

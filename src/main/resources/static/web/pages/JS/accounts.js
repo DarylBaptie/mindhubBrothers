@@ -9,16 +9,16 @@ createApp({
     };
   },
   created() {
-    this.loadData();
+    this.loadData()
   },
   methods: {
     loadData() {
       axios({
         method: "get",
-        url: "/api/clients/1",
+        url: "http://localhost:8080/api/clients/2",
       }).then(response =>
-        this.data = [response.data]
-      );
+        this.data = [response.data],
+      )
     },
     changeDate(data) {
         for (let client of data) {
