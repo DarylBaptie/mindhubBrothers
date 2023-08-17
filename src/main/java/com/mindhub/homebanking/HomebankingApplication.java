@@ -112,6 +112,17 @@ public class HomebankingApplication {
 			Card card3 = new Card(darylBaptie.getFirstName() + " " + darylBaptie.getLastName(), CREDIT, SILVER, "2839 5349 9384 1024", (short) 749, this.cardEmissionDate, this.cardExpiryDate);
 			darylBaptie.addCard(card3);
 			repositoryCard.save(card3);
+
+			Card card4 = new Card(melbaMorel.getFirstName() + " " + melbaMorel.getLastName(), DEBIT, SILVER, "5849 6940 8235 1467", (short) 478, this.cardEmissionDate, this.cardExpiryDate);
+			melbaMorel.addCard(card4);
+			repositoryCard.save(card4);
+
+			Card card5 = new Card(melbaMorel.getFirstName() + " " + melbaMorel.getLastName(), CREDIT, GOLD, "9712 5938 1242 7483", (short) 693, this.cardEmissionDate, this.cardExpiryDate);
+			melbaMorel.addCard(card5);
+			repositoryCard.save(card5);
+
+
+
 		};
 
 	}

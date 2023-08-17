@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -87,39 +87,78 @@
             </div>
         </div>
         <h2 class="text-center mb-3 display-3">Your Cards</h2>
-
-        <template v-for="card of cards">
-            <template v-if="card.cardType == 'DEBIT'">
-        <div class="container-fluid p-3 my-3">
-            <div class="height-100 d-flex justify-content-center align-items-center">
-                <div class="card p-3 cardClient">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <img src="pages/images/chip.png" width="50" />
-                        <h1>VISA</h1>
-                    </div>
-                    <div class="px-2 number mt-3 d-flex justify-content-between align-items-center">
-                        <span>1234</span>
-                        <span>5678</span>
-                        <span>8910</span>
-                        <span>1112</span>
-                    </div>
-                    <div class="p-4 card-border mt-4">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="cardholder">Card Holder</span>
-                            <span class="expires">Expires</span>
-                        </div>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="name">Allice William</span>
-                            <span class="date">10/20</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-            </template>
+        <h3 class="text-center">Debit</h3>
+        <template v-for="client of clients">
+        <template v-if="!client.cards.debitCards">
+            <h3 class="text-center">Currently there are no debit cards associated with this account</h3>
         </template>
+            <div class="container-fluid d-flex flex-wrap justify-content-evenly p-3 my-3">
+        <template v-else v-for="card of cards">
+            <template v-if="card.cardType == 'DEBIT'">
+                    <div class="height-100 col-md-7 pb-3 d-flex justify-content-center align-items-center">
+                        <div class="card w-100 p-3 cardClient"  v-bind:class="cardColorStyle(card)" >
+                            <div class="d-flex justify-content-between align-items-center">
+                                <img src="pages/images/chip.png" width="50" />
+                                <h1>VISA</h1>
+                            </div>
+                            <div class="px-2 number mt-3 d-flex flex-column justify-content-center align-items-center">
+                                <span>{{card.cardNumber}}</span>
+                            </div>
+                            <div class="p-4 card-border mt-4" v-bind:class="cardBorderStyle(card)">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="cardholder pe-2">Card Holder</span>
+                                    <span class="expires pe-2">Expires</span>
+                                    <span class="expires">CVV</span>
 
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="name">{{card.cardholder}}</span>
+                                    <span class="date">{{card.formattedDate}}</span>
+                                    <span class="pe-2">{{card.cvv}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+        </template>
+            </div>
+        </template>
+        <h3 class="text-center">Credit</h3>
+        <template v-for="client of clients">
+            <template v-if="!client.cards.creditCards">
+                <h3 class="text-center">Currently there are no credit cards associated with this account</h3>
+            </template>
+            <div class="container-fluid d-flex flex-wrap justify-content-evenly p-3 my-3">
+                <template v-else v-for="card of cards">
+                    <template v-if="card.cardType == 'CREDIT'">
+                        <div class="height-100 col-md-7 gap-1 pb-3 d-flex justify-content-center align-items-center">
+                            <div class="card w-100 p-3 cardClient"  v-bind:class="cardColorStyle(card)" >
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <img src="pages/images/chip.png" width="50" />
+                                    <h1>VISA</h1>
+                                </div>
+                                <div class="px-2 number mt-3 d-flex flex-column justify-content-center align-items-center">
+                                    <span>{{card.cardNumber}}</span>
+                                </div>
+                                <div class="p-4 card-border mt-4" v-bind:class="cardBorderStyle(card)">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="cardholder pe-2">Card Holder</span>
+                                        <span class="expires pe-2">Expires</span>
+                                        <span class="expires">CVV</span>
 
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="name">{{card.cardholder}}</span>
+                                        <span class="date">{{card.formattedDate}}</span>
+                                        <span class="pe-2">{{card.cvv}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </template>
+            </div>
+        </template>
     </div>
 
 

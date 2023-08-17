@@ -49,26 +49,37 @@ object-position: 60% 10%;
 
  .cardClient{
      border:none;
-     width:400px;
-     border-radius:12px;
+     border-radius:1rem;
      color:#fff;
-     background-image: linear-gradient(to right top, #000, #1b171b, #50464d, #3c2b33, #1e1a1b);
+ }
+
+ .cardTitanium
+ {
+    background-image: linear-gradient(to right top, #000, #1b171b, #50464d, #3c2b33, #1e1a1b);
+ }
+
+ .cardGold {
+background-image: linear-gradient(to right top, #f9f295, #E0AA3E, #dfbd69, #EDC967, #DF8D69);
+ }
+
+ .cardSilver {
+background-image: linear-gradient(to right top, #A8A9AD,#D7D7D8, #C0C0C3, #CBCCCD,#B4B5B8 );
  }
 
 .number span{
 
-    font-size:20px;
+    font-size:1.5rem !important;
     font-weight:600;
 }
 
  .cardholder , .expires{
      font-weight:600;
-     font-size:17px;
+     font-size:1rem;
  }
 
  .name,.date{
 
-     font-size:15px;
+     font-size:1rem;
 
  }
 
@@ -80,6 +91,17 @@ object-position: 60% 10%;
      border-radius:6px;
      background-color:blue;
      color:#fff;
-     background-image: linear-gradient(to right top, #0c0b0d, #201b21, #564b53, #2d2529, #393536);
  }
 
+.cardBorderTitanium {
+     background-image: linear-gradient(to right top, #0c0b0d, #201b21, #564b53, #2d2529, #393536);
+}
+
+.cardBorderGold {
+background-image: linear-gradient(to right top, #EDC967, #dfbd69, #EDC967, #F9F295, #DF8D69)
+}
+
+
+.cardBorderSilver {
+background-image: linear-gradient(to right top, #E3E3E3, #D7D7D8, #CBCCCD, #B4B5B8, #A8A9AD)
+}
