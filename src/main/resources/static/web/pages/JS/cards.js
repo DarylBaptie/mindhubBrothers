@@ -5,6 +5,7 @@ const { createApp } = Vue
       return {
       clients: [],
       cards: [],
+      showData: true,
       }
     },
         created() {
@@ -69,6 +70,9 @@ const { createApp } = Vue
     }
     }
   },
+  showDetails() {
+    this.showData = !this.showData;
+    },
   }
   }).mount('#app')
 

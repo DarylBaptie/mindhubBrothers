@@ -15,10 +15,16 @@ createApp({
     loadData() {
       axios({
         method: "get",
-        url: "http://localhost:8080/api/clients/1",
-      }).then(response =>
-        this.data = [response.data],
-      )
+        url: '/api/clients/1',
+      })
+      .then((response) => {
+        this.data.push(response.data)
+        this.changeDate(this.data)
+        console.log(this.data)
+        this.sortAccounts(this.data)
+        this.formatLoanAmount(this.data)
+        this.formatAccountBalance(this.data)
+      });
     },
     changeDate(data) {
         for (let client of data) {

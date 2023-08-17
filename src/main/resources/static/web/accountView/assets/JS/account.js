@@ -22,8 +22,12 @@ createApp({
         method: "get",
         url: `/api/accounts/${idParam}`,
       }).then((response) => {
-        this.data = [response.data];
+        this.data.push(response.data);
         this.accountNumber = idParam;
+        this.changeDate(this.data);
+        this.sortTransactions(this.data);
+        this.formatAccountBalance(this.data);
+        this.formatAmountAccount(this.data);
       });
     },
     changeDate(data) {
@@ -58,9 +62,10 @@ createApp({
         axios({
             method: "get",
             url: "/api/clients/1",
-        }).then(response =>
-            this.client = [response.data]
-            );
+        }).then((response) => {
+            this.client.push(response.data)
+            this.changeDateClient(this.client)
+            });
     },
     changeDateClient(client) {
         for (let customer of client) {
