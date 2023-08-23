@@ -93,7 +93,10 @@ color: black;}
 .exit:hover {
 transition: 0.2s !important;
 transform: scale(1.15) !important;
+cursor: pointer;
 }
+
+
 
 .cardAccount:hover, .quickLinkCard:hover, nav-link:hover, .cardLoan:hover {
 transition: 0.3s !important;

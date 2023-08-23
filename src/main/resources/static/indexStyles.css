@@ -1,0 +1,32 @@
+html {
+height: 100%
+}
+
+body {
+padding:0 !important;
+margin:0 !important;
+box-sizing: border-box;
+height: 100% !important;
+background-color: #FFFFF0 !important;
+font-family: 'Playfair Display', serif !important;
+}
+
+
+#div2 {
+background-image: url('../images/indexBackground.jpg');
+  background-size: 100% 100%;
+
+}
+
+#loginBtn {
+background-color: #F7E7CE !important;
+}
+
+#logo {
+position:relative;
+top:-5px
+}
+
+#clientRegistrationLink {
+color: black;
+}

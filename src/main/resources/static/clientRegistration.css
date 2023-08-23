@@ -1,0 +1,31 @@
+html {
+height: 100%
+}
+
+body {
+padding:0 !important;
+margin:0 !important;
+box-sizing: border-box;
+height: 100% !important;
+background-color: #FFFFF0 !important;
+font-family: 'Playfair Display', serif !important;
+}
+
+
+#loginBtn {
+background-color: #F7E7CE !important;
+}
+
+#logo {
+position:relative;
+top:-5px
+}
+
+#div2 {
+background-image: url('/images/registrationBackground.jpg');
+background-size: 100% 100%;
+}
+
+#loginLink {
+color: black !important;
+}

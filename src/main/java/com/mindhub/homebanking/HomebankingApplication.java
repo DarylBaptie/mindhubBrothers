@@ -2,10 +2,12 @@ package com.mindhub.homebanking;
 
 import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.repositories.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 import java.time.LocalDate;
@@ -34,6 +36,8 @@ public class HomebankingApplication {
 	private List<Integer> payments2 = Arrays.asList(6,12,24);
 	private List<Integer> payments3 = Arrays.asList(6,12,24,36);
 
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 
 	public static void main(String[] args) {
@@ -48,8 +52,9 @@ public class HomebankingApplication {
 			Account secondAccount = new Account("VIN002", this.localDateTimeNextDay, 7500);
 			Account thirdAccount = new Account("VIN003", this.localDateTimeTwoDays, 8500);
 			Account fourthAccount = new Account("VIN004", this.localDateTimeThreeDays, 900);
-			Client melbaMorel = new Client("Melba", "Morel", "melba@mindhub.com");
-			Client darylBaptie = new Client("Daryl", "Baptie", "darylBaptie@gmail.com");
+			Client melbaMorel = new Client("Melba", "Morel", "melba@mindhub.com", passwordEncoder.encode("AlbaGuBrath"));
+			Client darylBaptie = new Client("Daryl", "Baptie", "darylBaptie@gmail.com", passwordEncoder.encode("Hibs1875"));
+			Client adminAdmin = new Client("Admin", "admin", "admin@mindhub.com", passwordEncoder.encode("admin2006"));
 			Transaction transaction1 = new Transaction(TransactionType.CREDIT, this.localDateTime, 3000, "salary"  );
 			Transaction transaction2 = new Transaction(TransactionType.DEBIT, this.localDateTime, -80, "supermarket"  );
 			Transaction transaction3 = new Transaction(TransactionType.DEBIT, this.localDateTime, -25, "Energy payment"  );
@@ -68,6 +73,7 @@ public class HomebankingApplication {
 			repositoryLoan.save(car);
 			repositoryClient.save(melbaMorel);
 			repositoryClient.save(darylBaptie);
+			repositoryClient.save(adminAdmin);
 			melbaMorel.addClientLoan(clientLoanMortgage);
 			mortgage.addClientLoan(clientLoanMortgage);
 			melbaMorel.addClientLoan(clientLoanPersonal);
@@ -120,8 +126,8 @@ public class HomebankingApplication {
 			Card card5 = new Card(melbaMorel.getFirstName() + " " + melbaMorel.getLastName(), CREDIT, GOLD, "9712 5938 1242 7483", (short) 693, this.cardEmissionDate, this.cardExpiryDate);
 			melbaMorel.addCard(card5);
 			repositoryCard.save(card5);
-
-
+			passwordEncoder.encode(melbaMorel.getPassword());
+			passwordEncoder.encode(darylBaptie.getPassword());
 
 		};
 

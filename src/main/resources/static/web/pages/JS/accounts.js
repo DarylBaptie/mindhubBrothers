@@ -6,6 +6,7 @@ createApp({
       data: [],
       show: true,
       loans: [],
+      accounts: [],
     };
   },
   created() {
@@ -15,24 +16,23 @@ createApp({
     loadData() {
       axios({
         method: "get",
-        url: '/api/clients/1',
+        url: '/api/clients/current',
       })
       .then((response) => {
         this.data.push(response.data)
-        this.changeDate(this.data)
-        console.log(this.data)
+        this.accounts = response.data.accounts
+        this.loans = response.data.clientloans
+        this.changeDate(this.accounts)
         this.sortAccounts(this.data)
-        this.formatLoanAmount(this.data)
-        this.formatAccountBalance(this.data)
+        this.formatLoanAmount(this.loans)
+        this.formatAccountBalance(this.accounts)
       });
     },
-    changeDate(data) {
-        for (let client of data) {
-        for (let account of client.accounts) {
+    changeDate(accounts) {
+        for (let account of accounts) {
             let newDate = account.creationDate;
             newDate = newDate + "Z";
             account.newDate = new Date(newDate).toLocaleDateString('en-US');
-        }
         }
     },
     sortAccounts(data) {
@@ -51,27 +51,31 @@ createApp({
     showBalance() {
      this.show = !this.show;
     },
-    formatLoanAmount(data) {
-        for(let client of data) {
-            for(let loan of client.clientloans) {
+    formatLoanAmount(loans) {
+            for(let loan of loans) {
                 loan.formattedAmount = loan.amount.toLocaleString("en-US", {
                                                               style: "currency",
                                                               currency: "USD",
                                                               maximumFractionDigits: 0,
             })
         }
-   }
+
   },
-      formatAccountBalance(data) {
-          for(let client of data) {
-              for(let account of client.accounts) {
+      formatAccountBalance(accounts) {
+              for(let account of accounts) {
                   account.formattedBalance = account.balance.toLocaleString("en-US", {
                                                                 style: "currency",
                                                                 currency: "USD",
                                                                 maximumFractionDigits: 0,
               })
           }
-     }
+
     },
+    logout() {
+        axios.post('/api/logout')
+        .then(response => {
+        window.location = "/index.html";
+        })
+    }
   },
 }).mount("#app");

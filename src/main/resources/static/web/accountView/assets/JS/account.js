@@ -7,6 +7,7 @@ createApp({
       typeTransaction: true,
       show: true,
       client:[],
+      accounts: [],
       accountNumber: 0,
     };
   },
@@ -61,7 +62,7 @@ createApp({
     accountsOfClient() {
         axios({
             method: "get",
-            url: "/api/clients/1",
+            url: "/api/clients/current",
         }).then((response) => {
             this.client.push(response.data)
             this.changeDateClient(this.client)
@@ -94,5 +95,11 @@ createApp({
           }
         }
     },
+        logout() {
+            axios.post('/api/logout')
+            .then(response => {
+            window.location = "/index.html";
+            })
+        }
   }
 }).mount("#app");

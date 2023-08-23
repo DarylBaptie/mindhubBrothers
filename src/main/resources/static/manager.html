@@ -32,7 +32,7 @@
                     <div class="mb-3">
                         <label for="email" class="form-label">Email address</label>
                         <input type="email" class="form-control inputWidth mx-auto" id="email" aria-describedby="emailHelp"
-                               value="clientEmail" v-model="formData.clientEmail" placeholder="JohnDoe@gmail.com"
+                               value="email" v-model="formData.email" placeholder="JohnDoe@gmail.com"
                                required="true">
                     </div>
                     <button type="submit" class="btn btn-primary text-white">Add Client</button>
@@ -55,7 +55,7 @@
                             <tr>
                                 <td>{{client.firstName}}</td>
                                 <td>{{client.lastName}}</td>
-                                <td>{{client.clientEmail}}</td>
+                                <td>{{client.email}}</td>
                             </tr>
                         </template>
                         </tbody>

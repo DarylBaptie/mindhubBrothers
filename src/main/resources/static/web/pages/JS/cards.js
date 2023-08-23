@@ -15,7 +15,7 @@ const { createApp } = Vue
         loadData() {
             axios({
                 method: 'get',
-                url: '/api/clients/1',
+                url: '/api/clients/current',
             })
     .then((response) => {
       this.clients.push(response.data);
@@ -73,6 +73,12 @@ const { createApp } = Vue
   showDetails() {
     this.showData = !this.showData;
     },
+    logout() {
+        axios.post('/api/logout')
+        .then(response => {
+        window.location = "/index.html";
+        })
+    }
   }
   }).mount('#app')
 

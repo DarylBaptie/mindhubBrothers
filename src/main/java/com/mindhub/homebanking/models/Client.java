@@ -3,7 +3,6 @@ package com.mindhub.homebanking.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -28,8 +27,9 @@ public class Client {
     private String firstName;
     private String lastName;
 
-    private String clientEmail;
+    private String email;
 
+    private String password;
 
     @OneToMany(mappedBy="client", fetch=FetchType.EAGER)
     private Set<Account> accounts = new HashSet<>();
@@ -40,12 +40,14 @@ public class Client {
     @OneToMany(mappedBy="client", fetch=FetchType.EAGER)
     private Set<Card> cards = new HashSet<>();
 
+
     public Client() { }
 
-    public Client(String first, String last, String email) {
+    public Client(String first, String last, String email, String password) {
         this.firstName = first;
         this.lastName = last;
-        this.clientEmail = email;
+        this.email = email;
+        this.password = password;
     }
 
 
@@ -53,12 +55,12 @@ public class Client {
         return id;
     }
 
-    public String getClientEmail() {
-        return clientEmail;
+    public String getEmail() {
+        return email;
     }
 
-    public void setClientEmail(String clientEmail) {
-        this.clientEmail = clientEmail;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getFirstName() {
@@ -77,8 +79,12 @@ public class Client {
         this.lastName = lastName;
     }
 
+    public void setPassword(String password) {this.password = password;}
+
+    public String getPassword(){return password;}
+
     public String toString() {
-        return id + " " + firstName + " " + lastName + " " + clientEmail;
+        return id + " " + firstName + " " + lastName + " " + email;
     }
 
     public Set<Account> getAccounts() {
