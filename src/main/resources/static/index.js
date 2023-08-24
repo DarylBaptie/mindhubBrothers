@@ -15,7 +15,7 @@ createApp({
         .then(function (response) {
           console.log(response);
           if (this.email == "admin@mindhub.com") {
-            window.location = "/h2-console/login.jsp";
+            window.location = "/manager.html";
           } else {
             window.location = "/web/accounts.html";
           }

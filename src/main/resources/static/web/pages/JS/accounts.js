@@ -71,6 +71,10 @@ createApp({
           }
 
     },
+    newAccount() {
+    axios.post('/api/clients/current/accounts')
+    .then(response => console.log(response))
+    },
     logout() {
         axios.post('/api/logout')
         .then(response => {
