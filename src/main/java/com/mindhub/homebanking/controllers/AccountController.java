@@ -1,9 +1,7 @@
 package com.mindhub.homebanking.controllers;
 
 import com.mindhub.homebanking.dtos.AccountDTO;
-import com.mindhub.homebanking.dtos.ClientDTO;
 import com.mindhub.homebanking.models.Account;
-import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +25,12 @@ public class AccountController {
     private ClientRepository clientRepository;
 
     private String randomNumber() {
-    String random = "VIN" + getRandomNumber(0, 99999999);
-    return random;
-    }
-
-    private int getRandomNumber(int i, int i1) {
-        return (int) ((Math.random() * (i - i1)) + i);
+        String random;
+        do {
+            int number = (int) (Math.random()*1000 + 9999);
+            random = "VIN-" + number;
+        } while (accountRepository.findByNumber(random)!=null);
+            return random;
     }
 
     @RequestMapping("/api/accounts")

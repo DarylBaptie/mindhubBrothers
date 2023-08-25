@@ -107,19 +107,19 @@ public class HomebankingApplication {
 			repositoryClientLoan.save(clientLoanPersonal2);
 			repositoryClientLoan.save(clientLoanCar);
 
-			Card card1 = new Card(melbaMorel.getFirstName() + " " + melbaMorel.getLastName(), DEBIT, GOLD, "4582 8954 3594 3458", (short) 567, this.cardEmissionDate, this.cardExpiryDate);
+			Card card1 = new Card(melbaMorel.getFirstName() + " " + melbaMorel.getLastName(), DEBIT, GOLD, "4582 8954 3594 3458", 567, this.cardEmissionDate, this.cardExpiryDate);
 			melbaMorel.addCard(card1);
 			repositoryCard.save(card1);
 
-			Card card2 = new Card(melbaMorel.getFirstName() + " " + melbaMorel.getLastName(), CREDIT, TITANIUM, "7685 9204 9384 4637", (short) 283, this.cardEmissionDate, this.cardExpiryDate);
+			Card card2 = new Card(melbaMorel.getFirstName() + " " + melbaMorel.getLastName(), CREDIT, TITANIUM, "7685 9204 9384 4637", 283, this.cardEmissionDate, this.cardExpiryDate);
 			melbaMorel.addCard(card2);
 			repositoryCard.save(card2);
 
-			Card card3 = new Card(darylBaptie.getFirstName() + " " + darylBaptie.getLastName(), CREDIT, SILVER, "2839 5349 9384 1024", (short) 749, this.cardEmissionDate, this.cardExpiryDate);
+			Card card3 = new Card(darylBaptie.getFirstName() + " " + darylBaptie.getLastName(), CREDIT, SILVER, "2839 5349 9384 1024", 749, this.cardEmissionDate, this.cardExpiryDate);
 			darylBaptie.addCard(card3);
 			repositoryCard.save(card3);
 
-			Card card4 = new Card(melbaMorel.getFirstName() + " " + melbaMorel.getLastName(), DEBIT, SILVER, "5849 6940 8235 1467", (short) 478, this.cardEmissionDate, this.cardExpiryDate);
+			Card card4 = new Card(melbaMorel.getFirstName() + " " + melbaMorel.getLastName(), DEBIT, SILVER, "5849 6940 8235 1467", 478, this.cardEmissionDate, this.cardExpiryDate);
 			melbaMorel.addCard(card4);
 			repositoryCard.save(card4);
 

@@ -28,9 +28,9 @@ import javax.servlet.http.HttpSession;
 
                 .antMatchers("/index.html", "/clientRegistration.html", "/static/images").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/clients").permitAll()
-                .antMatchers("/web/**", "/api/login", "/api/**").hasAuthority("CLIENT")
+                .antMatchers("/web/**", "/api/login", "/api/**", "/api/clients/current/cards").hasAuthority("CLIENT")
                 .antMatchers("/rest/**", "/admin/**", "/api/login", "/api/clients", "/h2-console").hasAuthority("ADMIN")
-                .antMatchers(HttpMethod.POST, "/api/clients/current/accounts").hasAuthority("CLIENT");
+                .antMatchers(HttpMethod.POST, "/api/clients/current/accounts", "/api/clients/current/cards").hasAuthority("CLIENT");
 
 
 

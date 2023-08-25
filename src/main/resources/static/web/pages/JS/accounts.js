@@ -73,13 +73,15 @@ createApp({
     },
     newAccount() {
     axios.post('/api/clients/current/accounts')
-    .then(response => console.log(response))
+    .then(response => {
+    window.location = "/accounts.html";
+    })
     },
     logout() {
         axios.post('/api/logout')
         .then(response => {
         window.location = "/index.html";
         })
-    }
+    },
   },
 }).mount("#app");

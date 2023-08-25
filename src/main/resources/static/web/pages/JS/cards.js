@@ -6,6 +6,8 @@ const { createApp } = Vue
       clients: [],
       cards: [],
       showData: true,
+      cardType: "",
+      cardColor: "",
       }
     },
         created() {
@@ -78,6 +80,13 @@ const { createApp } = Vue
         .then(response => {
         window.location = "/index.html";
         })
+    },
+    newCard() {
+        axios.post('/api/clients/current/cards',`color=${this.cardColor}&type=${this.cardType}`, {headers:{'content-type':'application/x-www-form-urlencoded'}})
+        .then(response => {
+         window.location = "/api/cards.html";
+        })
+         .catch(error => console.log(error))
     }
   }
   }).mount('#app')

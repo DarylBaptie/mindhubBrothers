@@ -189,32 +189,33 @@
         </div>
 
         <h2 class="text-center mt-2 pb-3 display-3">Apply for a new Card</h2>
+        {{cardType}} {{cardColor}}
     <form class="justify-content-center align-items-center text-center">
 <div class="d-flex flex-wrap justify-content-center align-items-center gap-3">
         <div>
         <h3>Select Card Type: </h3>
         <div class="py-2">
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="cardType" id="inlineRadio1" value="Credit">
+            <input class="form-check-input" type="radio" name="cardType" id="inlineRadio1" v-model="cardType" value="CREDIT">
             <label class="form-check-label" for="inlineRadio1">CREDIT</label>
         </div>
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="cardType" id="inlineRadio2" value="Debit">
+            <input class="form-check-input" type="radio" name="cardType" id="inlineRadio2" v-model="cardType" value="DEBIT">
             <label class="form-check-label" for="inlineRadio2">DEBIT</label>
         </div>
         </div>
         <div>
             <h3 class="pb-2">Select Card Color: </h3>
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="cardColor" id="inlineRadio3" value="Silver">
+            <input class="form-check-input" type="radio" name="cardColor" id="inlineRadio3" v-model="cardColor" value="SILVER">
             <label class="form-check-label" for="inlineRadio3">SILVER</label>
         </div>
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="cardColor" id="inlineRadio4" value="Gold">
+            <input class="form-check-input" type="radio" name="cardColor" id="inlineRadio4" v-model="cardColor" value="GOLD">
             <label class="form-check-label" for="inlineRadio4">GOLD</label>
         </div>
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="cardColor" id="inlineRadio5" value="Titanium">
+            <input class="form-check-input" type="radio" name="cardColor" id="inlineRadio5" v-model="cardColor" value="TITANIUM">
             <label class="form-check-label" for="inlineRadio5">TITANIUM</label>
         </div>
         </div>
@@ -225,7 +226,7 @@
         </div>
 </div>
         <div>
-            <button type="button" class="btn mb-3 showDetailsBtn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Send</button>
+            <button type="button" @click="newCard" class="btn mb-3 showDetailsBtn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Send</button>
         </div>
 
         <!-- Modal -->
@@ -241,7 +242,7 @@
                         Your account manager with shortly contact you for the next steps.
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn showDetailsBtn" data-bs-dismiss="modal">Close</button>
+                        <button type="button"  class="btn showDetailsBtn" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
