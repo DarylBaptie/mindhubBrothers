@@ -5,9 +5,13 @@ const { createApp } = Vue
       return {
       clients: [],
       cards: [],
+      accounts: [],
       showData: true,
-      cardType: "",
-      cardColor: "",
+      cardType: "DEBIT",
+      cardColor: "SILVER",
+      errorMessage: "",
+      debitCards: 0,
+      creditCards: 0,
       }
     },
         created() {
@@ -22,8 +26,13 @@ const { createApp } = Vue
     .then((response) => {
       this.clients.push(response.data);
       this.cards = response.data.cards;
+      this.accounts = response.data.accounts;
       this.formatThruDate(this.cards);
       this.cardGrouping(this.clients);
+      this.debitCreditCards(this.cards);
+    })
+    .catch((error) => {
+    console.log(error)
     });
   },
   cardColorStyle(card) {
@@ -80,14 +89,30 @@ const { createApp } = Vue
         .then(response => {
         window.location = "/index.html";
         })
+        .catch(error => console.log(error))
     },
     newCard() {
         axios.post('/api/clients/current/cards',`color=${this.cardColor}&type=${this.cardType}`, {headers:{'content-type':'application/x-www-form-urlencoded'}})
         .then(response => {
-         window.location = "/api/cards.html";
+         window.location = "/web/cards.html";
         })
-         .catch(error => console.log(error))
+         .catch((error) => {
+         console.log(error)
+         this.errorMessage = error.response.data
+         console.log(errorMessage)
+         }
+
+         )
+    },
+    debitCreditCards(cards) {
+    for (card of cards) {
+        if (card.cardType == "DEBIT") {
+        this.debitCards++;
+        } else if (card.cardType == "CREDIT") {
+        this.creditCards++
+        }
     }
+    },
   }
   }).mount('#app')
 

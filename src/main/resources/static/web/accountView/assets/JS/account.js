@@ -8,6 +8,7 @@ createApp({
       show: true,
       client:[],
       accounts: [],
+      transactions:  [],
       accountNumber: 0,
     };
   },
@@ -29,7 +30,10 @@ createApp({
         this.sortTransactions(this.data);
         this.formatAccountBalance(this.data);
         this.formatAmountAccount(this.data);
-      });
+        this.transactions = response.data.transactions;
+      })
+      .catch(error => console.log(error));
+;
     },
     changeDate(data) {
         for (let account of data) {
@@ -66,6 +70,7 @@ createApp({
         }).then((response) => {
             this.client.push(response.data)
             this.changeDateClient(this.client)
+            this.customerAccounts(this.client);
             });
     },
     changeDateClient(client) {
@@ -95,11 +100,27 @@ createApp({
           }
         }
     },
+    customerAccounts(client) {
+     for (let customer of client) {
+    for(account of customer.accounts) {
+        this.accounts.push(account)
+    }
+    }
+    },
+        newAccount() {
+        axios.post('/api/clients/current/accounts')
+        .then(response => {
+        window.location = "/web/accounts.html";
+        })
+        .catch(error => console.log(error));
+
+        },
         logout() {
             axios.post('/api/logout')
             .then(response => {
             window.location = "/index.html";
             })
+            .catch(error => console.log(error));
         }
   }
 }).mount("#app");

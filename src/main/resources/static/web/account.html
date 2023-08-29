@@ -65,7 +65,7 @@
                             </ul>
                         </li>
                     </ul>
-                    <a @click="logout">
+                    <a type="button"  data-bs-toggle="modal" data-bs-target="#exampleModal">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                              class="bi bi-box-arrow-right exit" viewBox="0 0 16 16">
                             <path fill-rule="evenodd"
@@ -78,6 +78,24 @@
             </div>
         </nav>
     </header>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure you want to log out?</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to log out? See you next time!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn logOutBtn" @click="logout">Logout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <main>
         <div class="container-fluid d-flex flex-column p-0 shadow-lg">
             <div class="card text-bg-dark rounded-0 border-0 mb-4 mt-4">
@@ -112,19 +130,21 @@
                         </div>
                     </template>
                 </div>
+                <div v-if="transactions.length == 0" class="container g-0 d-flex col-md-8 col-lg-6 align-items-center justify-content-center">
+                    <h3 class="d-flex text-center">No transactions available</h3>
+                </div>
 
-                <div class="container tableContainer g-0 d-flex table-responsive col-md-8 col-lg-6  justify-content-md-center">
+                <div v-else class="container tableContainer g-0 d-flex table-responsive col-md-8 col-lg-6  justify-content-md-center">
                     <table class="align-middle d-flex table table-bordered text-center align-items-center justify-content-center justify-content-md-center w-100 d-block d-md-table">
                         <tbody>
                         <tr id="tableHeader">
-
                             <td class="fw-semibold p-0">Type</td>
                             <td class="fw-semibold p-0">Amount ($)</td>
                             <td class="fw-semibold p-0">Date</td>
                             <td class="fw-semibold p-0">Description</td>
                         </tr>
-                        <template v-for="account of data">
-                            <template v-for="transaction of account.transactions">
+
+                            <template v-for="transaction of transactions">
                                 <tr :class="transaction.type == 'CREDIT' ? 'creditRow' : 'debitRow'">
                                     <td :class="transaction.type == 'CREDIT' ? 'creditColor' : 'debitColor'">
                                         {{transaction.type}}
@@ -134,17 +154,19 @@
                                     <td>{{transaction.description}}</td>
                                 </tr>
                             </template>
-                        </template>
                         </tbody>
                     </table>
                 </div>
             </div>
+            <div v-if="accounts.length <= 1">
+             </div>
+            <div v-else>
             <h3 class="text-center mb-5 display-4">Other Accounts</h3>
-            <div class="d-flex mb-5 justify-content-center">
+            <div class="d-flex flex-wrap mb-5 gap-2 justify-content-center">
                 <template v-for="client of client">
                     <template v-for="account of client.accounts">
                         <template v-if="account.id != accountNumber">
-                            <div class=" otherAccount d-flex justify-content-center card mb-3 cardAccount rounded text-light col-8 col-md-6 col-lg-5">
+                            <div class=" gap-2 otherAccount d-flex flex-wrap justify-content-center card mb-3 cardAccount rounded text-light col-8 col-md-4">
                                 <div class="row g-0">
                                     <div class="col-md-12">
                                         <div class="card-body">
@@ -161,6 +183,7 @@
                         </template>
                     </template>
                 </template>
+            </div>
             </div>
 
             <div>
@@ -218,14 +241,18 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card mb-3 rounded quickLinkCard col-10" id="openAccounts">
+                        <div class="card mb-3 rounded quickLinkCard col-10 shadow" id="openAccounts">
                             <div class="row g-0">
                                 <div class="col-md-12">
                                     <div class="card-body">
                                         <h4 class="card-title">Open an Account</h4>
-                                        <p class="card-text pt-2">Current and Savings Accounts for you and your
-                                            family</p>
-                                        <a href="./pages/openAccount" class="stretched-link"></a>
+                                        <p class="card-text pt-2">Current and Savings Accounts for you and your family</p>
+                                        <template v-if="accounts.length >= 3">
+                                            <a href="#" class="stretched-link"  type="button" data-bs-toggle="modal" data-bs-target="#noAccountPossibleModal" ></a>
+                                        </template>
+                                        <template v-else>
+                                            <a href="#" class="stretched-link"  type="button" data-bs-toggle="modal" data-bs-target="#accountModal" ></a>
+                                        </template>
                                     </div>
                                 </div>
                             </div>
@@ -234,6 +261,42 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal fade" id="noAccountPossibleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="exampleModalLabel"></h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        We are sorry, only three accounts are possible per client.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="accountModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="exampleModalLabel">Seconds away from a new account!</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to open a new account? Click 'Confirm' and have immediate access to your new account!
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn showBalanceBtn border" @click="newAccount">Confirm</button>
+                    </div>
+                </div>
+            </div>
+
+
     </main>
     <footer class="d-flex flex-column flex-md-row justify-content-around align-items-center py-3">
         <p class="mb-0" id="copyright">@All rights reserved 2023</p>

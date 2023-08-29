@@ -27,11 +27,16 @@ public class AccountController {
     private String randomNumber() {
         String random;
         do {
-            int number = (int) (Math.random()*1000 + 9999);
+            int number = getRandomNumber(0, 99999999);
             random = "VIN-" + number;
-        } while (accountRepository.findByNumber(random)!=null);
+        } while (accountRepository.findByNumber(random)!= null);
             return random;
     }
+
+    public int getRandomNumber(int min, int max) {
+        return (int) ((Math.random() * (max - min)) + min);
+    }
+
 
     @RequestMapping("/api/accounts")
     public List<AccountDTO> getAccounts() {
@@ -49,7 +54,6 @@ public class AccountController {
 
     public ResponseEntity<Object> createAccount(Authentication authentication
     )  {
-
         if(clientRepository.findByEmail(authentication.getName()).getAccounts().size() < 3) {
         Account newAccount = new Account(randomNumber(), LocalDateTime.now(), 0);
         clientRepository.findByEmail(authentication.getName()).addAccount(newAccount);
@@ -60,8 +64,6 @@ public class AccountController {
         }
 
     }
-
-
 
 }
 

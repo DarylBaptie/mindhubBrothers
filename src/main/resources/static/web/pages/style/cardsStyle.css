@@ -11,8 +11,12 @@ background-color: #FFFFF0 !important;
 font-family: 'Playfair Display', serif !important;
 }
 
-.navbar, footer,#tableHeader, .dropdown-menu, .showDetailsBtn {
+.navbar, footer,#tableHeader, .dropdown-menu, .showDetailsBtn, .logOutBtn {
 background-color: #F7E7CE !important;
+}
+
+.modal-content {
+background-color: #FFFFF0 !important;
 }
 
 .cardClient:hover {
@@ -20,7 +24,12 @@ transition: 0.3s !important;
 transform: scale(1.1) !important;
 }
 
+button:hover {
+transition: 0.3s !important;
+transform: scale(1.15) !important;
+}
 
+}
 .nav-link:hover, .navbar-brand:hover {
 opacity: 1 !important;
 text-decoration: underline !important;

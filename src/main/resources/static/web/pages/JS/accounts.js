@@ -26,7 +26,8 @@ createApp({
         this.sortAccounts(this.data)
         this.formatLoanAmount(this.loans)
         this.formatAccountBalance(this.accounts)
-      });
+      })
+      .catch(error => console.log(error));
     },
     changeDate(accounts) {
         for (let account of accounts) {
@@ -74,14 +75,18 @@ createApp({
     newAccount() {
     axios.post('/api/clients/current/accounts')
     .then(response => {
-    window.location = "/accounts.html";
+    window.location = "/web/accounts.html";
     })
+    .catch(error => console.log(error));
+
     },
     logout() {
         axios.post('/api/logout')
         .then(response => {
         window.location = "/index.html";
         })
+        .catch(error => console.log(error));
+
     },
   },
 }).mount("#app");

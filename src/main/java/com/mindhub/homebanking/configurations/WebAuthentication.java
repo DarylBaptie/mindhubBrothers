@@ -19,7 +19,7 @@ public class WebAuthentication extends GlobalAuthenticationConfigurerAdapter {
 
     @Autowired
 
-    ClientRepository clientRepository;
+    private ClientRepository clientRepository;
 
 
 
@@ -31,7 +31,7 @@ public class WebAuthentication extends GlobalAuthenticationConfigurerAdapter {
 
             Client client = clientRepository.findByEmail(inputName);
 
-            if (client != null && client.getEmail() == "admin@mindhub.com") {
+            if (client != null && client.getEmail().contains("admin@mindhub.com")) {
 
                 return new User(client.getEmail(), client.getPassword(),
 

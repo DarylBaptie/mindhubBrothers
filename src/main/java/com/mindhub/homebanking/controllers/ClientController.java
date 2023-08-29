@@ -79,12 +79,27 @@ public class ClientController {
 
 
 
-        if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty()) {
+        if (firstName.isBlank()) {
 
-            return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("First name is missing", HttpStatus.FORBIDDEN);
 
         }
 
+        if (lastName.isBlank()) {
+
+            return new ResponseEntity<>("Surname is missing", HttpStatus.FORBIDDEN);
+
+        }
+        if (email.isBlank()) {
+
+            return new ResponseEntity<>("Email is missing", HttpStatus.FORBIDDEN);
+
+        }
+        if (password.isBlank()) {
+
+            return new ResponseEntity<>("Password is missing", HttpStatus.FORBIDDEN);
+
+        }
 
 
         if (clientRepository.findByEmail(email) !=  null) {

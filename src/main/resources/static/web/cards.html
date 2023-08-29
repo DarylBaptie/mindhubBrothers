@@ -53,17 +53,13 @@
                                 Transactions
                             </a>
                             <ul class="dropdown-menu">
-                                <template v-for="client of clients">
-                                    <template v-for="account of client.accounts">
-                                        <template v-if="account.id != accountNumber">
+                                    <template v-for="account of accounts">
                                             <li><a class="dropdown-item" v-bind:href="'http://localhost:8080/web/account.html?id='+account.id">{{account.number}}</a></li>
-                                        </template>
                                     </template>
-                                </template>
                             </ul>
                         </li>
                     </ul>
-                    <a @click="logout">
+                    <a type="button"  data-bs-toggle="modal" data-bs-target="#exampleModal">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                              class="bi bi-box-arrow-right exit" viewBox="0 0 16 16">
                             <path fill-rule="evenodd"
@@ -72,10 +68,28 @@
                                   d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
                         </svg>
                     </a>
+
                 </div>
             </div>
         </nav>
     </header>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure you want to log out?</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to log out? See you next time!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn logOutBtn" @click="logout">Logout</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <main>
     <div class="container-fluid d-flex flex-column p-0 shadow-lg">
@@ -189,7 +203,6 @@
         </div>
 
         <h2 class="text-center mt-2 pb-3 display-3">Apply for a new Card</h2>
-        {{cardType}} {{cardColor}}
     <form class="justify-content-center align-items-center text-center">
 <div class="d-flex flex-wrap justify-content-center align-items-center gap-3">
         <div>
@@ -200,14 +213,14 @@
             <label class="form-check-label" for="inlineRadio1">CREDIT</label>
         </div>
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="cardType" id="inlineRadio2" v-model="cardType" value="DEBIT">
+            <input class="form-check-input" type="radio" name="cardType" id="inlineRadio2" v-model="cardType" value="DEBIT" checked="checked">
             <label class="form-check-label" for="inlineRadio2">DEBIT</label>
         </div>
         </div>
         <div>
             <h3 class="pb-2">Select Card Color: </h3>
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="cardColor" id="inlineRadio3" v-model="cardColor" value="SILVER">
+            <input class="form-check-input" type="radio" name="cardColor" id="inlineRadio3" v-model="cardColor" value="SILVER" checked="checked">
             <label class="form-check-label" for="inlineRadio3">SILVER</label>
         </div>
         <div class="form-check form-check-inline">
@@ -220,36 +233,56 @@
         </div>
         </div>
         </div>
-        <div class="mb-3">
-            <label for="exampleFormControlTextarea1" class="form-label" ></label>
-            <textarea class="form-control w-100 cols-10" id="exampleFormControlTextarea1" rows="6" cols="30" placeholder="Additional Comments"></textarea>
-        </div>
 </div>
-        <div>
-            <button type="button" @click="newCard" class="btn mb-3 showDetailsBtn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Send</button>
+        <div class="mt-3">
+            <button type="button"  class="btn mb-3 showDetailsBtn" data-bs-toggle="modal" data-bs-target="#confirmCardModal">Send</button>
         </div>
-
         <!-- Modal -->
-        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal fade" id="confirmCardModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Card Application</h1>
+                    </div>
+                    <div  class="modal-body" v-if="cardType == 'CREDIT' && creditCards >= 3">
+                        <p>Sorry, a maximum number of 3 Credit cards is permitted</p>
+                    </div>
+                    <div  class="modal-body" v-else-if="cardType == 'DEBIT' && debitCards >= 3">
+                        <p>Sorry, a maximum number of 3 Debit cards is permitted</p>
+                    </div>
+                    <div v-else class="modal-body">
+                        You are about to apply for a  {{cardColor}} {{cardType}} card, are you sure?
+                    </div>
+                    <div v-if="cardType == 'DEBIT' && debitCards >= 3 || cardType == 'CREDIT' && creditCards >= 3"  class="modal-footer">
+                        <button type="button"  class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                    <div v-else class="modal-footer">
+                        <button type="button"  class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" data-bs-toggle="modal" data-bs-target="#completeCardModal"  class="btn showDetailsBtn" data-bs-dismiss="modal" >Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal fade" id="completeCardModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div></div>
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="staticBackdropLabel">Thank you!</h1>
                     </div>
                     <div class="modal-body">
-                        You are one step closer to your new MindHub Brothers card!
-                        <br>
-                        Your account manager with shortly contact you for the next steps.
+                        Your new card will be dispatched to you shortly!
                     </div>
                     <div class="modal-footer">
-                        <button type="button"  class="btn showDetailsBtn" data-bs-dismiss="modal">Close</button>
+                        <button type="button"  class="btn showDetailsBtn" data-bs-dismiss="modal" @click="newCard">Close</button>
                     </div>
                 </div>
             </div>
         </div>
 
     </form>
-
 
     </div>
 
