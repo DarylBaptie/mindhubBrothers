@@ -18,6 +18,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static com.mindhub.homebanking.models.CardType.CREDIT;
@@ -42,7 +43,7 @@ public class CardController {
     int cvv = random.nextInt(900) + 100;
 
 
-    String cardNumber = String.format("%04d", random.nextInt(9999)) + " " + String.format("%04d", random.nextInt(9999)) + " " + String.format("%04d", random.nextInt(9999)) + " " + String.format("%04d", random.nextInt(9999));
+    String cardNumber = String.format("%04d", random.nextInt(10000)) + " " + String.format("%04d", random.nextInt(10000)) + " " + String.format("%04d", random.nextInt(10000)) + " " + String.format("%04d", random.nextInt(10000));
 
 
 
@@ -56,7 +57,7 @@ public class CardController {
         return cardRepository.findById(id).map(CardDTO::new).orElse(null);
     }
 
-@RequestMapping(path="/api/clients/current/cards", method = RequestMethod.POST)
+    @RequestMapping(path="/api/clients/current/cards", method = RequestMethod.POST)
     public ResponseEntity<Object> createCard(
             Authentication authentication,
             @RequestParam String type,
@@ -78,6 +79,7 @@ public class CardController {
             return new ResponseEntity<>("Card color is missing", HttpStatus.FORBIDDEN);
         }
 
+//        if (!client.getCards().stream().filter(card -> card.getCardType().equals(CardType.valueOf(type)) && card.getCardColor().equals(CardColor.valueOf(color))).collect(Collectors.toSet()).isEmpty()) {}
 
         if (CardType.valueOf(type) == DEBIT && debitCards.count() >= 3) {
                 return new ResponseEntity<>("Maximum of three debit cards permitted per account", HttpStatus.FORBIDDEN);

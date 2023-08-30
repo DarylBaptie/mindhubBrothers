@@ -27,6 +27,9 @@ public class ClientController {
     @Autowired
     private AccountRepository accountRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     private String randomNumber() {
         String random = "VIN" + getRandomNumber(0, 99999999);
         return random;
@@ -63,9 +66,7 @@ public class ClientController {
 
 
 
-    @Autowired
 
-    private PasswordEncoder passwordEncoder;
 
 
 

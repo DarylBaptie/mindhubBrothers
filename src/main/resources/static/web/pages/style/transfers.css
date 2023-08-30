@@ -1,0 +1,66 @@
+
+html {
+height: 100%
+}
+
+body {
+padding:0 !important;
+margin:0 !important;
+box-sizing: border-box;
+height: 100% !important;
+background-color: #FFFFF0 !important;
+font-family: 'Playfair Display', serif !important;
+}
+
+.navbar, footer,#tableHeader, .dropdown-menu, .logOutBtn, .formContainer
+{
+background-color: #F7E7CE !important;
+}
+
+.submitBtn {
+background-color: #FFFFF0 !important;
+ }
+
+
+.nav-link:hover, .navbar-brand:hover {
+opacity: 1 !important;
+text-decoration: underline !important;
+transition: 0.3s !important;
+transform: scale(1.10) !important;
+}
+
+#logo {
+position:relative;
+top:-2px
+}
+
+.exit {
+color: black;}
+
+.exit:hover {
+transition: 0.2s !important;
+transform: scale(1.15) !important;
+cursor: pointer;
+}
+
+h1 {
+ font-style: italic;
+}
+
+#carouselPic {
+height: 20rem;
+opacity: 0.7;
+object-fit: cover;
+object-position: 60% 10%;
+}
+
+.socialsLinks {
+text-decoration: none !important;
+color: black !important;
+}
+
+.socialsLinks:hover {
+transition: 0.3s !important;
+transform: scale(1.10) !important;
+}
+

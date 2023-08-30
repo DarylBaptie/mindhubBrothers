@@ -21,17 +21,16 @@ import javax.servlet.http.HttpSession;
     public class WebAuthorization {
 
     @Bean
-
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
 
-                .antMatchers("/index.html", "/clientRegistration.html", "/static/images").permitAll()
+                .antMatchers("/index.html", "/clientRegistration.html", "/clientRegistration.css", "/clientRegistration.js", "/pages/images/**", "/images/**", "/index.js", "/indexStyles.css").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/clients").permitAll()
-                .antMatchers("/rest/**", "/admin/**", "/api/login", "/api/clients", "/h2-console").hasAuthority("ADMIN")
-                .antMatchers("/web/**", "/api/login", "/api/clients/current/cards").hasAuthority("CLIENT")
-                .antMatchers(HttpMethod.POST, "/api/clients/current/accounts", "/api/clients/current/cards").hasAuthority("CLIENT");
-
+                .antMatchers("/rest/**", "/admin/**", "/api/login", "/api/clients", "/h2-console", "/manager.html", "/manager.js").hasAuthority("ADMIN")
+                .antMatchers("/web/**", "/api/login", "/api/clients/current/cards", "/api/clients/current", "/api/accounts/**").hasAuthority("CLIENT")
+                .antMatchers(HttpMethod.POST, "/api/clients/current/accounts", "/api/clients/current/cards", "/api/clients/current/transactions").hasAuthority("CLIENT")
+                .anyRequest().denyAll();
 
 
         http.formLogin()
