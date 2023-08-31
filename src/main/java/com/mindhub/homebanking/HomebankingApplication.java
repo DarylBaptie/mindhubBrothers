@@ -56,11 +56,11 @@ public class HomebankingApplication {
 			Client darylBaptie = new Client("Daryl", "Baptie", "darylBaptie@gmail.com", passwordEncoder.encode("Hibs1875"));
 			Client adminAdmin = new Client("Admin", "admin", "admin@mindhub.com", passwordEncoder.encode("admin2006"));
 			Transaction transaction1 = new Transaction(TransactionType.CREDIT, this.localDateTime, 3000, "salary"  );
-			Transaction transaction2 = new Transaction(TransactionType.DEBIT, this.localDateTime, -80, "supermarket"  );
-			Transaction transaction3 = new Transaction(TransactionType.DEBIT, this.localDateTime, -25, "Energy payment"  );
+			Transaction transaction2 = new Transaction(TransactionType.DEBIT, this.localDateTime, 80, "supermarket"  );
+			Transaction transaction3 = new Transaction(TransactionType.DEBIT, this.localDateTime, 25, "Energy payment"  );
 			Transaction transaction4 = new Transaction(TransactionType.CREDIT, this.localDateTime, 2250, "salary"  );
-			Transaction transaction5 = new Transaction(TransactionType.DEBIT, this.localDateTime, -35.75, "Gas Station"  );
-			Transaction transaction6 = new Transaction(TransactionType.DEBIT, this.localDateTime, -125, "Student loan"  );
+			Transaction transaction5 = new Transaction(TransactionType.DEBIT, this.localDateTime, 35.75, "Gas Station"  );
+			Transaction transaction6 = new Transaction(TransactionType.DEBIT, this.localDateTime, 125, "Student loan"  );
 			Loan mortgage = new Loan("Mortgage", 500000, this.payments1);
 			Loan personal = new Loan("Personal", 100000, this.payments2);
 			Loan car = new Loan("Car", 300000, this.payments3);

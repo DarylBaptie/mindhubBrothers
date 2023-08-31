@@ -7,8 +7,12 @@ padding:0 !important;
 margin:0 !important;
 box-sizing: border-box;
 height: 100% !important;
-background-color: #FFFFF0 !important;
+background-color: #F7E7CE !important;
 font-family: 'Playfair Display', serif !important;
+}
+
+form {
+background-color: #FFFFF0  !important;
 }
 
 

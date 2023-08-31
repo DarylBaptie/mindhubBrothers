@@ -11,7 +11,7 @@ background-color: #FFFFF0 !important;
 font-family: 'Playfair Display', serif !important;
 }
 
-.navbar, footer, #tableHeader, .dropdown-menu, .showBalanceBtn, .logOutBtn {
+.navbar, footer, #tableHeader, .dropdown-menu, .showBalanceBtn, .logOutBtn, #confirmAccountBtn {
 background-color: #F7E7CE !important;
 }
 
@@ -202,7 +202,7 @@ height: 10rem;}
 }
 
 @media only screen and (min-width:768px) {
-.showBalanceBtn {
+.showBalanceBtn, {
 margin-left: 1rem;
 }
 .otherAccount {

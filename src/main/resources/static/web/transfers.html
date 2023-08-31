@@ -37,16 +37,19 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="./pages/home">Home</a>
+                            <a class="nav-link" aria-current="page" href="home.html">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="accounts.html">Accounts</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">Cards</a>
+                            <a class="nav-link" href="cards.html">Cards</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="./pages/loans">Loans</a>
+                            <a class="nav-link" href="loans.html">Loans</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">Transfers</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
@@ -62,7 +65,7 @@
                             </ul>
                         </li>
                     </ul>
-                    <a type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <a type="button" data-bs-toggle="modal" data-bs-target="#logoutModal">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                              class="bi bi-box-arrow-right exit" viewBox="0 0 16 16">
                             <path fill-rule="evenodd"
@@ -76,46 +79,91 @@
             </div>
         </nav>
     </header>
+    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure you want to log out?</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to log out? See you next time!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn logOutBtn" @click="logout">Logout</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <main>
         <div class="container-fluid d-flex flex-column p-0 shadow-lg">
             <div class="card text-bg-dark rounded-0 border-0 mb-4 mt-4">
                 <img src="pages/images/transfers.jpg" class="card-img rounded-0 border-0"
-                     id="carouselPic" alt="...">
+                     id="carouselPic" alt="welcome picture">
                 <div class="card-img-overlay">
                     <h1 class=" pt-5" id="welcomeText">Transfers</h1>
                 </div>
             </div>
 
+            <h2 class="text-center mb-3 display-3">Make a Transfer</h2>
 
-            <h2 class="text-center mb-2 display-3">Make a Transfer</h2>
-<div class="container formContainer d-flex col-7 text-center align-items-center justify-content-center my-3 rounded-3">
-    <form class="w-50 py-3">
-        <h4 class="mb-3">Transfer Details</h4>
-        <div class="mb-3">
-            <label for="amount" class="form-label">Amount</label>
-            <input type="text" v-model="amount" class="form-control" id="amount" aria-describedby="emailHelp">
+<div class="d-flex flex-wrap container h-100 mt-3 mb-5 col-11 col-lg-10">
+<div class="container flex-column formContainer d-flex col-12 col-md-6 text-center align-items-center justify-content-center rounded-start ">
+    <h4 class="my-3">Transfer Details</h4>
+        <div>
+        <div class="form-check mb-2">
+            <input v-model="transferDestination" checked="checked" class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="personal">
+            <label class="form-check-label" for="inlineRadio1">Transfer to own account</label>
+        </div>
+        <div class="form-check">
+            <input v-model="transferDestination"  class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="otherPerson">
+            <label class="form-check-label" for="inlineRadio2">Transfer to other person</label>
+        </div>
+        </div>
+
+    <form class="w-75 py-3">
+        <label for="amount" class="form-label">Amount</label>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text rounded-0">$</span>
+            </div>
+            <input type="text" v-model="amount" required class="form-control" id="amount" aria-describedby="emailHelp">
         </div>
         <div class="mb-3">
             <label for="description" class="form-label">Description</label>
-            <input type="text" v-model="description" class="form-control" id="description" aria-describedby="emailHelp">
+            <input type="text" v-model="description" required class="form-control" id="description" aria-describedby="emailHelp">
         </div>
         <div class="mb-3">
             <label for="accountNumber" class="form-label">Account number</label>
             <select class="form-select" v-model="accountNumber" aria-label="Default select example" id="accountNumber">
                 <template v-for="account of accounts">
-                    <option :value="account.number">{{account.number}}: ${{account.balance}}</option>
+                    <option :value="account.number">{{account.number}} (Balance: $<span>{{account.balance}})</span></option>
                 </template>
             </select>
         </div>
-        <div class="mb-3">
+        <div v-if="transferDestination == 'otherPerson'" class="mb-3">
             <label for="destinationAccount" class="form-label">Destination</label>
-            <input type="text" v-model="destinationAccount" class="form-control" id="destinationAccount" aria-describedby="emailHelp">
+            <input type="text" v-model="destinationAccount" class="form-control" id="destinationAccount" aria-describedby="emailHelp" required>
         </div>
-        <button type="button" class="btn submitBtn" data-bs-toggle="modal" data-bs-target="#exampleModal">Submit</button>
+        <div v-else class="mb-3">
+            <label for="destinationAccount" class="form-label">Destination</label>
+            <select class="form-select" v-model="destinationAccount" aria-label="Default select example" id="destinationAccount">
+                <template v-for="account of accounts">
+                    <template v-if="account.number != accountNumber">
+                    <option :value="account.number">{{account.number}} (Balance: ${{account.balance}})</option>
+                    </template>
+                </template>
+            </select>
+        </div>
+        <button type="button" class="btn submitBtn shadow" data-bs-toggle="modal" data-bs-target="#transferOverviewModal">Submit</button>
     </form>
 </div>
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div id="div2" class="col-12 col-md-6 rounded-end"></div>
+</div>
+
+            <div class="modal fade" id="transferOverviewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -130,13 +178,45 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn submitBtn" @click="transfer">Confirm</button>
+                            <button type="button" class="btn submitBtn" @click="transfer" data-bs-toggle="modal" data-bs-target="#FinalTransferModal">Confirm</button>
                         </div>
                     </div>
                 </div>
             </div>
 
+            <div class="modal fade" id="FinalTransferModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <template v-if="showAlert == true">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Please review transfer</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            {{errorMessage}}
+                        </div>
+                        </template>
+                        <template v-else>
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Transfer successful</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Your transfer has been processed successfully
+                            </div>
+                        </template>
+                        <div class="modal-footer">
+                            <button v-if="showAlert == true" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button v-else type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="reloadPage">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+    </div>
     </main>
+
     <footer class="d-flex flex-column flex-md-row justify-content-around align-items-center py-3">
         <p class="mb-0" id="copyright">@All rights reserved 2023</p>
         <div class="d-flex flex-row gap-5">

@@ -11,7 +11,7 @@ background-color: #FFFFF0 !important;
 font-family: 'Playfair Display', serif !important;
 }
 
-.navbar, footer,#tableHeader, .dropdown-menu, .showDetailsBtn, .logOutBtn {
+.navbar, footer,#tableHeader, .dropdown-menu, .showDetailsBtn, #applyCardBtn, #confirmCardBtn, #reloadPageBtn .logOutBtn {
 background-color: #F7E7CE !important;
 }
 
@@ -75,11 +75,12 @@ object-position: 60% 10%;
 
  .cardGold {
 background-image: linear-gradient(to right top, #f9f295, #E0AA3E, #dfbd69, #EDC967, #DF8D69);
-color: #f8f9fa !important;
+color: #343434;
  }
 
  .cardSilver {
-background-image: linear-gradient(to right top, #A8A9AD,#D7D7D8, #C0C0C3, #CBCCCD,#B4B5B8 );
+background-image: linear-gradient(to right top, #A8A9AD,#D7D7D8, #C0C0C3, #A8A9AD,#D7D7D8 );
+color  : #3B3C36;
  }
 
 .number span{
@@ -88,15 +89,13 @@ background-image: linear-gradient(to right top, #A8A9AD,#D7D7D8, #C0C0C3, #CBCCC
     font-weight:600;
 }
 
- .cardholder , .expires{
+ .cardholder , .cardExpiry{
      font-weight:600;
      font-size:1rem;
  }
 
- .name, .date{
-
+ .cardName, .cardExpiryDate {
      font-size:1rem;
-
  }
 
  .card-border{
@@ -114,12 +113,15 @@ background-image: linear-gradient(to right top, #A8A9AD,#D7D7D8, #C0C0C3, #CBCCC
 }
 
 .cardBorderGold {
-background-image: linear-gradient(to right top, #EDC967, #dfbd69, #EDC967, #F9F295, #DF8D69)
+background-image: linear-gradient(to right top, #EDC967, #dfbd69, #EDC967, #F9F295, #DF8D69);
+color: black;
 }
 
 
 .cardBorderSilver {
-background-image: linear-gradient(to right top, #E3E3E3, #D7D7D8, #CBCCCD, #B4B5B8, #A8A9AD)
+background-image: linear-gradient(to right top, #E3E3E3, #D7D7D8, #CBCCCD, #B4B5B8, #A8A9AD);
+color: black;
+
 }
 
 .newCard {

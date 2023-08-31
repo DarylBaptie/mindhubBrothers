@@ -80,6 +80,10 @@ public class TransactionController {
         return new ResponseEntity<>("Destination account number is missing", HttpStatus.FORBIDDEN);
     }
 
+    if(Double.valueOf(amount) <= 0 ) {
+        return new ResponseEntity<>("Amount is not valid", HttpStatus.FORBIDDEN);
+    }
+
     if(accountNumberOrigin.equals(accountNumberDestination)) {
         return new ResponseEntity<>("Destination and Origin account numbers cannot be the same", HttpStatus.FORBIDDEN);
     }
@@ -103,7 +107,7 @@ public class TransactionController {
 
 
 
-    Transaction transactionDebit = new Transaction(DEBIT, LocalDateTime.now(), Double.valueOf(amount), description);
+    Transaction transactionDebit = new Transaction(DEBIT, LocalDateTime.now(), (Double.valueOf(amount) * -1), description);
     Transaction transactionCredit = new Transaction(CREDIT, LocalDateTime.now(), Double.valueOf(amount), description);
 
     originAccount.setBalance(originAccount.getBalance() - Double.valueOf(amount));

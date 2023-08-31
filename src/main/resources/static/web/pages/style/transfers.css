@@ -12,14 +12,12 @@ background-color: #FFFFF0 !important;
 font-family: 'Playfair Display', serif !important;
 }
 
-.navbar, footer,#tableHeader, .dropdown-menu, .logOutBtn, .formContainer
+.navbar, footer,#tableHeader, .dropdown-menu, .logOutBtn, .formContainer, .submitBtn
 {
 background-color: #F7E7CE !important;
 }
 
-.submitBtn {
-background-color: #FFFFF0 !important;
- }
+
 
 
 .nav-link:hover, .navbar-brand:hover {
@@ -43,6 +41,10 @@ transform: scale(1.15) !important;
 cursor: pointer;
 }
 
+.modal-content {
+background-color: #FFFFF0 !important;
+}
+
 h1 {
  font-style: italic;
 }
@@ -54,6 +56,12 @@ object-fit: cover;
 object-position: 60% 10%;
 }
 
+#div2 {
+  background-image: url('../images/transfers2.jpg') !important;
+  background-size: 100% 100%;
+  opacity: 0.8;
+ }
+
 .socialsLinks {
 text-decoration: none !important;
 color: black !important;
@@ -64,3 +72,26 @@ transition: 0.3s !important;
 transform: scale(1.10) !important;
 }
 
+ @media only screen and (min-width:320px) and (max-width:767px)  {
+
+  #copyright{
+  padding-bottom: 1rem !important;
+  }
+
+  #carouselPic {
+  height: 10rem;
+  object-position: 40% 5%;
+  margin-top: 1rem;
+  }
+
+  }
+
+
+@media only screen and (min-width:768px) {
+  #welcomeText {
+     margin-left: 2rem !important;
+    }
+
+}
+
+}

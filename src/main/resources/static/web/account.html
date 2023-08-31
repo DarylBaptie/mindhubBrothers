@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml"  class="h-100">
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" class="h-100">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -20,7 +20,6 @@
 </head>
 <body>
 <div id="app">
-
 
     <header>
         <nav class="navbar fixed-top navbar-expand-lg">
@@ -45,27 +44,33 @@
                             <a class="nav-link" href="accounts.html">Accounts</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="http://localhost:8080/web/cards.html">Cards</a>
+                            <a class="nav-link" href="cards.html">Cards</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="./pages/loans">Loans</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="transfers.html">Transfers</a>
+                        </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown"
+                               aria-expanded="false">
                                 Transactions
                             </a>
                             <ul class="dropdown-menu">
                                 <template v-for="client of client">
                                     <template v-for="account of client.accounts">
                                         <template v-if="account.id != accountNumber">
-                                        <li><a class="dropdown-item" v-bind:href="'http://localhost:8080/web/account.html?id='+account.id">{{account.number}}</a></li>
+                                            <li><a class="dropdown-item"
+                                                   v-bind:href="'http://localhost:8080/web/account.html?id='+account.id">{{account.number}}</a>
+                                            </li>
                                         </template>
                                     </template>
                                 </template>
                             </ul>
                         </li>
                     </ul>
-                    <a type="button"  data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <a type="button" data-bs-toggle="modal" data-bs-target="#logoutModal">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                              class="bi bi-box-arrow-right exit" viewBox="0 0 16 16">
                             <path fill-rule="evenodd"
@@ -78,7 +83,7 @@
             </div>
         </nav>
     </header>
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -100,7 +105,7 @@
         <div class="container-fluid d-flex flex-column p-0 shadow-lg">
             <div class="card text-bg-dark rounded-0 border-0 mb-4 mt-4">
                 <img src="pages/images/transaction.jpg" class="card-img rounded-0 border-0"
-                     id="carouselPic" alt="...">
+                     id="carouselPic" alt="welcome picture">
                 <div class="card-img-overlay">
                     <template v-for="account in data">
                         <h1 class=" pt-5" id="welcomeText">Transactions: {{account.number}}</h1>
@@ -120,7 +125,8 @@
                                     <div class="card-body">
                                         <h5 class="card-title">Account: {{account.number}}</h5>
                                         <p v-if="!show" class="card-text pt-2">Balance: $****</p>
-                                        <p v-else class="card-text pt-2">Balance: <span class="fs-4">{{account.formattedBalance}}</span> </p>
+                                        <p v-else class="card-text pt-2">Balance: <span class="fs-4">{{account.formattedBalance}}</span>
+                                        </p>
                                         <p class="card-text rounded text-light"><small>Account Creation Date:
                                             {{account.newDate}}</small></p>
                                         <a href="#" class="stretched-link"></a>
@@ -130,11 +136,13 @@
                         </div>
                     </template>
                 </div>
-                <div v-if="transactions.length == 0" class="container g-0 d-flex col-md-8 col-lg-6 align-items-center justify-content-center">
+                <div v-if="transactions.length == 0"
+                     class="container g-0 d-flex col-md-8 col-lg-6 align-items-center justify-content-center">
                     <h3 class="d-flex text-center">No transactions available</h3>
                 </div>
 
-                <div v-else class="container tableContainer g-0 d-flex table-responsive col-md-8 col-lg-6  justify-content-md-center">
+                <div v-else
+                     class="container tableContainer g-0 d-flex table-responsive col-md-8 col-lg-6 justify-content-md-center">
                     <table class="align-middle d-flex table table-bordered text-center align-items-center justify-content-center justify-content-md-center w-100 d-block d-md-table">
                         <tbody>
                         <tr id="tableHeader">
@@ -144,69 +152,71 @@
                             <td class="fw-semibold p-0">Description</td>
                         </tr>
 
-                            <template v-for="transaction of transactions">
-                                <tr :class="transaction.type == 'CREDIT' ? 'creditRow' : 'debitRow'">
-                                    <td :class="transaction.type == 'CREDIT' ? 'creditColor' : 'debitColor'">
-                                        {{transaction.type}}
-                                    </td>
-                                    <td>{{transaction.formattedAmount}}</td>
-                                    <td>{{transaction.newDate}}</td>
-                                    <td>{{transaction.description}}</td>
-                                </tr>
-                            </template>
+                        <template v-for="transaction of transactions">
+                            <tr :class="transaction.type == 'CREDIT' ? 'creditRow' : 'debitRow'">
+                                <td :class="transaction.type == 'CREDIT' ? 'creditColor' : 'debitColor'">
+                                    {{transaction.type}}
+                                </td>
+                                <td>{{transaction.formattedAmount}}</td>
+                                <td>{{transaction.newDate}}</td>
+                                <td>{{transaction.description}}</td>
+                            </tr>
+                        </template>
                         </tbody>
                     </table>
                 </div>
             </div>
-            <div v-if="accounts.length <= 1">
-             </div>
-            <div v-else>
-            <h3 class="text-center mb-5 display-4">Other Accounts</h3>
-            <div class="d-flex flex-wrap mb-5 gap-2 justify-content-center">
-                <template v-for="client of client">
-                    <template v-for="account of client.accounts">
-                        <template v-if="account.id != accountNumber">
-                            <div class=" gap-2 otherAccount d-flex flex-wrap justify-content-center card mb-3 cardAccount rounded text-light col-8 col-md-4">
-                                <div class="row g-0">
-                                    <div class="col-md-12">
-                                        <div class="card-body">
-                                            <h5 class="card-title">Account: {{account.number}}</h5>
-                                            <p v-if="!show" class="card-text pt-2">Balance: $****</p>
-                                            <p v-else class="card-text pt-2">Balance: $<span class="fs-4">{{account.balance}}</span> </p>
-                                            <p class="card-text roFunded text-light"><small>Account Creation Date:
-                                                {{account.newCreationDate}}</small></p>
-                                            <a v-bind:href="'http://localhost:8080/web/account.html?id='+account.id" class="stretched-link"></a>
+            <div v-if="accounts.length > 1">
+                <h3 class="text-center mb-5 display-4">Other Accounts</h3>
+                <div class="d-flex flex-wrap mb-5 gap-2 justify-content-center">
+                    <template v-for="client of client">
+                        <template v-for="account of client.accounts">
+                            <template v-if="account.id != accountNumber">
+                                <div class=" gap-2 otherAccount d-flex flex-wrap justify-content-center card mb-3 cardAccount rounded text-light col-8 col-md-4">
+                                    <div class="row g-0">
+                                        <div class="col-md-12">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Account: {{account.number}}</h5>
+                                                <p v-if="!show" class="card-text pt-2">Balance: $****</p>
+                                                <p v-else class="card-text pt-2">Balance: $<span class="fs-4">{{account.balance}}</span>
+                                                </p>
+                                                <p class="card-text roFunded text-light"><small>Account Creation Date:
+                                                    {{account.newCreationDate}}</small></p>
+                                                <a v-bind:href="'http://localhost:8080/web/account.html?id='+account.id"
+                                                   class="stretched-link"></a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </template>
                         </template>
                     </template>
-                </template>
-            </div>
+                </div>
             </div>
 
             <div>
                 <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img src="pages/images/family1.jpg" class="d-block w-100 carouselImg1" alt="...">
+                            <img src="pages/images/family1.jpg" class="d-block w-100 carouselImg1"
+                                 alt="picture of couple">
                         </div>
                         <div class="carousel-item">
-                            <img src="pages/images/family2.jpg" class="d-block w-100 carouselImg2" alt="...">
+                            <img src="pages/images/family2.jpg" class="d-block w-100 carouselImg2"
+                                 alt="picture of family">
                         </div>
                         <div class="carousel-item">
-                            <img src="pages/images/family3.jpg" class="d-block w-100 carouselImg3" alt="...">
+                            <img src="pages/images/family3.jpg" class="d-block w-100 carouselImg3"
+                                 alt="picture of family">
                         </div>
                     </div>
                 </div>
-
 
                 <h5 class="text-center mt-3 display-5">Quick Links</h5>
 
                 <div class="container d-flex flex-wrap align-items-center justify-content-evenly my-4">
                     <div class="d-flex flex-column col-10 col-md-6 col-lg-4 align-items-center justify-content-center">
-                        <div class="card mb-3 rounded quickLinkCard col-10 " id="investment">
+                        <div class="card mb-3 rounded quickLinkCard col-10" id="investment">
                             <div class="row g-0">
                                 <div class="col-md-12">
                                     <div class="card-body">
@@ -229,14 +239,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="d-flex flex-column col-10 col-md-6 col-lg-4  align-items-center justify-content-center">
+                    <div class="d-flex flex-column col-10 col-md-6 col-lg-4 align-items-center justify-content-center">
                         <div class="card mb-3 rounded quickLinkCard col-10" id="transfer">
                             <div class="row g-0">
                                 <div class="col-md-12">
                                     <div class="card-body">
                                         <h4 class="card-title">Transfers</h4>
                                         <p class="card-text pt-2">Instant transfers around the world</p>
-                                        <a href="./pages/transfers" class="stretched-link"></a>
+                                        <a href="transfers.html" class="stretched-link"></a>
                                     </div>
                                 </div>
                             </div>
@@ -246,12 +256,15 @@
                                 <div class="col-md-12">
                                     <div class="card-body">
                                         <h4 class="card-title">Open an Account</h4>
-                                        <p class="card-text pt-2">Current and Savings Accounts for you and your family</p>
+                                        <p class="card-text pt-2">Current and Savings Accounts for you and your
+                                            family</p>
                                         <template v-if="accounts.length >= 3">
-                                            <a href="#" class="stretched-link"  type="button" data-bs-toggle="modal" data-bs-target="#noAccountPossibleModal" ></a>
+                                            <a href="#" class="stretched-link" type="button" data-bs-toggle="modal"
+                                               data-bs-target="#noAccountPossibleModal"></a>
                                         </template>
                                         <template v-else>
-                                            <a href="#" class="stretched-link"  type="button" data-bs-toggle="modal" data-bs-target="#accountModal" ></a>
+                                            <a href="#" class="stretched-link" type="button" data-bs-toggle="modal"
+                                               data-bs-target="#accountModal"></a>
                                         </template>
                                     </div>
                                 </div>
@@ -262,7 +275,8 @@
             </div>
         </div>
 
-        <div class="modal fade" id="noAccountPossibleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="noAccountPossibleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -287,17 +301,19 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        Are you sure you want to open a new account? Click 'Confirm' and have immediate access to your new account!
+                        Are you sure you want to open a new account? Click 'Confirm' and have immediate access to your
+                        new account!
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn showBalanceBtn border" @click="newAccount">Confirm</button>
+                        <button type="button" class="btn border" id="confirmAccountBtn" @click="newAccount">Confirm
+                        </button>
                     </div>
                 </div>
             </div>
-
-
+        </div>
     </main>
+
     <footer class="d-flex flex-column flex-md-row justify-content-around align-items-center py-3">
         <p class="mb-0" id="copyright">@All rights reserved 2023</p>
         <div class="d-flex flex-row gap-5">
@@ -321,8 +337,6 @@
             </a>
         </div>
     </footer>
-
-
 </div>
 
 
