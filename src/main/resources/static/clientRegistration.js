@@ -7,6 +7,8 @@ createApp({
         lastName: "",
         email: "",
         password: "",
+        errorMessage: "",
+        showAlert: false,
     };
   },
   methods: {
@@ -22,8 +24,10 @@ createApp({
                     window.location = "/web/accounts.html";
                      })
         })
-        .catch(function (error) {
-          alert("Email already registered or incomplete data. Please login or complete fields")
+        .catch((error) => {
+        console.log(error);
+        this.errorMessage = error.response.data
+        this.showAlert = true
         });
     }
   },

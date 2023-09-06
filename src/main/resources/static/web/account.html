@@ -22,7 +22,7 @@
 <div id="app">
 
     <header>
-        <nav class="navbar fixed-top navbar-expand-lg">
+        <nav class="navbar fixed-top navbar-expand-lg lightBg">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">Mindhub Brothers
                     <svg id="logo" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -47,7 +47,7 @@
                             <a class="nav-link" href="cards.html">Cards</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="./pages/loans">Loans</a>
+                            <a class="nav-link" href="loan-application.html">Loans</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="transfers.html">Transfers</a>
@@ -57,9 +57,8 @@
                                aria-expanded="false">
                                 Transactions
                             </a>
-                            <ul class="dropdown-menu">
-                                <template v-for="client of client">
-                                    <template v-for="account of client.accounts">
+                            <ul class="dropdown-menu lightBg">
+                                    <template v-for="account of accounts">
                                         <template v-if="account.id != accountNumber">
                                             <li><a class="dropdown-item"
                                                    v-bind:href="'http://localhost:8080/web/account.html?id='+account.id">{{account.number}}</a>
@@ -95,7 +94,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn logOutBtn" @click="logout">Logout</button>
+                    <button type="button" class="btn logOutBtn lightBg" @click="logout">Logout</button>
                 </div>
             </div>
         </div>
@@ -114,7 +113,7 @@
             </div>
             <h2 class="text-center mb-3 display-3">Account Resume</h2>
             <div class="d-flex align-items-center justify-content-center justify-content-md-start mb-3 ">
-                <button @click="showBalance" class="btn showBalanceBtn">Show/Hide Balance</button>
+                <button @click="showBalance" class="btn showBalanceBtn lightBg">Show/Hide Balance</button>
             </div>
             <div class="d-flex flex-wrap mb-5">
                 <div class="d-flex justify-content-center align-items-center col-12 col-md-4 col-lg-5 col-xl-4">
@@ -145,7 +144,7 @@
                      class="container tableContainer g-0 d-flex table-responsive col-md-8 col-lg-6 justify-content-md-center">
                     <table class="align-middle d-flex table table-bordered text-center align-items-center justify-content-center justify-content-md-center w-100 d-block d-md-table">
                         <tbody>
-                        <tr id="tableHeader">
+                        <tr id="tableHeader" class="lightBg">
                             <td class="fw-semibold p-0">Type</td>
                             <td class="fw-semibold p-0">Amount ($)</td>
                             <td class="fw-semibold p-0">Date</td>
@@ -178,7 +177,7 @@
                                             <div class="card-body">
                                                 <h5 class="card-title">Account: {{account.number}}</h5>
                                                 <p v-if="!show" class="card-text pt-2">Balance: $****</p>
-                                                <p v-else class="card-text pt-2">Balance: $<span class="fs-4">{{account.balance}}</span>
+                                                <p v-else class="card-text pt-2">Balance: <span class="fs-4">{{account.formattedBalance}}</span>
                                                 </p>
                                                 <p class="card-text roFunded text-light"><small>Account Creation Date:
                                                     {{account.newCreationDate}}</small></p>
@@ -211,7 +210,6 @@
                         </div>
                     </div>
                 </div>
-
                 <h5 class="text-center mt-3 display-5">Quick Links</h5>
 
                 <div class="container d-flex flex-wrap align-items-center justify-content-evenly my-4">
@@ -306,7 +304,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn border" id="confirmAccountBtn" @click="newAccount">Confirm
+                        <button type="button" class="btn border lightBg" id="confirmAccountBtn" @click="newAccount">Confirm
                         </button>
                     </div>
                 </div>
@@ -314,7 +312,7 @@
         </div>
     </main>
 
-    <footer class="d-flex flex-column flex-md-row justify-content-around align-items-center py-3">
+    <footer class="d-flex flex-column flex-md-row justify-content-around align-items-center py-3 lightBg">
         <p class="mb-0" id="copyright">@All rights reserved 2023</p>
         <div class="d-flex flex-row gap-5">
             <a href="https://api.whatsapp.com/send?phone=15551234567">

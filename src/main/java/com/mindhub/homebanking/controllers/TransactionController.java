@@ -1,15 +1,12 @@
 package com.mindhub.homebanking.controllers;
 
 
-import com.mindhub.homebanking.dtos.AccountDTO;
 import com.mindhub.homebanking.dtos.TransactionDTO;
 import com.mindhub.homebanking.models.Account;
-import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.models.Transaction;
-import com.mindhub.homebanking.models.TransactionType;
-import com.mindhub.homebanking.repositories.AccountRepository;
-import com.mindhub.homebanking.repositories.ClientRepository;
-import com.mindhub.homebanking.repositories.TransactionRepository;
+import com.mindhub.homebanking.services.AccountService;
+import com.mindhub.homebanking.services.ClientService;
+import com.mindhub.homebanking.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,23 +26,23 @@ import static java.util.stream.Collectors.toList;
 public class TransactionController {
 
     @Autowired
-    private TransactionRepository transactionRepository;
+    private TransactionService transactionService;
 
     @Autowired
-    private AccountRepository accountRepository;
+    private AccountService accountService;
 
     @Autowired
-    private ClientRepository clientRepository;
+    private ClientService clientService;
 
     @RequestMapping("/api/transactions")
     public List<TransactionDTO> getTransactions() {
-        return transactionRepository.findAll().stream().map(TransactionDTO::new).collect(toList());
+        return transactionService.getTransactionsDTO();
 
     }
 
     @RequestMapping("/api/transactions/{id}")
     public TransactionDTO getTransaction(@PathVariable Long id) {
-        return transactionRepository.findById(id).map(TransactionDTO::new).orElse(null);
+        return transactionService.getTransactionDTO(id);
     }
 
 
@@ -53,24 +50,26 @@ public class TransactionController {
     @RequestMapping(path = "/api/clients/current/transactions", method = RequestMethod.POST)
     public ResponseEntity<Object> createTransaction(
         Authentication authentication,
-        @RequestParam String amount,
+        @RequestParam double amount,
         @RequestParam String description,
         @RequestParam String accountNumberOrigin,
         @RequestParam String accountNumberDestination
 
 ) {
 
-    Account originAccount = accountRepository.findByNumber(accountNumberOrigin);
-    Account destinationAccount = accountRepository.findByNumber(accountNumberDestination);
+    Account originAccount = accountService.findAccountByNumber(accountNumberOrigin);
+    Account destinationAccount = accountService.findAccountByNumber(accountNumberDestination);
+
+
+        if(amount <= 0 ) {
+            return new ResponseEntity<>("Amount is not valid", HttpStatus.FORBIDDEN);
+        }
 
 
         if(description.isBlank()) {
             return new ResponseEntity<>("Description is missing", HttpStatus.FORBIDDEN);
         }
 
-        if(amount.isBlank()) {
-            return new ResponseEntity<>("Amount is missing", HttpStatus.FORBIDDEN);
-        }
 
         if(accountNumberOrigin.isBlank()) {
             return new ResponseEntity<>("Origin account number is missing", HttpStatus.FORBIDDEN);
@@ -80,43 +79,40 @@ public class TransactionController {
         return new ResponseEntity<>("Destination account number is missing", HttpStatus.FORBIDDEN);
     }
 
-    if(Double.valueOf(amount) <= 0 ) {
-        return new ResponseEntity<>("Amount is not valid", HttpStatus.FORBIDDEN);
-    }
 
     if(accountNumberOrigin.equals(accountNumberDestination)) {
         return new ResponseEntity<>("Destination and Origin account numbers cannot be the same", HttpStatus.FORBIDDEN);
     }
 
 
-    if(accountRepository.findByNumber(accountNumberOrigin) == null) {
+    if(accountService.findAccountByNumber(accountNumberOrigin) == null) {
         return new ResponseEntity<>("Provided origin account number does not exist", HttpStatus.FORBIDDEN);
     }
 
-    if(accountRepository.findByNumber(accountNumberOrigin).getBalance() < Double.valueOf(amount)) {
+    if(originAccount.getBalance() < amount) {
         return new ResponseEntity<>("Insufficient funds for this transaction", HttpStatus.FORBIDDEN);
     }
 
-    if(!clientRepository.findByEmail(authentication.getName()).getAccounts().contains(originAccount)) {
+    if(!clientService.findClientByEmail(authentication.getName()).getAccounts().contains(originAccount)) {
         return new ResponseEntity<>("Account does not belong to client.", HttpStatus.FORBIDDEN);
     }
 
-    if(accountRepository.findByNumber(accountNumberDestination) == null) {
+    if(accountService.findAccountByNumber(accountNumberDestination) == null) {
         return new ResponseEntity<>("Provided destination account number does not exist", HttpStatus.FORBIDDEN);
     }
 
 
 
-    Transaction transactionDebit = new Transaction(DEBIT, LocalDateTime.now(), (Double.valueOf(amount) * -1), description);
-    Transaction transactionCredit = new Transaction(CREDIT, LocalDateTime.now(), Double.valueOf(amount), description);
+    Transaction transactionDebit = new Transaction(DEBIT, LocalDateTime.now(), (amount * -1), description + " " + destinationAccount.getNumber());
+    Transaction transactionCredit = new Transaction(CREDIT, LocalDateTime.now(), amount, description + " " + originAccount.getNumber());
 
-    originAccount.setBalance(originAccount.getBalance() - Double.valueOf(amount));
-    destinationAccount.setBalance(destinationAccount.getBalance() + Double.valueOf(amount));
+    originAccount.setBalance(originAccount.getBalance() - amount);
+    destinationAccount.setBalance(destinationAccount.getBalance() + amount);
 
     originAccount.addTransaction(transactionDebit);
     destinationAccount.addTransaction(transactionCredit);
-    transactionRepository.save(transactionDebit);
-    transactionRepository.save(transactionCredit);
+    transactionService.saveTransaction(transactionDebit);
+    transactionService.saveTransaction(transactionCredit);
 
     return new ResponseEntity<>("Transaction successful", HttpStatus.CREATED);
 

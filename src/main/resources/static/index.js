@@ -5,6 +5,7 @@ createApp({
     return {
         email: "",
         password: "",
+        showAlert: false,
     };
   },
   methods: {
@@ -20,12 +21,10 @@ createApp({
             window.location = "/web/accounts.html";
           }
         })
-        .catch(function (error) {
+        .catch((error) => {
           console.log(error);
-          alert("Email or username incorrect, please re-enter your client details")
+          this.showAlert = true
         });
-        this.email = ""
-        this.password = ""
     },
   },
 }).mount("#app");

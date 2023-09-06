@@ -31,7 +31,7 @@
                     </svg>
                 </div>
 
-                <form class="col-6 mb-3 mt-3 p-3 rounded" @submit="clientLogin">
+                <form class="col-10 col-md-10 col-lg-7 mb-3 mt-3 p-3 rounded" @submit="clientLogin">
                     <h5 class="text-decoration-underline">Login</h5>
                     <div class="mb-3">
                         <label for="emailAddress" class="form-label">Email address</label>
@@ -41,6 +41,9 @@
                     <div class="mb-3">
                         <label for="passwordInput" class="form-label">Password</label>
                         <input type="password" v-model="password" class="form-control" id="passwordInput">
+                    </div>
+                    <div class="alert alert-danger" role="alert" v-if="showAlert == true">
+                        Incorrect username or password, please try again.
                     </div>
                     <div class="text-center pt-3">
                         <button type="submit" class="btn text-center shadow" id="loginBtn">Login</button>

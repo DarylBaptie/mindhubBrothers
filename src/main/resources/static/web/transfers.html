@@ -21,7 +21,7 @@
 <body  class="d-flex flex-column h-100">
 <div id="app">
     <header>
-        <nav class="navbar fixed-top navbar-expand-lg">
+        <nav class="navbar fixed-top navbar-expand-lg lightBg">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">Mindhub Brothers
                     <svg id="logo" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -46,7 +46,7 @@
                             <a class="nav-link" href="cards.html">Cards</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="loans.html">Loans</a>
+                            <a class="nav-link" href="loan-application.html">Loans</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" href="#">Transfers</a>
@@ -56,7 +56,7 @@
                                aria-expanded="false">
                                 Transactions
                             </a>
-                            <ul class="dropdown-menu">
+                            <ul class="dropdown-menu lightBg">
                                 <template v-for="account of accounts">
                                     <li><a class="dropdown-item"
                                            v-bind:href="'http://localhost:8080/web/account.html?id='+account.id">{{account.number}}</a>
@@ -91,7 +91,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn logOutBtn" @click="logout">Logout</button>
+                    <button type="button" class="btn logOutBtn lightBg" @click="logout">Logout</button>
                 </div>
             </div>
         </div>
@@ -110,7 +110,7 @@
             <h2 class="text-center mb-3 display-3">Make a Transfer</h2>
 
 <div class="d-flex flex-wrap container h-100 mt-3 mb-5 col-11 col-lg-10">
-<div class="container flex-column formContainer d-flex col-12 col-md-6 text-center align-items-center justify-content-center rounded-start ">
+<div class="container flex-column formContainer lightBg d-flex col-12 col-md-6 text-center align-items-center justify-content-center rounded-start ">
     <h4 class="my-3">Transfer Details</h4>
         <div>
         <div class="form-check mb-2">
@@ -157,7 +157,7 @@
                 </template>
             </select>
         </div>
-        <button type="button" class="btn submitBtn shadow" data-bs-toggle="modal" data-bs-target="#transferOverviewModal">Submit</button>
+        <button type="button" class="btn submitBtn lightBg shadow" data-bs-toggle="modal" data-bs-target="#transferOverviewModal">Submit</button>
     </form>
 </div>
     <div id="div2" class="col-12 col-md-6 rounded-end"></div>
@@ -217,7 +217,7 @@
     </div>
     </main>
 
-    <footer class="d-flex flex-column flex-md-row justify-content-around align-items-center py-3">
+    <footer class="d-flex flex-column flex-md-row justify-content-around align-items-center py-3 lightBg">
         <p class="mb-0" id="copyright">@All rights reserved 2023</p>
         <div class="d-flex flex-row gap-5">
             <a href="https://api.whatsapp.com/send?phone=15551234567">

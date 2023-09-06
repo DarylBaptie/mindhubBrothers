@@ -3,8 +3,8 @@ package com.mindhub.homebanking.controllers;
 import com.mindhub.homebanking.dtos.ClientDTO;
 import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
-import com.mindhub.homebanking.repositories.AccountRepository;
-import com.mindhub.homebanking.repositories.ClientRepository;
+import com.mindhub.homebanking.services.AccountService;
+import com.mindhub.homebanking.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,20 +15,19 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static java.util.stream.Collectors.toList;
-
 @RestController
 
 public class ClientController {
 
-    @Autowired
-    private ClientRepository clientRepository;
-
-    @Autowired
-    private AccountRepository accountRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private ClientService clientService;
+
+    @Autowired
+    private AccountService accountService;
 
     private String randomNumber() {
         String random = "VIN" + getRandomNumber(0, 99999999);
@@ -42,17 +41,13 @@ public class ClientController {
 
     @RequestMapping("/api/clients")
     public List<ClientDTO> getClients() {
-        return clientRepository.findAll()
-                .stream()
-                .map(client -> new ClientDTO(client))
-                .collect(toList());
-
+        return clientService.getClientsDTO();
         }
 
     @RequestMapping("/api/clients/{id}")
     public ClientDTO getClient(@PathVariable Long id){
 
-        return clientRepository.findById(id).map(ClientDTO::new).orElse(null);
+        return clientService.getClientDTOById(id);
 
     }
 
@@ -60,7 +55,7 @@ public class ClientController {
     @RequestMapping("/api/clients/current")
     public ClientDTO getClient(Authentication authentication) {
 
-        return new ClientDTO(clientRepository.findByEmail(authentication.getName()));
+        return clientService.getCurrentClient(authentication.getName());
 
     }
 
@@ -103,9 +98,9 @@ public class ClientController {
         }
 
 
-        if (clientRepository.findByEmail(email) !=  null) {
+        if (clientService.findClientByEmail(email) !=  null) {
 
-            return new ResponseEntity<>("Name already in use", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Email already in use", HttpStatus.FORBIDDEN);
 
         }
 
@@ -113,8 +108,8 @@ public class ClientController {
         Client newClient = new Client(firstName, lastName, email, passwordEncoder.encode(password));
         Account newAccount = new Account(randomNumber(), LocalDateTime.now(), 0);
         newClient.addAccount(newAccount);
-        clientRepository.save(newClient);
-        accountRepository.save(newAccount);
+        clientService.saveClient(newClient);
+        accountService.saveAccount(newAccount);
 
         return new ResponseEntity<>("Client created", HttpStatus.CREATED);
 

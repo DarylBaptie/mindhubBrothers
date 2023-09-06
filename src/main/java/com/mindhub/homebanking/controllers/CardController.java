@@ -5,8 +5,8 @@ import com.mindhub.homebanking.models.Card;
 import com.mindhub.homebanking.models.CardColor;
 import com.mindhub.homebanking.models.CardType;
 import com.mindhub.homebanking.models.Client;
-import com.mindhub.homebanking.repositories.CardRepository;
-import com.mindhub.homebanking.repositories.ClientRepository;
+import com.mindhub.homebanking.services.CardService;
+import com.mindhub.homebanking.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,10 +30,10 @@ import static java.util.stream.Collectors.toList;
 public class CardController {
 
     @Autowired
-    private CardRepository cardRepository;
+    private CardService cardService;
 
     @Autowired
-    private ClientRepository clientRepository;
+    private ClientService clientService;
 
     private LocalDate cardEmissionDate = LocalDate.now();
     private LocalDate cardExpiryDate =  cardEmissionDate.plusYears(5);
@@ -49,13 +49,10 @@ public class CardController {
 
     @RequestMapping("/api/cards")
     public List<CardDTO> getCards() {
-        return cardRepository.findAll().stream().map(card -> new CardDTO(card)).collect(toList());
+        return cardService.getCardsDTO();
     }
 
-    @RequestMapping("/api/cards/{id}")
-    public CardDTO getCard(@PathVariable Long id) {
-        return cardRepository.findById(id).map(CardDTO::new).orElse(null);
-    }
+
 
     @RequestMapping(path="/api/clients/current/cards", method = RequestMethod.POST)
     public ResponseEntity<Object> createCard(
@@ -66,10 +63,8 @@ public class CardController {
 
     {
 
-            Client client = clientRepository.findByEmail(authentication.getName());
-            Set <Card> cards = client.getCards();
-            Stream <Card> debitCards = cards.stream().filter(card -> card.getCardType().equals(DEBIT));
-            Stream <Card> creditCards = cards.stream().filter(card -> card.getCardType().equals(CREDIT));
+            Client client = clientService.findClientByEmail(authentication.getName());
+
 
         if (type.isBlank()) {
             return new ResponseEntity<>("Card type is missing", HttpStatus.FORBIDDEN);
@@ -79,18 +74,14 @@ public class CardController {
             return new ResponseEntity<>("Card color is missing", HttpStatus.FORBIDDEN);
         }
 
-//        if (!client.getCards().stream().filter(card -> card.getCardType().equals(CardType.valueOf(type)) && card.getCardColor().equals(CardColor.valueOf(color))).collect(Collectors.toSet()).isEmpty()) {}
-
-        if (CardType.valueOf(type) == DEBIT && debitCards.count() >= 3) {
-                return new ResponseEntity<>("Maximum of three debit cards permitted per account", HttpStatus.FORBIDDEN);
-            } else if (CardType.valueOf(type) == CREDIT && creditCards.count() >= 3) {
-                return new ResponseEntity<>("Maximum of three credit cards permitted per account", HttpStatus.FORBIDDEN);
-            } else {
+     if (!client.getCards().stream().filter(card -> card.getCardType().equals(CardType.valueOf(type)) && card.getCardColor().equals(CardColor.valueOf(color))).collect(Collectors.toSet()).isEmpty())
+        {
+            return new ResponseEntity<>("Apologies, you already have this card", HttpStatus.FORBIDDEN);
+        } else {
                 String clientName = client.getFirstName() + " " + client.getLastName();
                 Card newCard = new Card(clientName, CardType.valueOf(type), CardColor.valueOf(color), cardNumber, cvv, cardEmissionDate,cardExpiryDate);
                 client.addCard(newCard);
-                cardRepository.save(newCard);
-
+                cardService.saveCard(newCard);
                 return new ResponseEntity<>("Card created", HttpStatus.CREATED);
 
             }

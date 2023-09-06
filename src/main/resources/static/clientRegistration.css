@@ -33,3 +33,19 @@ background-size: 100% 100%;
 #loginLink {
 color: black !important;
 }
+
+.alert {
+--bs-alert-padding-x: 0 !important;
+--bs-alert-margin-bottom: 0 !important;
+--bs-alert-padding-y: 0 !important;
+color: black !important;
+}
+
+@media only screen and (max-width: 767px) {
+#div2{
+display: none;
+}
+
+#loginDiv {
+margin-bottom: 0.5rem;}
+}

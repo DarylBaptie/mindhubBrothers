@@ -21,7 +21,7 @@
 <body class="d-flex flex-column h-100">
 <div id="app">
     <header>
-        <nav class="navbar fixed-top navbar-expand-lg">
+        <nav class="navbar fixed-top navbar-expand-lg lightBg">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">Mindhub Brothers
                     <svg id="logo" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -46,7 +46,7 @@
                             <a class="nav-link active" href="#">Cards</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="./pages/loans">Loans</a>
+                            <a class="nav-link" href="loan-application.html">Loans</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="transfers.html">Transfers</a>
@@ -56,7 +56,7 @@
                                aria-expanded="false">
                                 Transactions
                             </a>
-                            <ul class="dropdown-menu">
+                            <ul class="dropdown-menu lightBg">
                                 <template v-for="account of accounts">
                                     <li><a class="dropdown-item"
                                            v-bind:href="'http://localhost:8080/web/account.html?id='+account.id">{{account.number}}</a>
@@ -91,7 +91,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn logOutBtn" @click="logout">Logout</button>
+                    <button type="button" class="btn lightBg" id="logOutBtn" @click="logout">Logout</button>
                 </div>
             </div>
         </div>
@@ -109,13 +109,13 @@
             <h2 class="text-center mb-3 display-3">Your Cards</h2>
             <h3 class="text-center display-4 fst-italic">Debit</h3>
             <div v-if="debitCards > 0" class="d-flex align-items-center justify-content-center">
-                <button @click="showDetails" class="btn m-2 showDetailsBtn shadow">Show/Hide Details</button>
+                <button @click="showDetails" class="btn m-2 showDetailsBtn lightBg shadow">Show/Hide Details</button>
             </div>
             <template v-for="client of clients">
                 <template v-if="!client.cards.debitCards">
                     <h3 class="text-center">Currently there are no debit cards associated with this account</h3>
                 </template>
-                <div class="container-fluid d-flex flex-wrap justify-content-evenly p-3 mb-3">
+                <div class="container-fluid gap-1 d-flex flex-wrap justify-content-evenly p-3 mb-3">
                     <template v-else v-for="card of cards">
                         <template v-if="card.cardType == 'DEBIT'">
                             <div class="height-50 col-md-8 col-lg-5 col-xl-4 pb-3 d-flex justify-content-center align-items-center">
@@ -158,7 +158,7 @@
                 <template v-if="!client.cards.creditCards">
                     <h3 class="text-center">Currently there are no credit cards associated with this account</h3>
                 </template>
-                <div class="container-fluid d-flex flex-wrap justify-content-evenly p-3 mb-3">
+                <div class="container-fluid gap-1 d-flex flex-wrap justify-content-evenly p-3 mb-3">
                     <template v-else v-for="card of cards">
                         <template v-if="card.cardType == 'CREDIT'">
                             <div class="height-100 col-md-8 col-lg-5 col-xl-4 gap-1 pb-3 d-flex justify-content-center align-items-center">
@@ -210,8 +210,8 @@
 
             <h2 class="text-center mt-2 pb-3 display-3">Apply for a new Card</h2>
             <form class="justify-content-center align-items-center text-center">
-                <div class="d-flex flex-wrap justify-content-center align-items-center gap-3">
-                    <div>
+                <div class="d-flex flex-wrap justify-content-center align-items-center mb-4 gap-3" >
+                    <div id="formDiv" class="py-2 px-5 rounded-4 lightBg">
                         <h3>Select Card Type: </h3>
                         <div class="py-2">
                             <div class="form-check form-check-inline">
@@ -243,13 +243,15 @@
                                 <label class="form-check-label" for="inlineRadio5">TITANIUM</label>
                             </div>
                         </div>
+                        <div class="mt-3">
+                            <button type="button" class="btn mb-3 shadow lightBg" id="applyCardBtn" data-bs-toggle="modal"
+                                    data-bs-target="#confirmCardModal">Send
+                            </button>
+                        </div>
                     </div>
+
                 </div>
-                <div class="mt-3">
-                    <button type="button" class="btn mb-3 shadow" id="applyCardBtn" data-bs-toggle="modal"
-                            data-bs-target="#confirmCardModal">Send
-                    </button>
-                </div>
+
                 <div class="modal fade" id="confirmCardModal" data-bs-backdrop="static" data-bs-keyboard="false"
                      tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog">
@@ -257,23 +259,13 @@
                             <div class="modal-header">
                                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Card Application</h1>
                             </div>
-                            <div class="modal-body" v-if="cardType == 'CREDIT' && creditCards >= 3">
-                                <p>Sorry, a maximum number of 3 Credit cards is permitted</p>
-                            </div>
-                            <div class="modal-body" v-else-if="cardType == 'DEBIT' && debitCards >= 3">
-                                <p>Sorry, a maximum number of 3 Debit cards is permitted</p>
-                            </div>
-                            <div v-else class="modal-body">
+                            <div class="modal-body">
                                 You are about to apply for a {{cardColor}} {{cardType}} card, are you sure?
                             </div>
-                            <div v-if="cardType == 'DEBIT' && debitCards >= 3 || cardType == 'CREDIT' && creditCards >= 3"
-                                 class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            </div>
-                            <div v-else class="modal-footer">
+                            <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                 <button type="button" data-bs-toggle="modal" data-bs-target="#completeCardModal"
-                                        class="btn" id="confirmCardBtn" data-bs-dismiss="modal" @click="newCard">Confirm
+                                        class="btn lightBg" id="confirmCardBtn" data-bs-dismiss="modal" @click="newCard">Confirm
                                 </button>
                             </div>
                         </div>
@@ -281,33 +273,43 @@
                 </div>
 
 
-                <div class="modal fade" id="completeCardModal" data-bs-backdrop="static" data-bs-keyboard="false"
-                     tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal fade" id="completeCardModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <div></div>
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Thank you!</h1>
-                            </div>
-                            <div class="modal-body">
-                                Your new card will be dispatched to you shortly!
-                            </div>
+                            <template v-if="showAlert == true">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Please review card selection</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    {{errorMessage}}
+                                </div>
+                            </template>
+                            <template v-else>
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Thank you!</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Your new card will be dispatched to you shortly!
+                                </div>
+                            </template>
                             <div class="modal-footer">
-                                <button @click="reloadPage" type="button" class="btn" id="reloadPageBtn"
-                                        data-bs-dismiss="modal">
-                                    Close
-                                </button>
+                                <button v-if="showAlert == true" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button v-else type="button" class="btn lightBg" id="reloadPageBtn" data-bs-dismiss="modal" @click="reloadPage">Close</button>
                             </div>
                         </div>
                     </div>
                 </div>
 
-            </form>
 
+
+
+            </form>
         </div>
     </main>
 
-    <footer class="d-flex flex-column flex-md-row justify-content-around align-items-center py-3">
+    <footer class="d-flex flex-column flex-md-row justify-content-around align-items-center py-3 lightBg">
         <p class="mb-0" id="copyright">@All rights reserved 2023</p>
         <div class="d-flex flex-row gap-5">
             <a href="https://api.whatsapp.com/send?phone=15551234567">

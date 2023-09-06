@@ -11,6 +11,8 @@ const { createApp } = Vue
       cardColor: "SILVER",
       debitCards: 0,
       creditCards: 0,
+      errorMessage: "",
+      showAlert: false,
       }
     },
         created() {
@@ -97,10 +99,10 @@ const { createApp } = Vue
         console.log(response)
         })
          .catch((error) => {
-         console.log(error)
-         }
-
-         )
+                         console.log(error);
+                         this.errorMessage = error.response.data;
+                         this.showAlert = true;
+                       })
     },
     debitCreditCards(cards) {
     for (card of cards) {

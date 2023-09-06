@@ -32,7 +32,11 @@ createApp({
         this.formatAmountAccount(this.data);
         this.transactions = response.data.transactions;
       })
-      .catch(error => console.log(error));
+      .catch(error => { console.log(error)
+      alert("Unauthorized access")
+      window.location = "/web/accounts.html";
+      }
+      );
 ;
     },
     changeDate(data) {
@@ -68,9 +72,10 @@ createApp({
             method: "get",
             url: "/api/clients/current",
         }).then((response) => {
-            this.client.push(response.data)
-            this.changeDateClient(this.client)
+            this.client.push(response.data);
+            this.changeDateClient(this.client);
             this.customerAccounts(this.client);
+            this.formatAccountBalance(this.accounts);
             });
     },
     changeDateClient(client) {

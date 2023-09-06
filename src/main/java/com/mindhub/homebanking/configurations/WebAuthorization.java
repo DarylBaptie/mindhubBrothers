@@ -28,8 +28,8 @@ import javax.servlet.http.HttpSession;
                 .antMatchers("/index.html", "/clientRegistration.html", "/clientRegistration.css", "/clientRegistration.js", "/pages/images/**", "/images/**", "/index.js", "/indexStyles.css").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/clients").permitAll()
                 .antMatchers("/rest/**", "/admin/**", "/api/login", "/api/clients", "/h2-console", "/manager.html", "/manager.js").hasAuthority("ADMIN")
-                .antMatchers("/web/**", "/api/login", "/api/clients/current/cards", "/api/clients/current", "/api/accounts/**").hasAuthority("CLIENT")
-                .antMatchers(HttpMethod.POST, "/api/clients/current/accounts", "/api/clients/current/cards", "/api/clients/current/transactions").hasAuthority("CLIENT")
+                .antMatchers("/web/**", "/api/login", "/api/clients/current/cards", "/api/clients/current", "/api/accounts/**", "/api/loans").hasAuthority("CLIENT")
+                .antMatchers(HttpMethod.POST, "/api/clients/current/accounts", "/api/clients/current/cards", "/api/clients/current/transactions", "/api/loans").hasAuthority("CLIENT")
                 .anyRequest().denyAll();
 
 
