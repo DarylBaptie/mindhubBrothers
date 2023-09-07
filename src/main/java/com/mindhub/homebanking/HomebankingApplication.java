@@ -36,8 +36,10 @@ public class HomebankingApplication {
 	private List<Integer> payments2 = Arrays.asList(6,12,24);
 	private List<Integer> payments3 = Arrays.asList(6,12,24,36);
 
+/*
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+*/
 
 
 	public static void main(String[] args) {
@@ -48,7 +50,7 @@ public class HomebankingApplication {
 	@Bean
 	public CommandLineRunner initData(ClientRepository repositoryClient, AccountRepository repositoryAccount, TransactionRepository repositoryTransaction, LoanRepository repositoryLoan, ClientLoanRepository repositoryClientLoan, CardRepository repositoryCard) {
 		return (args) -> {
-			Account firstAccount = new Account("VIN001", this.localDateTime, 5000);
+			/*Account firstAccount = new Account("VIN001", this.localDateTime, 5000);
 			Account secondAccount = new Account("VIN002", this.localDateTimeNextDay, 7500);
 			Account thirdAccount = new Account("VIN003", this.localDateTimeTwoDays, 8500);
 			Account fourthAccount = new Account("VIN004", this.localDateTimeThreeDays, 900);
@@ -128,7 +130,7 @@ public class HomebankingApplication {
 			repositoryCard.save(card5);
 			passwordEncoder.encode(melbaMorel.getPassword());
 			passwordEncoder.encode(darylBaptie.getPassword());
-
+*/
 		};
 
 	}

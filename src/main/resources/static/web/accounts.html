@@ -187,7 +187,7 @@
             </template>
             <template v-else>
                 <div class="d-flex align-items-center justify-content-center">
-                    <button @click="showBalance" class="btn mb-3 showBalanceBtn shadow">Show/Hide Balance</button>
+                    <button @click="showBalance" class="btn mb-3 showBalanceBtn lightBg shadow">Show/Hide Balance</button>
                 </div>
                 <div class="d-flex flex-wrap align-items-center justify-content-evenly mb-4 gap-1">
                     <template v-for="loan in loans">
@@ -209,7 +209,9 @@
                     </template>
                 </div>
             </template>
-
+            <div class="d-flex align-items-center justify-content-center">
+                <a href="loan-application.html" class="btn mb-3 newLoanBtn lightBg shadow">New Loan</a>
+            </div>
             <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     <div class="carousel-item active">

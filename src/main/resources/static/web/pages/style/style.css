@@ -105,7 +105,7 @@ cursor: pointer;
 
 
 
-.cardAccount:hover, .quickLinkCard:hover, nav-link:hover, .cardLoan:hover, button:hover {
+.cardAccount:hover, .quickLinkCard:hover, nav-link:hover, .cardLoan:hover, button:hover, .newLoanBtn:hover {
 transition: 0.3s !important;
 transform: scale(1.15) !important;
 }

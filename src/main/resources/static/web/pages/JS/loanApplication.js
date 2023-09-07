@@ -82,7 +82,12 @@ const { createApp } = Vue
     calculateInstallments() {
     amount = this.loanAmount;
     installments = this.paymentOption;
-    this.installmentAmount = amount * 1.20 / installments;
+    installmentCalculation = amount * 1.20 / installments;
+    this.installmentAmount = installmentCalculation.toLocaleString("en-US", {
+                                                                  style: "currency",
+                                                                  currency: "USD",
+                                                                  maximumFractionDigits: 0,
+    })
     },
     reloadPage() {
         window.location = "/web/accounts.html";

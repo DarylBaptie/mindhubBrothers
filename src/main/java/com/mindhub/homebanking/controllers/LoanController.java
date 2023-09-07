@@ -18,8 +18,7 @@ import java.util.stream.Stream;
 
 
 import static com.mindhub.homebanking.models.TransactionType.CREDIT;
-import static java.lang.Double.NaN;
-import static java.util.stream.Collectors.toList;
+
 
 
 @RestController
@@ -71,12 +70,12 @@ public class LoanController {
             return new ResponseEntity<>("Loan name is empty. Please review requested loan", HttpStatus.FORBIDDEN);
         }
 
-        if(loanApplicationDTO.getAmount() <= 0 || loanApplicationDTO.getAmount() == NaN) {
+        if(loanApplicationDTO.getAmount() <= 0) {
             return new ResponseEntity<>("Invalid amount. Please review requested amount", HttpStatus.FORBIDDEN);
         }
 
 
-        if(loanApplicationDTO.getPayments() <= 0 || loanApplicationDTO.getPayments() == NaN ) {
+        if(loanApplicationDTO.getPayments() <= 0) {
             return new ResponseEntity<>("Invalid payment plan. Please review requested payment plan.", HttpStatus.FORBIDDEN);
         }
 

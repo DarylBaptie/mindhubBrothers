@@ -11,8 +11,7 @@ background-color: #FFFFF0 !important;
 font-family: 'Playfair Display', serif !important;
 }
 
-.lightBg
-.navbar, footer, #tableHeader, .dropdown-menu, .showBalanceBtn, .logOutBtn, #confirmAccountBtn {
+.lightBg {
 background-color: #F7E7CE !important;
 }
 
