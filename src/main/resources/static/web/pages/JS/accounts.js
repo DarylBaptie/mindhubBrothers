@@ -22,7 +22,7 @@ createApp({
       .then((response) => {
         this.data.push(response.data)
         this.accounts = response.data.accounts
-        this.loans = response.data.clientloans
+        this.loans = response.data.clientloans.filter(loan => loan.active == true)
         this.changeDate(this.accounts)
         this.sortAccounts(this.data)
         this.formatLoanAmount(this.loans)

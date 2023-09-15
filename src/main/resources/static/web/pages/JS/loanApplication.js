@@ -11,7 +11,7 @@ const { createApp } = Vue
       paymentOption: 0,
       loanAmount: 0,
       accounts: [],
-      installmentAmount: 0,
+      installmentAmountShow: 0,
       destinedAccount: "",
       errorMessage: "",
       showAlert: false,
@@ -20,6 +20,7 @@ const { createApp } = Vue
       accountForPayment: 0,
       repaymentLoanName: "",
       paymentType: "",
+      installmentAmount: 0,
       }
     },
     created() {
@@ -35,7 +36,7 @@ const { createApp } = Vue
           .then((response) => {
             this.data.push(response.data)
             this.accounts = response.data.accounts
-            this.clientLoans = response.data.clientloans
+            this.clientLoans = response.data.clientloans.filter(loan => loan.active == true)
             this.formatLoanAmount(this.clientLoans)
           })
           .catch(error => console.log(error));
@@ -56,7 +57,12 @@ const { createApp } = Vue
                   .then((response) => {
                     console.log(response)
                   })
-                  .catch(error => console.log(error));
+                  .catch(error => {
+                  console.log(error)
+                  this.errorMessage = error.response.data;
+                  this.showAlert = true;
+                  });
+
                 },
     formatLoanAmount(loans) {
                 for(let loan of loans) {
@@ -95,11 +101,12 @@ const { createApp } = Vue
     amount = this.loanAmount;
     installments = this.paymentOption;
     installmentCalculation = amount * 1.20 / installments;
-    this.installmentAmount = installmentCalculation.toLocaleString("en-US", {
+    this.installmentAmountShow = installmentCalculation.toLocaleString("en-US", {
                                                                   style: "currency",
                                                                   currency: "USD",
                                                                   maximumFractionDigits: 0,
-    })
+    });
+    this.installmentAmount = installmentCalculation.toFixed(2);
     },
     reloadPage() {
         window.location = "/web/accounts.html";

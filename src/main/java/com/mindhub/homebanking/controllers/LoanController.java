@@ -60,8 +60,7 @@ public class LoanController {
         Account account = accountService.findAccountByNumber(loanApplicationDTO.getAccountNumber());
         ClientLoan clientLoan = new ClientLoan(loanApplicationDTO.getAmount() * 1.2, loanApplicationDTO.getPayments(),loanApplicationDTO.getInstallmentAmount(), true);
         Loan loan = loanService.findLoanByName(loanApplicationDTO.getName());
-        Stream clientLoanNames = client.getClientLoans().stream().filter(cloan -> cloan.getLoan().getName().equals(loanApplicationDTO.getName()));
-
+        Stream clientLoanNames = client.getClientLoans().stream().filter(cloan -> cloan.getLoan().getName().equals(loanApplicationDTO.getName()) && cloan.isActive());
 
         if(authentication == null) {
             return new ResponseEntity<>("Unauthorized access", HttpStatus.FORBIDDEN);
@@ -172,7 +171,14 @@ public class LoanController {
             clientLoanService.saveClientLoan(clientLoan);
             account.addTransaction(transaction);
             transactionService.saveTransaction(transaction);
+
+            if(clientLoan.getAmount() == 0) {
+                clientLoan.setActive(false);
+                clientLoanService.saveClientLoan(clientLoan);
+            }
+
             return new ResponseEntity<>("payment successful", HttpStatus.CREATED);
+
 
         }
 
