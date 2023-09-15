@@ -7,9 +7,14 @@ padding:0 !important;
 margin:0 !important;
 box-sizing: border-box;
 height: 100% !important;
-background-color: #FFFFF0 !important;
+background-image: radial-gradient(#f7e7ce 2px, transparent 2px);
+background-size: 32px 32px;
+background-color: #fefae0 !important;
 font-family: 'Playfair Display', serif !important;
 }
+
+.btnColor {
+background-color: #ccd5ae !important;}
 
 .lightBg {
 background-color: #F7E7CE !important;
@@ -94,8 +99,13 @@ color  : #3B3C36;
      font-size:1rem;
  }
 
- .cardName, .cardExpiryDate {
+ .cardName, .cardExpiryDateValid, .cardExpiryDateExpired {
      font-size:1rem;
+ }
+
+.cardExpiryDateExpired {
+color: red;
+font-weight: 600;
  }
 
  .card-border{

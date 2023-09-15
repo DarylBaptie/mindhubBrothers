@@ -19,7 +19,7 @@ const { createApp } = Vue
         loadData() {
             axios({
                 method: 'get',
-                url: '/api/clients',
+                url: '/api/clients',{headers:{'accept':'application/xml'}
             })
     .then((response) => {
       this.data = response.data;

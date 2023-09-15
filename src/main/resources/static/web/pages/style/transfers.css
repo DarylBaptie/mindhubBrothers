@@ -8,7 +8,9 @@ padding:0 !important;
 margin:0 !important;
 box-sizing: border-box;
 height: 100% !important;
-background-color: #FFFFF0 !important;
+background-image: radial-gradient(#f7e7ce 2px, transparent 2px);
+background-size: 32px 32px;
+background-color: #fefae0 !important;
 font-family: 'Playfair Display', serif !important;
 }
 
@@ -16,7 +18,8 @@ font-family: 'Playfair Display', serif !important;
 background-color: #F7E7CE !important;
 }
 
-
+#formDiv {
+background-color: #eae2b7 !important;}
 
 
 .nav-link:hover, .navbar-brand:hover {

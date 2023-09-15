@@ -1,7 +1,5 @@
 package com.mindhub.homebanking.dtos;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Transaction;
 import com.mindhub.homebanking.models.TransactionType;
 
@@ -16,12 +14,20 @@ public class TransactionDTO {
     private double amount;
     private String description;
 
+    private double balance;
+
+    private boolean isActive;
+
+
+
     public TransactionDTO(Transaction transaction) {
         this.id = transaction.getId();
         this.type = transaction.getType();
         this.date = transaction.getDate();
         this.amount = transaction.getAmount();
         this.description = transaction.getDescription();
+        this.balance = transaction.getBalance();
+        this.isActive = transaction.getIsActive();
     }
 
     public long getId() {
@@ -35,5 +41,13 @@ public class TransactionDTO {
     public double getAmount() {return this.amount;}
 
     public String getDescription() {return this.description;}
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public boolean getIsActive() {
+        return isActive;
+    }
 
 }

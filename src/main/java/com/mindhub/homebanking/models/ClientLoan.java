@@ -33,12 +33,20 @@ public class ClientLoan {
 
     private int payment;
 
+    private double installmentAmount;
+
+    private boolean isActive;
 
     public ClientLoan() {}
 
-    public ClientLoan(double amount, int payment) {
+
+
+
+    public ClientLoan(double amount, int payment, double installmentAmount, boolean isActive) {
         this.amount = amount;
         this.payment = payment;
+        this.installmentAmount = installmentAmount;
+        this.isActive = isActive;
     }
 
 
@@ -63,6 +71,21 @@ public class ClientLoan {
 
     public Loan getLoan() {return loan;}
 
+    public double getInstallmentAmount() {
+        return installmentAmount;
+    }
+
+    public void setInstallmentAmount(double installmentAmount) {
+        this.installmentAmount = installmentAmount;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
 
     public String toString() {
         return id + " " + amount + " " + payment + " " + client + " " + loan;

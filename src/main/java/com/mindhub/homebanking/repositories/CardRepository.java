@@ -10,4 +10,9 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 public interface CardRepository extends JpaRepository<Card, Long> {
 
     Card findByCardType(Enum cardType);
+
+    Card findByCardNumber(String number);
+
+
+
 }

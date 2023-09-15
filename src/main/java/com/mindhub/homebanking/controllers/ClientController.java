@@ -39,12 +39,12 @@ public class ClientController {
     }
 
 
-    @RequestMapping("/api/clients")
+    @GetMapping("/api/clients")
     public List<ClientDTO> getClients() {
         return clientService.getClientsDTO();
         }
 
-    @RequestMapping("/api/clients/{id}")
+    @GetMapping("/api/clients/{id}")
     public ClientDTO getClient(@PathVariable Long id){
 
         return clientService.getClientDTOById(id);
@@ -52,7 +52,7 @@ public class ClientController {
     }
 
 
-    @RequestMapping("/api/clients/current")
+    @GetMapping("/api/clients/current")
     public ClientDTO getClient(Authentication authentication) {
 
         return clientService.getCurrentClient(authentication.getName());
@@ -65,7 +65,7 @@ public class ClientController {
 
 
 
-    @RequestMapping(path = "/api/clients", method = RequestMethod.POST)
+    @PostMapping("/api/clients")
 
     public ResponseEntity<Object> register(
 
@@ -106,7 +106,7 @@ public class ClientController {
 
 
         Client newClient = new Client(firstName, lastName, email, passwordEncoder.encode(password));
-        Account newAccount = new Account(randomNumber(), LocalDateTime.now(), 0);
+        Account newAccount = new Account(randomNumber(), LocalDateTime.now(), 0, true);
         newClient.addAccount(newAccount);
         clientService.saveClient(newClient);
         accountService.saveAccount(newAccount);

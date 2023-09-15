@@ -12,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Stream;
@@ -44,20 +45,20 @@ public class LoanController {
 
 
 
-    @RequestMapping("/api/loans")
+    @GetMapping("/api/loans")
     public List<LoanDTO> getLoans() {
         return loanService.getLoansDTO();
     }
 
 
     @Transactional
-    @RequestMapping(value="/api/loans", method= RequestMethod.POST)
+    @PostMapping("/api/loans")
 
     public ResponseEntity addLoan(@RequestBody LoanApplicationDTO loanApplicationDTO, Authentication authentication) {
 
         Client client = clientService.findClientByEmail(authentication.getName());
         Account account = accountService.findAccountByNumber(loanApplicationDTO.getAccountNumber());
-        ClientLoan clientLoan = new ClientLoan(loanApplicationDTO.getAmount() * 1.2, loanApplicationDTO.getPayments());
+        ClientLoan clientLoan = new ClientLoan(loanApplicationDTO.getAmount() * 1.2, loanApplicationDTO.getPayments(),loanApplicationDTO.getInstallmentAmount(), true);
         Loan loan = loanService.findLoanByName(loanApplicationDTO.getName());
         Stream clientLoanNames = client.getClientLoans().stream().filter(cloan -> cloan.getLoan().getName().equals(loanApplicationDTO.getName()));
 
@@ -110,8 +111,10 @@ public class LoanController {
 
         else {
 
-        Transaction transactionCredit = new Transaction(CREDIT, LocalDateTime.now(), loanApplicationDTO.getAmount(), loanApplicationDTO.getName() + ": " + "Loan approved");
-        account.setBalance(account.getBalance() + loanApplicationDTO.getAmount());
+        double newBalance = account.getBalance() + loanApplicationDTO.getAmount();
+
+        Transaction transactionCredit = new Transaction(CREDIT, LocalDateTime.now(), loanApplicationDTO.getAmount(), loanApplicationDTO.getName() + ": " + "Loan approved", newBalance, true);
+        account.setBalance(newBalance);
 
         client.addClientLoan(clientLoan);
         loan.addClientLoan(clientLoan);
@@ -120,6 +123,57 @@ public class LoanController {
         transactionService.saveTransaction(transactionCredit);
 
         return new ResponseEntity<>(account, HttpStatus.CREATED);
+        }
+
+    }
+
+    @Transactional
+    @PatchMapping("/api/clients/current/loans/loanPayment")
+    public ResponseEntity addLoan(@RequestParam long loanId, @RequestParam long accountId, double paymentAmount,  Authentication authentication) {
+
+        ClientLoan clientLoan = clientLoanService.findClientLoanById(loanId);
+        Client client = clientService.findClientByEmail(authentication.getName());
+        Account account = accountService.findAccountById(accountId);
+
+        if (!authentication.isAuthenticated()) {
+            return new ResponseEntity<>("Unauthorised account", HttpStatus.UNAUTHORIZED);
+        }
+
+        if (!client.getClientLoans().contains(clientLoan)) {
+            return new ResponseEntity<>("This loan does not belong to this client", HttpStatus.FORBIDDEN);
+        }
+
+        if (!client.getAccounts().contains(account)) {
+            return new ResponseEntity<>("The selected account does not belong to this client", HttpStatus.FORBIDDEN);
+        }
+
+        if (account.getBalance() < paymentAmount) {
+            return new ResponseEntity<>("Insufficient balance", HttpStatus.FORBIDDEN);
+        }
+
+        if (clientLoan.getAmount() == 0) {
+            return new ResponseEntity<>("This loan is already paid off", HttpStatus.FORBIDDEN);
+        }
+
+        if (clientLoan.getAmount() < paymentAmount) {
+            return new ResponseEntity<>("Payment amount exceeds loan balance", HttpStatus.FORBIDDEN);
+        }
+
+        if (clientLoan.getPayment() == 0) {
+            return new ResponseEntity<>("All installments have been paid", HttpStatus.FORBIDDEN);
+        }
+
+        else {
+
+            account.setBalance(account.getBalance() - paymentAmount);
+            Transaction transaction = new Transaction(TransactionType.DEBIT, LocalDateTime.now(), paymentAmount, "Loan Installment - " + clientLoan.getLoan().getName(), account.getBalance(), true);
+            clientLoan.setPayment(clientLoan.getPayment() - 1);
+            clientLoan.setAmount((int) (clientLoan.getAmount() - paymentAmount));
+            clientLoanService.saveClientLoan(clientLoan);
+            account.addTransaction(transaction);
+            transactionService.saveTransaction(transaction);
+            return new ResponseEntity<>("payment successful", HttpStatus.CREATED);
+
         }
 
     }

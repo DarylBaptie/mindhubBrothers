@@ -7,6 +7,7 @@ createApp({
       show: true,
       loans: [],
       accounts: [],
+      accountId: null,
     };
   },
   created() {
@@ -80,6 +81,16 @@ createApp({
     .catch(error => console.log(error));
 
     },
+            deactivateAccount() {
+            axios.patch('/api/clients/current/accounts/close',`id=${this.accountId}`)
+                .then(response => {
+                console.log(response)
+            })
+            .catch((error) => {
+                console.log(error);
+                })
+            },
+
     reloadPage() {
         window.location = "/web/accounts.html";
     },

@@ -5,6 +5,7 @@ const { createApp } = Vue
       return {
       clients: [],
       cards: [],
+      cardsActive: [],
       accounts: [],
       showData: true,
       cardType: "DEBIT",
@@ -13,6 +14,9 @@ const { createApp } = Vue
       creditCards: 0,
       errorMessage: "",
       showAlert: false,
+      cardId: null,
+      dateNow: new Date().toISOString().slice(0, 10),
+      eliminateCardNumber: "",
       }
     },
         created() {
@@ -27,11 +31,14 @@ const { createApp } = Vue
     .then((response) => {
       this.clients.push(response.data);
       this.cards = response.data.cards;
+      this.cardsActive = this.cards.filter(card => card.isActive)
       this.accounts = response.data.accounts;
       this.sortAccounts(this.accounts);
       this.formatThruDate(this.cards);
       this.cardGrouping(this.clients);
       this.debitCreditCards(this.cards);
+      this.date = new Date().toLocaleDateString('en-CA');
+      this.formatJavaDate(this.cards);
     })
     .catch((error) => {
     console.log(error)
@@ -83,6 +90,12 @@ const { createApp } = Vue
     }
     }
   },
+    formatJavaDate(cards) {
+    for (card of cards) {
+    card.newFormatDate = Date(card.fromDate).toLocaleString('en-CA')
+    }
+    },
+
   showDetails() {
     this.showData = !this.showData;
     },
@@ -123,6 +136,15 @@ const { createApp } = Vue
                     }
                         return 0;
                 });
+        },
+        deactivateCard() {
+        axios.patch('/api/clients/current/cards/deactivate',`id=${this.cardId}`)
+            .then(response => {
+            console.log(response)
+        })
+        .catch((error) => {
+            console.log(error);
+            })
         },
     reloadPage() {
              window.location = "/web/cards.html";

@@ -15,6 +15,11 @@ const { createApp } = Vue
       destinedAccount: "",
       errorMessage: "",
       showAlert: false,
+      loanId: 0,
+      paymentAmount: 0,
+      accountForPayment: 0,
+      repaymentLoanName: "",
+      paymentType: "",
       }
     },
     created() {
@@ -46,6 +51,13 @@ const { createApp } = Vue
           })
           .catch(error => console.log(error));
         },
+                makePayment() {
+                    axios.patch('/api/clients/current/loans/loanPayment',`loanId=${this.loanId}&&accountId=${this.accountForPayment}&paymentAmount=${this.paymentAmount}`)
+                  .then((response) => {
+                    console.log(response)
+                  })
+                  .catch(error => console.log(error));
+                },
     formatLoanAmount(loans) {
                 for(let loan of loans) {
                     loan.formattedAmount = loan.amount.toLocaleString("en-US", {
@@ -69,7 +81,7 @@ const { createApp } = Vue
     },
 
     newLoan(event) {
-        axios.post('/api/loans',{"name": this.loanName, "amount": this.loanAmount, "payments": this.paymentOption, "accountNumber": this.destinedAccount})
+        axios.post('/api/loans',{"name": this.loanName, "amount": this.loanAmount, "payments": this.paymentOption, "accountNumber": this.destinedAccount, "installmentAmount": this.installmentAmount})
         .then(response => {
         console.log(response)
         })
@@ -99,6 +111,8 @@ const { createApp } = Vue
             })
             .catch(error => console.log(error))
         },
+
+
   }
   }).mount('#app')
 

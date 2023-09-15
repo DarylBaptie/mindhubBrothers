@@ -24,7 +24,7 @@
     <header>
         <nav class="navbar fixed-top navbar-expand-lg lightBg">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">Mindhub Brothers
+                <a class="navbar-brand" href="home.html">Mindhub Brothers
                     <svg id="logo" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                          class="bi bi-bank" viewBox="0 0 16 16">
                         <path d="m8 0 6.61 3h.89a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H15v7a.5.5 0 0 1 .485.38l.5 2a.498.498 0 0 1-.485.62H.5a.498.498 0 0 1-.485-.62l.5-2A.501.501 0 0 1 1 13V6H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 3h.89L8 0ZM3.777 3h8.447L8 1 3.777 3ZM2 6v7h1V6H2Zm2 0v7h2.5V6H4Zm3.5 0v7h1V6h-1Zm2 0v7H12V6H9.5ZM13 6v7h1V6h-1Zm2-1V4H1v1h14Zm-.39 9H1.39l-.25 1h13.72l-.25-1Z"/>
@@ -38,7 +38,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="./pages/home">Home</a>
+                            <a class="nav-link" aria-current="page" href="home.html">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" href="#">Accounts</a>
@@ -59,9 +59,11 @@
                             </a>
                             <ul class="dropdown-menu lightBg">
                                 <template v-for="account of accounts">
+                                    <template v-if="account.isActive">
                                     <li><a class="dropdown-item"
                                            v-bind:href="'http://localhost:8080/web/account.html?id='+account.id">{{account.number}}</a>
                                     </li>
+                                    </template>
                                 </template>
                             </ul>
                         </li>
@@ -92,7 +94,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn logOutBtn" @click="logout">Logout</button>
+                    <button type="button" class="btn lightBg" @click="logout">Logout</button>
                 </div>
             </div>
         </div>
@@ -108,13 +110,14 @@
                     </template>
                 </div>
             </div>
-
+            <section id="sectionOverview">
             <h2 class="text-center mb-2 display-3">Account Overview</h2>
             <div class="d-flex align-items-center justify-content-center ">
-                <button @click="showBalance" class="btn mb-3 showBalanceBtn lightBg shadow">Show/Hide Balance</button>
+                <button @click="showBalance" class="btn mb-3 btnColor shadow">Show/Hide Balance</button>
             </div>
             <div class="d-flex flex-wrap align-items-center justify-content-evenly mb-4 gap-1">
                 <template v-for="account in accounts">
+                    <template v-if="account.isActive">
                     <div class="card shadow mb-3 cardAccount ps-3 rounded text-light col-10 col-md-5 col-lg-4">
                         <div class="row g-0">
                             <div class="col-md-12">
@@ -131,10 +134,12 @@
                             </div>
                         </div>
                     </div>
+                    </template>
                 </template>
             </div>
-            <div v-if="accounts.length < 3" class="d-flex align-items-center justify-content-center ">
-                <button type="button" class="btn mb-3 shadow lightBg" id="NewAccountBtn" data-bs-toggle="modal"
+            <div v-if="accounts.length < 3" class="d-flex flex-column align-items-center justify-content-center ">
+                <h5>Open a new account today!</h5>
+                <button type="button" class="btn mb-3 shadow btnColor" data-bs-toggle="modal"
                         data-bs-target="#newAccountModal">New Account
                 </button>
             </div>
@@ -179,7 +184,67 @@
                     </div>
                 </div>
             </div>
+            </section>
+            <div class="d-flex align-items-center justify-content-center">
+                <button type="button" class="btn m-2 btnColor shadow"  data-bs-toggle="modal" data-bs-target="#eliminateCardModal">Close Account</button>
+            </div>
+            <div class="modal fade" id="eliminateCardModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Account closure</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Please select account for closure:</p>
+                            <select class="form-select form-select-lg mb-3" v-model="accountId" aria-label=".form-select-lg example">
+                                <template v-for="account of accounts">
+                                    <option  :value="account.id" selected>{{account.number}}: {{account.balance}}
+                                    </option>
+                                </template>
+                            </select>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmClosure">Confirm</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
+
+            <div class="modal fade" id="confirmClosure" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Confirm</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            Are you sure you want to close this account?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" @click="deactivateAccount">Confirm</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item">
+                        <img src="pages/images/family2.jpg" class="d-block w-100 carouselImg2" alt="picture of family">
+                    </div>
+                    <div class="carousel-item active">
+                        <img src="pages/images/family1.jpg" class="d-block w-100 carouselImg1" alt="picture of couple">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="pages/images/family3.jpg" class="d-block w-100 carouselImg3" alt="picture of family">
+                    </div>
+                </div>
+            </div>
 
             <h5 class="text-center mt-3 display-5">Current Loans</h5>
             <template v-if="loans.length == 0">
@@ -187,7 +252,7 @@
             </template>
             <template v-else>
                 <div class="d-flex align-items-center justify-content-center">
-                    <button @click="showBalance" class="btn mb-3 showBalanceBtn lightBg shadow">Show/Hide Balance</button>
+                    <button @click="showBalance" class="btn mb-3 btnColor shadow">Show/Hide Balance</button>
                 </div>
                 <div class="d-flex flex-wrap align-items-center justify-content-evenly mb-4 gap-1">
                     <template v-for="loan in loans">
@@ -209,9 +274,11 @@
                     </template>
                 </div>
             </template>
-            <div class="d-flex align-items-center justify-content-center">
-                <a href="loan-application.html" class="btn mb-3 newLoanBtn lightBg shadow">New Loan</a>
+            <div class="d-flex flex-column align-items-center justify-content-center">
+                <h5>Apply for a new loan today!</h5>
+                <a href="loan-application.html" class="btn mb-3 btnColor shadow">New Loan</a>
             </div>
+
             <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     <div class="carousel-item active">
@@ -305,7 +372,7 @@
         </div>
     </main>
 
-    <footer class="d-flex flex-column flex-md-row justify-content-around align-items-center py-3 lightBg">
+    <footer class="d-flex flex-column flex-md-row justify-content-around align-items-center py-3">
         <p class="mb-0" id="copyright">@All rights reserved 2023</p>
         <div class="d-flex flex-row gap-5">
             <a href="https://api.whatsapp.com/send?phone=15551234567">

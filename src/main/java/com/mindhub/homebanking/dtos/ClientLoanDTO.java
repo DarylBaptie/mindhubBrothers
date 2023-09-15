@@ -14,13 +14,21 @@ public class ClientLoanDTO {
 
     private String loanName;
 
+    private double installmentAmount;
 
-public ClientLoanDTO(ClientLoan clientLoan) {
+
+    private boolean isActive;
+
+
+
+    public ClientLoanDTO(ClientLoan clientLoan) {
     this.id = clientLoan.getId();
     this.amount = clientLoan.getAmount();
     this.payment = clientLoan.getPayment();
     this.loanName = clientLoan.getLoan().getName();
     this.loanID = clientLoan.getLoan().getId();
+    this.installmentAmount = clientLoan.getInstallmentAmount();
+    this.isActive = clientLoan.isActive();
 }
 
     public long getId() {return id;}
@@ -38,5 +46,12 @@ public ClientLoanDTO(ClientLoan clientLoan) {
 
     public long getLoanId() {return loanID;}
 
+    public double getInstallmentAmount() {
+        return installmentAmount;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
 
 }

@@ -19,7 +19,6 @@ import java.util.List;
 
 import static com.mindhub.homebanking.models.TransactionType.CREDIT;
 import static com.mindhub.homebanking.models.TransactionType.DEBIT;
-import static java.util.stream.Collectors.toList;
 
 @RestController
 
@@ -34,20 +33,20 @@ public class TransactionController {
     @Autowired
     private ClientService clientService;
 
-    @RequestMapping("/api/transactions")
+    @GetMapping("/api/transactions")
     public List<TransactionDTO> getTransactions() {
         return transactionService.getTransactionsDTO();
 
     }
 
-    @RequestMapping("/api/transactions/{id}")
+    @GetMapping("/api/transactions/{id}")
     public TransactionDTO getTransaction(@PathVariable Long id) {
         return transactionService.getTransactionDTO(id);
     }
 
 
     @Transactional
-    @RequestMapping(path = "/api/clients/current/transactions", method = RequestMethod.POST)
+    @PostMapping("/api/clients/current/transactions")
     public ResponseEntity<Object> createTransaction(
         Authentication authentication,
         @RequestParam double amount,
@@ -101,10 +100,12 @@ public class TransactionController {
         return new ResponseEntity<>("Provided destination account number does not exist", HttpStatus.FORBIDDEN);
     }
 
+    boolean isActive = true;
+    double balanceDebit = originAccount.getBalance() - amount;
+    double balanceCredit = destinationAccount.getBalance() + amount;
 
-
-    Transaction transactionDebit = new Transaction(DEBIT, LocalDateTime.now(), (amount * -1), description + " " + destinationAccount.getNumber());
-    Transaction transactionCredit = new Transaction(CREDIT, LocalDateTime.now(), amount, description + " " + originAccount.getNumber());
+    Transaction transactionDebit = new Transaction(DEBIT, LocalDateTime.now(), (amount * -1), description + " " + destinationAccount.getNumber(), balanceDebit, isActive);
+    Transaction transactionCredit = new Transaction(CREDIT, LocalDateTime.now(), amount, description + " " + originAccount.getNumber(), balanceCredit, isActive);
 
     originAccount.setBalance(originAccount.getBalance() - amount);
     destinationAccount.setBalance(destinationAccount.getBalance() + amount);

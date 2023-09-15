@@ -11,9 +11,12 @@ public class LoanApplicationDTO {
 
     private int payments;
 
+    private double installmentAmount;
+
     private String accountNumber;
 
 
+    public double getInstallmentAmount() {return installmentAmount;}
     public long getId() {return id;}
 
     public String getName() {return name;}

@@ -30,6 +30,7 @@ import javax.servlet.http.HttpSession;
                 .antMatchers("/rest/**", "/admin/**", "/api/login", "/api/clients", "/h2-console", "/manager.html", "/manager.js").hasAuthority("ADMIN")
                 .antMatchers("/web/**", "/api/login", "/api/clients/current/cards", "/api/clients/current", "/api/accounts/**", "/api/loans").hasAuthority("CLIENT")
                 .antMatchers(HttpMethod.POST, "/api/clients/current/accounts", "/api/clients/current/cards", "/api/clients/current/transactions", "/api/loans").hasAuthority("CLIENT")
+                .antMatchers(HttpMethod.PATCH, "/api/clients/current/cards/deactivate", "/api/clients/current/accounts/close", "/api/clients/current/loans/loanPayment").hasAuthority("CLIENT")
                 .anyRequest().denyAll();
 
 

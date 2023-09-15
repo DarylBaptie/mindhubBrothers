@@ -1,0 +1,158 @@
+
+html {
+height: 100%
+}
+
+body {
+padding:0 !important;
+margin:0 !important;
+box-sizing: border-box;
+height: 100% !important;
+background-image: radial-gradient(#f7e7ce 2px, transparent 2px);
+background-size: 32px 32px;
+background-color: #fefae0 !important;
+font-family: 'Playfair Display', serif !important;
+}
+
+
+.lightBg {
+background-color: #F7E7CE !important;
+}
+
+.modal-content {
+background-color: #FFFFF0 !important;
+}
+
+.nav-link:hover, .navbar-brand:hover,  {
+opacity: 1 !important;
+text-decoration: underline !important;
+transition: 0.3s !important;
+transform: scale(1.10) !important;
+}
+
+
+
+
+h1 {
+ font-style: italic;
+}
+
+#logo {
+position:relative;
+top:-2px
+}
+
+.exit {
+color: black;}
+
+.exit:hover {
+transition: 0.2s !important;
+transform: scale(1.15) !important;
+cursor: pointer;
+}
+
+.modal-content {
+background-color: #FFFFF0 !important;
+}
+
+#carouselPic {
+height: 20rem;
+opacity: 0.7;
+object-fit: cover;
+object-position: 60% 10%;
+}
+
+#homeBodyPhoto, #homeBodyPhoto2 {
+height: 100%;
+width: 100%;
+}
+
+.carouselImg1, .carouselImg2, .carouselImg3
+   {
+    width: 100%;
+    height: 15rem;
+    object-fit: cover;
+}
+
+.carouselImg1 {
+    object-position: 60% 10%;
+}
+
+.carouselImg2 {
+    object-position: 60% 30%;
+}
+
+.carouselImg3 {
+    object-position: 60% 2.5%;
+}
+
+.cardAccount:hover, .quickLinkCard:hover, nav-link:hover, .cardLoan:hover, button:hover, .newLoanBtn:hover {
+transition: 0.3s !important;
+transform: scale(1.15) !important;
+}
+
+.quickLinkCard {
+height: 8rem !important}
+
+.socialsLinks {
+text-decoration: none !important;
+color: black !important;
+}
+
+.socialsLinks:hover {
+transition: 0.3s !important;
+transform: scale(1.10) !important;
+}
+
+
+#investment {
+ background-image: url('../images/investment.jpg') !important;
+background-size: 100% 100%;
+color: white;
+}
+
+#payment {
+ background-image: url('../images/payment.jpg') !important;
+background-size: 100% 100%;
+color: white;
+}
+
+#transfer {
+ background-image: url('../images/transfer.jpg') !important;
+background-size: 100% 100%;
+color: white;
+}
+
+#openAccounts {
+ background-image: url('../images/accounts.jpg') !important;
+background-size: 100% 100%;
+color: white;
+--bs-card-title-spacer-y: 0 !important;
+}
+
+.divBgColor {
+background-color: #faedcd;
+}
+
+  @media only screen and (min-width:768px) {
+.pText {
+width: 75% !important}
+}
+
+  @media only screen and (min-width:320px) and (max-width:767px)  {
+
+  #copyright{
+  padding-bottom: 1rem !important;
+  }
+
+  #carouselPic {
+  height: 10rem;
+  object-position: 40% 40%;
+  margin-top: 1rem;
+  }
+
+  .carouselImg1, .carouselImg2, .carouselImg3 {
+  height: 10rem;}
+
+
+  }

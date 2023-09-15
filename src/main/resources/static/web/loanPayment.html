@@ -12,11 +12,11 @@
     "
     />
     <link rel="stylesheet" href="pages/style/loanApplication.css">
-    <title>Loan Applications</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;1,500&display=swap"
           rel="stylesheet">
+    <title>Loan Payment</title>
 </head>
 <body>
 <div id="app">
@@ -46,7 +46,7 @@
                             <a class="nav-link" href="cards.html">Cards</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">Loans</a>
+                            <a class="nav-link active" href="loan-application.html">Loans</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="transfers.html">Transfers</a>
@@ -102,7 +102,7 @@
                 <img src="pages/images/loanHeader.jpg" class="card-img rounded-0 border-0" id="carouselPic"
                      alt="Welcome picture of family">
                 <div class="card-img-overlay">
-                    <h1 class=" pt-5 mb-5" id="welcomeText">Loan Center</h1>
+                    <h1 class=" pt-5 mb-5" id="welcomeText">Loan Repayment</h1>
                 </div>
             </div>
 
@@ -134,90 +134,96 @@
                     </template>
                 </div>
             </template>
-            <div class="d-flex align-items-center justify-content-center">
-                <a href="loanPayment.html" class="btn mb-3 btnColor shadow">Make a payment</a>
-            </div>
-            <h2 class="text-center mb-3 display-3">New Loan Application</h2>
 
+            <h2 class="text-center mb-3 display-3">Make a Loan Payment</h2>
+{{paymentAmount}}
             <div class="d-flex flex-wrap container h-100 mt-3 mb-5 col-11 col-lg-10">
                 <div id="formDiv" class="container flex-column formContainer d-flex col-12 col-md-6 col-xl-7 text-center align-items-center justify-content-center rounded-start">
                     <form class="w-75 py-3" >
-                        <div class="mb-3">
-                            <label for="loanName" class="form-label">Loan Type</label>
-                            <select class="form-select" v-model="loanName" aria-label="Default select example"
-                                    id="loanName">
-                                <template v-for="loan of loans">
-                                    <option :value="loan.name">{{loan.name}}</option>
-                                </template>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="paymentOptions" class="form-label">Installments</label>
-                            <select class="form-select" v-model="paymentOption" aria-label="Default select example"
-                                    id="paymentOptions">
-                                <template v-for="loan of loans">
-                                    <template v-if="loan.name == loanName">
-                                        <template v-for="payment of loan.payments">
-                                            <option :value="payment">{{payment}}</option>
-                                        </template>
-                                    </template>
-                                </template>
-                            </select>
+                        <div>
+                            <div class="form-check">
+                                <input v-model="paymentType"  class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="fixedInstallment" checked="checked" >
+                                <label class="form-check-label" for="inlineRadio2">Fixed installment</label>
+                            </div>
+                            <div class="form-check">
+                                <input v-model="paymentType" class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="customizedAmount">
+                                <label class="form-check-label" for="inlineRadio1">Customized amount</label>
+                            </div>
                         </div>
 
                         <div class="mb-3">
-                            <label for="loanAmount" class="form-label">Amount
-                                <template v-for="loan of loans">
-                                    <template v-if="loan.name == loanName">
-                                        (Maximum amount permitted: {{loan.formattedAmount}})
-                                    </template>
+                            <label for="clientLoan" class="form-label">Select a Loan</label>
+                            <select  id="clientLoan" class="form-select form-select-sm" v-model="loanId" aria-label=".form-select-sm example">
+                                <template v-for="clientLoan of clientLoans">
+                                    <option :value="clientLoan.id">{{clientLoan.loanName}} - {{clientLoan.amount}} - {{clientLoan.payment}}</option>
                                 </template>
-                            </label>
-                            <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text rounded-0">$</span>
-                            </div>
-                            <input type="text" v-model="loanAmount" class="form-control" id="loanAmount"
-                                   aria-describedby="emailHelp" required>
-                            </div>
+                            </select>
                         </div>
                         <div class="mb-3">
-                            <label for="accountSelected" class="form-label">Account</label>
-                            <select class="form-select" v-model="destinedAccount" aria-label="Default select example"
-                                    id="accountSelected">
+                            <label for="installment" class="form-label">Amount</label>
+                            <template v-if="paymentType == 'customizedAmount'">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text rounded-0">$</span>
+                                </div>
+                                <input type="number" v-model="paymentAmount" class="form-control" id="installment">
+                            </div>
+                            </template>
+                            <template v-else>
+                                <div class="input-group">
+                                    <select :value="paymentAmount" class="form-select form-select-lg mb-3" v-model="paymentAmount" aria-label=".form-select-lg example">
+                                        <template v-for="loan of clientLoans">
+                                            <template v-if="loan.id == loanId">
+                                            <option selected>{{loan.installmentAmount}}
+                                            </option>
+                                            </template>
+                                        </template>
+                                    </select>
+                                </div>
+                            </template>
+                        </div>
+                        <div class="mb-3">
+                            <label for="accountForPayment" class="form-label">Account</label>
+                            <select id="accountForPayment" class="form-select form-select-sm" v-model="accountForPayment" aria-label=".form-select-sm example">
                                 <template v-for="account of accounts">
-                                    <option :value="account.number">{{account.number}}</option>
+                                    <option :value="account.id">{{account.number}}</option>
                                 </template>
                             </select>
                         </div>
                         <button type="button" class="btn shadow submitBtn" data-bs-toggle="modal"
-                                data-bs-target="#loanOverviewModal" @click="calculateInstallments">
+                                data-bs-target="#paymentOverviewModal">
                             Submit
                         </button>
                     </form>
-                    <div class="modal fade" id="loanOverviewModal" data-bs-backdrop="static" data-bs-keyboard="false"
+                    <div class="modal fade" id="paymentOverviewModal" data-bs-backdrop="static" data-bs-keyboard="false"
                          tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Loan Overview</h1>
+                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Payment Overview</h1>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <p>Please review the loan request and confirm</p>
+                                    <p>Please review the payment request and confirm</p>
                                     <hr>
-                                    <p>Loan Type: {{loanName}}</p>
-                                    <p>Loan Amount: {{loanAmount}}</p>
-                                    <p>Installments: {{paymentOption}}</p>
-                                    <p>Each installment will be a total of: {{installmentAmount}}</p>
-                                    <p>Account for deposit: {{destinedAccount}}</p>
+                                    <template v-for="loan of clientLoans">
+                                        <template v-if="loan.id == loanId">
+                                    <p>Loan: {{loan.loanName}}</p>
+                                        </template>
+                                    </template>
+                                    <p>Installment Amount: {{paymentAmount}}</p>
+                                    <template v-for="account of accounts">
+                                    <template v-if="account.id == accountForPayment">
+                                    <p>Account for installment payment: {{account.number}}</p>
+                                    </template>
+                                    </template>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
                                     </button>
                                     <button type="button" id="confirmBtn" class="btn lightBg" data-bs-toggle="modal"
-                                            data-bs-target="#confirmationModal" @click="newLoan">Confirm
+                                            data-bs-target="#confirmationModal" @click="makePayment">Confirm
                                     </button>
                                 </div>
                             </div>
@@ -229,7 +235,7 @@
                             <div class="modal-content">
                                 <template v-if="showAlert == true">
                                     <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Please review loan
+                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Please review payment
                                             request</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
@@ -244,12 +250,12 @@
                                 </template>
                                 <template v-else>
                                     <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Loan Approved!</h1>
+                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Payment Approved!</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        Your loan has been approved and is already available in your account!
+                                        Your payment has been processed, have a nice day!
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" @click="reloadPage" data-bs-dismiss="modal">Close
@@ -291,11 +297,15 @@
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js
     "></script>
-    <script src="pages/JS/loanApplication.js"></script>
-</div>
+<script src="pages/JS/loanApplication.js"></script>
 </body>
 </html>

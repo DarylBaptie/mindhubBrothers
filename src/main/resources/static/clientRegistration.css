@@ -7,17 +7,24 @@ padding:0 !important;
 margin:0 !important;
 box-sizing: border-box;
 height: 100% !important;
-background-color: #F7E7CE !important;
+background-image: url('../images/clientRegistrationBackground.avif');
+background-size: 100% 100%;
 font-family: 'Playfair Display', serif !important;
 }
 
 form {
-background-color: #FFFFF0  !important;
+background-color: #fdf0d5  !important;
 }
 
 
-#loginBtn {
-background-color: #F7E7CE !important;
+#registerBtn {
+background-color: #89c2d9 !important;
+}
+
+#registerBtn:hover {
+background-color: #cae9ff !important;
+transition: 0.3s !important;
+transform: scale(1.1) !important;
 }
 
 #logo {
@@ -25,14 +32,18 @@ position:relative;
 top:-5px
 }
 
-#div2 {
-background-image: url('/images/registrationBackground.jpg');
-background-size: 100% 100%;
-}
+
 
 #loginLink {
 color: black !important;
 }
+
+#loginLink:hover {
+color: white !important;
+transition: 0.3s !important;
+transform: scale(1.1) !important;
+}
+
 
 .alert {
 --bs-alert-padding-x: 0 !important;
@@ -48,4 +59,25 @@ display: none;
 
 #loginDiv {
 margin-bottom: 0.5rem;}
+}
+
+@media only screen and (min-width:320px) and (max-width:767px) {
+body {
+background-image: none;
+}
+
+
+
+.mainDiv {
+background: hsla(16, 100%, 76%, 1);
+
+background: linear-gradient(90deg, hsla(16, 100%, 76%, 1) 0%, hsla(49, 100%, 81%, 1) 100%);
+
+background: -moz-linear-gradient(90deg, hsla(16, 100%, 76%, 1) 0%, hsla(49, 100%, 81%, 1) 100%);
+
+background: -webkit-linear-gradient(90deg, hsla(16, 100%, 76%, 1) 0%, hsla(49, 100%, 81%, 1) 100%);
+
+filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#FFA585", endColorstr="#FFEDA0", GradientType=1 );
+}
+
 }

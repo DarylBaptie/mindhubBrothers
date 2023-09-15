@@ -7,30 +7,49 @@ padding:0 !important;
 margin:0 !important;
 box-sizing: border-box;
 height: 100% !important;
-background-color: #F7E7CE !important;
+background-image: url('../images/indexBackgroundNew.avif');
+background-size: 100% 100%;
+background-repeat: no-repeat;
 font-family: 'Playfair Display', serif !important;
 }
 
+
 form {
-background-color: #FFFFF0  !important;
+background-color: #fdf0d5  !important;
 }
 
-#div2 {
-background-image: url('../images/indexBackground.jpg');
+#loginForm {
+background-image: url('../images/loginFormBackground.jpg');
   background-size: 100% 100%;
 }
 
+
+
 #loginBtn {
-background-color: #F7E7CE !important;
+background-color: #89c2d9 !important;
+}
+
+
+
+#loginBtn:hover {
+background-color: #cae9ff !important;
+transition: 0.3s !important;
+transform: scale(1.1) !important;
 }
 
 #logo {
 position:relative;
-top:-5px
+top:-4px
 }
 
 #clientRegistrationLink {
 color: black;
+}
+
+#clientRegistrationLink:hover {
+color: white;
+transition: 0.3s !important;
+transform: scale(1.1) !important;
 }
 
 .alert {
@@ -40,8 +59,16 @@ color: black;
 color: black;
 }
 
-@media only screen and (max-width: 767px) {
-#div2{
-display: none;
-}
+@media only screen and (min-width:320px) and (max-width:767px) {
+body {
+background-image: none;
+background: hsla(207, 79%, 68%, 1);
+
+background: linear-gradient(180deg, hsla(207, 79%, 68%, 1) 69%, hsla(197, 100%, 63%, 1) 100%);
+
+background: -moz-linear-gradient(180deg, hsla(207, 79%, 68%, 1) 69%, hsla(197, 100%, 63%, 1) 100%);
+
+background: -webkit-linear-gradient(180deg, hsla(207, 79%, 68%, 1) 69%, hsla(197, 100%, 63%, 1) 100%);
+
+filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#6CB4EE", endColorstr="#40C9FF", GradientType=1 );
 }

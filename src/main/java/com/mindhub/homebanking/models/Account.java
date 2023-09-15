@@ -2,7 +2,6 @@ package com.mindhub.homebanking.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -26,6 +25,8 @@ public class Account {
 
     private double balance;
 
+    private boolean isActive;
+
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="client_id")
@@ -36,10 +37,12 @@ public class Account {
 
     public Account() { }
 
-    public Account(String num, LocalDateTime createDate, double bal) {
+
+    public Account(String num, LocalDateTime createDate, double bal, boolean isActive) {
         this.number = num;
         this.creationDate = createDate;
         this.balance = bal;
+        this.isActive = isActive;
     }
 
     public long getId() {
@@ -91,5 +94,15 @@ public class Account {
         transaction.setAccount(this);
         transactions.add(transaction);
     }
+
+    public boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(boolean active) {
+        isActive = active;
+    }
+
+
 
 }
