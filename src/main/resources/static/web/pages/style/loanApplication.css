@@ -90,9 +90,13 @@ background-size: 100% 100%;
   background-size: 100% 100%;
  }
 
- .cardAccount:hover, nav-link:hover, .cardLoan:hover, button:hover {
+ .cardAccount:hover, .cardLoan:hover, button:hover {
  transition: 0.3s !important;
  transform: scale(1.15) !important;
+ }
+
+ .loanCard {
+ background-color:  #f5ebe0 !important;
  }
 
  #div2 {

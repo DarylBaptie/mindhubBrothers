@@ -8,12 +8,17 @@ padding:0 !important;
 margin:0 !important;
 box-sizing: border-box;
 height: 100% !important;
-background-image: radial-gradient(#f7e7ce 2px, transparent 2px);
-background-size: 32px 32px;
 background-color: #fefae0 !important;
 font-family: 'Playfair Display', serif !important;
 }
 
+.cardStyle {
+background-color: #edede9 !important;
+}
+
+.loanCard {
+background-color:  #f5ebe0 !important;
+}
 
 
 .lightBg, footer {

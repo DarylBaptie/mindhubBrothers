@@ -36,9 +36,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="../home.html">Home</a>
-                        </li>
+
                         <li class="nav-item">
                             <a class="nav-link" href="accounts.html">Accounts</a>
                         </li>
@@ -58,9 +56,11 @@
                             </a>
                             <ul class="dropdown-menu lightBg">
                                 <template v-for="account of accounts">
+                                    <template v-if="account.isActive">
                                     <li><a class="dropdown-item"
                                            v-bind:href="'http://localhost:8080/web/account.html?id='+account.id">{{account.number}}</a>
                                     </li>
+                                        </template>
                                 </template>
                             </ul>
                         </li>
@@ -195,8 +195,8 @@
                 </div>
             </template>
 
-            <div class="d-flex align-items-center justify-content-center">
-                <button type="button" class="btn m-2 btnColor shadow"  data-bs-toggle="modal" data-bs-target="#eliminateCardModal">Deactivate card</button>
+            <div class="d-flex flex-column align-items-center justify-content-center mb-2">
+             <h4>Deactivate a card:</h4>   <button type="button" class="btn m-2 btnColor shadow"  data-bs-toggle="modal" data-bs-target="#eliminateCardModal">Deactivate card</button>
             </div>
             <div class="modal fade" id="eliminateCardModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -286,9 +286,10 @@
                 </div>
             </div>
             <h2 class="text-center mt-2 pb-3 display-3">Apply for a new Card</h2>
-            <form class="justify-content-center align-items-center text-center">
-                <div class="d-flex flex-wrap justify-content-center align-items-center mb-4 gap-3" >
-                    <div id="formDiv" class="py-2 px-5 rounded-4 lightBg">
+            <div class="d-flex flex-wrap container h-100 mt-3 mb-5 col-11 col-lg-10">
+            <form class="text-center d-flex col-12 col-md-6 col-xl-7 text-center align-items-center justify-content-center rounded-start">
+                <div class="d-flex flex-wrap justify-content-center align-items-center" >
+                    <div id="formDiv" class="py-2 px-5 rounded-start lightBg">
                         <h3>Select Card Type: </h3>
                         <div class="py-2">
                             <div class="form-check form-check-inline">
@@ -326,8 +327,11 @@
                             </button>
                         </div>
                     </div>
-
                 </div>
+            </form>
+                <div id="div2NewCard" class="col-12 col-md-6 col-xl-5 rounded-end"></div>
+            </div>
+
 
                 <div class="modal fade" id="confirmCardModal" data-bs-backdrop="static" data-bs-keyboard="false"
                      tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -382,7 +386,7 @@
 
 
 
-            </form>
+
         </div>
     </main>
 

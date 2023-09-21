@@ -10,7 +10,7 @@ createApp({
     client: [],
     accounts: [],
     errorMessage: "",
-    transferDestination: "",
+    transferDestination: "personal",
     showAlert: false,
     };
   },
@@ -20,7 +20,7 @@ createApp({
   methods: {
         transfer(event) {
         event.preventDefault();
-        axios.post('/api/clients/current/transactions',`amount=${this.amount}&description=${this.description}&accountNumberOrigin=${this.accountNumber}&accountNumberDestination=${this.destinationAccount}&accountDestinationType=${transferDestination}`,{headers:{'content-type':'application/x-www-form-urlencoded'}})
+        axios.post('/api/clients/current/transactions',`amount=${this.amount}&description=${this.description}&accountNumberOrigin=${this.accountNumber}&accountNumberDestination=${this.destinationAccount}&accountDestinationType=${this.transferDestination}`,{headers:{'content-type':'application/x-www-form-urlencoded'}})
         .then((response) => {
           console.log(response);
         })

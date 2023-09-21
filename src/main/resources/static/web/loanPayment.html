@@ -37,9 +37,6 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="../home.html">Home</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link" href="accounts.html">Accounts</a>
                         </li>
                         <li class="nav-item">
@@ -58,9 +55,11 @@
                             </a>
                             <ul class="dropdown-menu lightBg">
                                 <template v-for="account of accounts">
+                                    <template v-if="account.isActive == true">
                                     <li><a class="dropdown-item"
                                            v-bind:href="'http://localhost:8080/web/account.html?id='+account.id">{{account.number}}</a>
                                     </li>
+                                    </template>
                                 </template>
                             </ul>
                         </li>
@@ -116,17 +115,29 @@
                 </div>
                 <div class="d-flex flex-wrap align-items-center justify-content-evenly mb-4 gap-1">
                     <template v-for="loan in clientLoans">
-                        <div v-bind:class="[loan.loanName]"
-                             class="card shadow mb-3 cardLoan ps-3 rounded text-light col-10 col-md-5 col-lg-4 col-xl-3">
+                        <div class="card mb-3 loanCard" style="max-width: 420px;">
                             <div class="row g-0">
-                                <div class="col-md-12">
+                                <div class="col-md-4">
+                                    <template v-if="loan.loanName == 'Personal'">
+                                        <img src="./pages/images/personal.jpg" class="img-fluid h-100 col-12 rounded-start" alt="...">
+                                    </template>
+                                    <template v-else-if="loan.loanName == 'Mortgage'">
+                                        <img src="./pages/images/mortgage.jpg" class="img-fluid h-100 col-12 rounded-start" alt="...">
+                                    </template>
+                                    <template v-else-if="loan.loanName == 'Car'">
+                                        <img src="./pages/images/car.jpg.jpg" class="img-fluid h-100 col-12 rounded-start" alt="...">
+                                    </template>
+                                    <template v-else>
+                                        <img src="./pages/images/personal.jpg" class="img-fluid h-100 col-12 rounded-start" alt="...">
+                                    </template>
+                                </div>
+                                <div class="col-md-8">
                                     <div class="card-body">
-                                        <h5 class="card-title">Loan Name: {{loan.loanName}} </h5>
+                                        <h5 class="card-title">Loan Name: {{loan.loanName}}</h5>
                                         <p v-if="!show" class="card-text pt-2">Amount: $****</p>
                                         <p v-else class="card-text pt-2">Amount:<span
                                                 class="fs-4">{{loan.formattedAmount}}</span></p>
                                         <p class="card-text pt-2">Payment Terms: {{loan.payment}} installments</p>
-                                        <a class="stretched-link"></a>
                                     </div>
                                 </div>
                             </div>
@@ -149,12 +160,13 @@
                                 <label class="form-check-label" for="inlineRadio1">Customized amount</label>
                             </div>
                         </div>
-
                         <div class="mb-3">
                             <label for="clientLoan" class="form-label">Select a Loan</label>
                             <select  id="clientLoan" class="form-select form-select-sm" v-model="loanId" aria-label=".form-select-sm example">
                                 <template v-for="clientLoan of clientLoans">
+                                    <template v-if="clientLoan.active == true">
                                     <option :value="clientLoan.id">{{clientLoan.loanName}} - {{clientLoan.amount}} - {{clientLoan.payment}}</option>
+                                    </template>
                                 </template>
                             </select>
                         </div>
@@ -185,7 +197,9 @@
                             <label for="accountForPayment" class="form-label">Account</label>
                             <select id="accountForPayment" class="form-select form-select-sm" v-model="accountForPayment" aria-label=".form-select-sm example">
                                 <template v-for="account of accounts">
+                                    <template v-if="account.isActive == true">
                                     <option :value="account.id">{{account.number}}</option>
+                                    </template>
                                 </template>
                             </select>
                         </div>

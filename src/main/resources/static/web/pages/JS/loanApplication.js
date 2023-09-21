@@ -11,6 +11,7 @@ const { createApp } = Vue
       paymentOption: 0,
       loanAmount: 0,
       accounts: [],
+      accountsActive: [],
       installmentAmountShow: 0,
       destinedAccount: "",
       errorMessage: "",
@@ -36,6 +37,7 @@ const { createApp } = Vue
           .then((response) => {
             this.data.push(response.data)
             this.accounts = response.data.accounts
+            this.accountsActive = this.accounts.filter(account => account.isActive == true)
             this.clientLoans = response.data.clientloans.filter(loan => loan.active == true)
             this.formatLoanAmount(this.clientLoans)
           })

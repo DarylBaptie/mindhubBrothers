@@ -17,6 +17,11 @@ font-family: 'Playfair Display', serif !important;
 background-color: #F7E7CE !important;
 }
 
+.cardStyle {
+background-color: #edede9 !important;
+}
+
+
 .modal-content {
 background-color: #fefae0  !important;
 }

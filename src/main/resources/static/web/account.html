@@ -38,9 +38,6 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="../home.html">Home</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link" href="accounts.html">Accounts</a>
                         </li>
                         <li class="nav-item">
@@ -59,11 +56,10 @@
                             </a>
                             <ul class="dropdown-menu lightBg">
                                     <template v-for="account of accounts">
-                                        <template v-if="account.id != accountNumber">
+                                        <template v-if="account.isActive && account.id != accountNumber">
                                             <li><a class="dropdown-item"
                                                    v-bind:href="'http://localhost:8080/web/account.html?id='+account.id">{{account.number}}</a>
                                             </li>
-                                        </template>
                                     </template>
                                 </template>
                             </ul>
@@ -118,21 +114,24 @@
             <div class="d-flex flex-wrap mb-5">
                 <div class="d-flex justify-content-center align-items-center col-12 col-md-4 col-lg-5 col-xl-4">
                     <template v-for="account in data">
-                        <div class="card mb-3 cardAccount rounded text-light col-lg-8  ">
-                            <div class="row g-0">
-                                <div class="col-md-12">
+                            <template v-if="account.isActive">
+                                <div class="card cardStyle" style="width: 18rem;">
+                                    <template v-if="account.accountType == 'CURRENT' ">
+                                        <img src="./pages/images/current.avif" class="card-img-top" alt="...">
+                                    </template>
+                                    <template v-else>
+                                        <img src="./pages/images/savings.avif" class="card-img-top" alt="...">
+                                    </template>
                                     <div class="card-body">
-                                        <h5 class="card-title">Account: {{account.number}}</h5>
-                                        <p v-if="!show" class="card-text pt-2">Balance: $****</p>
-                                        <p v-else class="card-text pt-2">Balance: <span class="fs-4">{{account.formattedBalance}}</span>
-                                        </p>
-                                        <p class="card-text rounded text-light"><small>Account Creation Date:
+                                        <h5 class="card-title">Account: {{account.number}} </h5>
+                                        <p class="card-text pt-2">{{account.accountType}}</p>
+                                        <p v-if="!show" class="card-text">Balance: $****</p>
+                                        <p v-else class="card-text">Balance:<span class="fs-4">{{account.formattedBalance}}</span></p>
+                                        <p class="card-text rounded"><small>Account Creation Date:
                                             {{account.newDate}}</small></p>
-                                        <a href="#" class="stretched-link"></a>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
+                            </template>
                     </template>
                 </div>
                 <div v-if="transactions.length == 0"
@@ -169,109 +168,31 @@
             <div v-if="accounts.length > 1">
                 <h3 class="text-center mb-5 display-4">Other Accounts</h3>
                 <div class="d-flex flex-wrap mb-5 gap-2 justify-content-center">
-                    <template v-for="client of client">
-                        <template v-for="account of client.accounts">
+                    <template v-for="account of accountsActive">
                             <template v-if="account.id != accountNumber">
-                                <div class=" gap-2 otherAccount d-flex flex-wrap justify-content-center card mb-3 cardAccount rounded text-light col-8 col-md-4">
-                                    <div class="row g-0">
-                                        <div class="col-md-12">
+                                        <div class="card cardStyle" style="width: 18rem;">
+                                            <template v-if="account.accountType == 'CURRENT' ">
+                                                <img src="./pages/images/current.avif" class="card-img-top" alt="...">
+                                            </template>
+                                            <template v-else>
+                                                <img src="./pages/images/savings.avif" class="card-img-top" alt="...">
+                                            </template>
                                             <div class="card-body">
-                                                <h5 class="card-title">Account: {{account.number}}</h5>
-                                                <p v-if="!show" class="card-text pt-2">Balance: $****</p>
-                                                <p v-else class="card-text pt-2">Balance: <span class="fs-4">{{account.formattedBalance}}</span>
-                                                </p>
-                                                <p class="card-text roFunded text-light"><small>Account Creation Date:
-                                                    {{account.newCreationDate}}</small></p>
-                                                <a v-bind:href="'http://localhost:8080/web/account.html?id='+account.id"
-                                                   class="stretched-link"></a>
+                                                <h5 class="card-title">Account: {{account.number}} </h5>
+                                                <p class="card-text pt-2">{{account.accountType}}</p>
+                                                <p v-if="!show" class="card-text">Balance: $****</p>
+                                                <p v-else class="card-text">Balance:<span class="fs-4">{{account.formattedBalance}}</span></p>
+                                                <p class="card-text rounded"><small>Account Creation Date:
+                                                    {{account.newDate}}</small></p>
+                                                <div class="d-flex flex-row gap-1"><a v-bind:href="'http://localhost:8080/web/account.html?id='+account.id" class="btn btn-secondary aButton">More Details</a>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </template>
                         </template>
                     </template>
                 </div>
             </div>
 
-            <div>
-                <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img src="pages/images/family1.jpg" class="d-block w-100 carouselImg1"
-                                 alt="picture of couple">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="pages/images/family2.jpg" class="d-block w-100 carouselImg2"
-                                 alt="picture of family">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="pages/images/family3.jpg" class="d-block w-100 carouselImg3"
-                                 alt="picture of family">
-                        </div>
-                    </div>
-                </div>
-                <h5 class="text-center mt-3 display-5">Quick Links</h5>
-
-                <div class="container d-flex flex-wrap align-items-center justify-content-evenly my-4">
-                    <div class="d-flex flex-column col-10 col-md-6 col-lg-4 align-items-center justify-content-center">
-                        <div class="card mb-3 rounded quickLinkCard col-10" id="investment">
-                            <div class="row g-0">
-                                <div class="col-md-12">
-                                    <div class="card-body">
-                                        <h4 class="card-title">Investments</h4>
-                                        <p class="card-text pt-2">Invest at a touch of a button</p>
-                                        <a href="./pages/investments" class="stretched-link"></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card mb-3 rounded quickLinkCard col-10" id="payment">
-                            <div class="row g-0">
-                                <div class="col-md-12">
-                                    <div class="card-body">
-                                        <h4 class="card-title">Payments</h4>
-                                        <p class="card-text pt-2">Hassle free payment options</p>
-                                        <a href="./pages/payments" class="stretched-link"></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="d-flex flex-column col-10 col-md-6 col-lg-4 align-items-center justify-content-center">
-                        <div class="card mb-3 rounded quickLinkCard col-10" id="transfer">
-                            <div class="row g-0">
-                                <div class="col-md-12">
-                                    <div class="card-body">
-                                        <h4 class="card-title">Transfers</h4>
-                                        <p class="card-text pt-2">Instant transfers around the world</p>
-                                        <a href="transfers.html" class="stretched-link"></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card mb-3 rounded quickLinkCard col-10 shadow" id="openAccounts">
-                            <div class="row g-0">
-                                <div class="col-md-12">
-                                    <div class="card-body">
-                                        <h4 class="card-title">Open an Account</h4>
-                                        <p class="card-text pt-2">Current and Savings Accounts for you and your
-                                            family</p>
-                                        <template v-if="accounts.length >= 3">
-                                            <a href="#" class="stretched-link" type="button" data-bs-toggle="modal"
-                                               data-bs-target="#noAccountPossibleModal"></a>
-                                        </template>
-                                        <template v-else>
-                                            <a href="#" class="stretched-link" type="button" data-bs-toggle="modal"
-                                               data-bs-target="#accountModal"></a>
-                                        </template>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <div class="modal fade" id="noAccountPossibleModal" tabindex="-1" aria-labelledby="exampleModalLabel"

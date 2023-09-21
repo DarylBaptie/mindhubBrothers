@@ -8,6 +8,7 @@ createApp({
       show: true,
       client:[],
       accounts: [],
+      accountsActive: [],
       transactions:  [],
       accountNumber: 0,
     };
@@ -75,6 +76,7 @@ createApp({
             this.client.push(response.data);
             this.changeDateClient(this.client);
             this.customerAccounts(this.client);
+            this.accountsActive = this.accounts.filter(account => account.isActive == true)
             this.formatAccountBalance(this.accounts);
             });
     },

@@ -115,7 +115,7 @@
             <div class="d-flex flex-wrap align-items-center justify-content-evenly mb-4 gap-1">
                 <template v-for="account in accounts">
                     <template v-if="account.isActive">
-                        <div class="card" style="width: 18rem;">
+                        <div class="card cardStyle" style="width: 18rem;">
                             <template v-if="account.accountType == 'CURRENT' ">
                             <img src="./pages/images/current.avif" class="card-img-top" alt="...">
                             </template>
@@ -326,7 +326,7 @@
                 </div>
                 <div class="d-flex flex-wrap align-items-center justify-content-evenly mb-4 gap-1">
                     <template v-for="loan in loans">
-                        <div class="card mb-3" style="max-width: 420px;">
+                        <div class="card mb-3 loanCard" style="max-width: 420px;">
                             <div class="row g-0">
                                 <div class="col-md-4">
                                     <template v-if="loan.loanName == 'Personal'">

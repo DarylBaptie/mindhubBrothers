@@ -8,7 +8,7 @@ padding:0 !important;
 margin:0 !important;
 box-sizing: border-box;
 height: 100% !important;
-background-color: #e9f5db;
+background-color: #fefae0;
 font-family: 'Playfair Display', serif !important;
 }
 
@@ -18,7 +18,7 @@ color: black !important;
 }
 
 .lightBg {
-background-color: #cfe1b9 !important;
+background-color: #F7E7CE !important;
 }
 
 .modal-content {
@@ -86,7 +86,7 @@ transform: scale(1.10) !important;
 
 
 .quickLinkCard {
-background-color:#b5c99a !important;
+background-color:#f2cc8f !important;
 }
 
 #investment {
@@ -115,7 +115,7 @@ color: white;
 }
 
 .divBgColor {
-background-color: #b5c99a;
+background-color: #f2cc8f;
 }
 
 .quickLinkCard {

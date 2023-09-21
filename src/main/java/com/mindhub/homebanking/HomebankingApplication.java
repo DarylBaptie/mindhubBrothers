@@ -32,8 +32,12 @@ public class HomebankingApplication {
 	private LocalDateTime localDateTimeTwoDays = localDateTime.plusDays(2) ;
 	private LocalDateTime localDateTimeThreeDays = localDateTime.plusDays(3) ;
 
+
+
 	private LocalDate cardEmissionDate = LocalDate.now();
 	private LocalDate cardExpiryDate = cardEmissionDate.plusYears(5);
+	private LocalDate cardExpiryDate2 = cardEmissionDate.minusMonths(1);
+
 
 	private List<Integer> payments1 = Arrays.asList(12,24,36,48,60);
 	private List<Integer> payments2 = Arrays.asList(6,12,24);
@@ -112,7 +116,7 @@ public class HomebankingApplication {
 			repositoryClientLoan.save(clientLoanPersonal2);
 			repositoryClientLoan.save(clientLoanCar);
 
-			Card card1 = new Card(melbaMorel.getFirstName() + " " + melbaMorel.getLastName(), DEBIT, GOLD, "4582 8954 3594 3458", 567,this.cardEmissionDate, this.cardExpiryDate, true);
+			Card card1 = new Card(melbaMorel.getFirstName() + " " + melbaMorel.getLastName(), DEBIT, GOLD, "4582 8954 3594 3458", 567,this.cardEmissionDate,  this.cardExpiryDate2 , true);
 			melbaMorel.addCard(card1);
 			repositoryCard.save(card1);
 

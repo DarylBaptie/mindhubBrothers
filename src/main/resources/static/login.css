@@ -7,7 +7,7 @@ padding:0 !important;
 margin:0 !important;
 box-sizing: border-box;
 height: 100% !important;
-background-image: url('../images/indexBackgroundNew.avif');
+background-image: url("../images/newLogIn.avif");
 background-size: 100% 100%;
 background-repeat: no-repeat;
 font-family: 'Playfair Display', serif !important;

@@ -35,7 +35,7 @@ transform: scale(1.15) !important;
 }
 
 }
-.nav-link:hover, .navbar-brand:hover {
+.nav-link:hover, .nav-item:hover, .navbar-brand:hover {
 opacity: 1 !important;
 text-decoration: underline !important;
 transition: 0.3s !important;
@@ -107,6 +107,13 @@ color  : #3B3C36;
 color: red;
 font-weight: 600;
  }
+
+#div2NewCard {
+background-image: url('../images/newCard.avif') !important;
+background-size: 100% 100%;
+opacity: 0.8;
+}
+
 
  .card-border{
 
