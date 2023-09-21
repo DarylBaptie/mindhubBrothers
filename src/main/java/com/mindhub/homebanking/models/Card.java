@@ -41,7 +41,7 @@ public class Card {
 
     public Card() {}
 
-    public Card(String cardholder, CardType cardType, CardColor cardColor, String cardNumber, int cvv, LocalDate thruDate, LocalDate fromDate, boolean isActive) {
+    public Card(String cardholder, CardType cardType, CardColor cardColor, String cardNumber, int cvv, LocalDate fromDate, LocalDate thruDate,  boolean isActive) {
         this.cardholder = cardholder;
         this.cardType = cardType;
         this.cardColor = cardColor;

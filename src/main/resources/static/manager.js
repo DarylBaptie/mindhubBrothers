@@ -19,7 +19,7 @@ const { createApp } = Vue
         loadData() {
             axios({
                 method: 'get',
-                url: '/api/clients',{headers:{'accept':'application/xml'}
+                url: '/api/clients',
             })
     .then((response) => {
       this.data = response.data;
@@ -48,7 +48,14 @@ axios.post('/api/clients', {
         this.formData.firstName = '';
         this.formData.lastName = '';
         this.formData.clientEmail = '';
-        }
+        },
+            logout() {
+                axios.post('/api/logout')
+                .then(response => {
+                window.location = "/index.html";
+                })
+                .catch(error => console.log(error))
+            },
     }
   }).mount('#app')
 

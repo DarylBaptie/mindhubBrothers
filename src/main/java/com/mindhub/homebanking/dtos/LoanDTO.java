@@ -12,7 +12,7 @@ public class LoanDTO {
 
     private List<Integer> payments;
 
-    private List<Double> interest;
+    private double interest;
 
 
 
@@ -29,7 +29,7 @@ public class LoanDTO {
 
     public List<Integer> getPayments() {return payments;}
 
-    public List<Double> getInterest() {
+    public double getInterest() {
         return interest;
     }
 

@@ -36,15 +36,13 @@ public class Loan {
     @Column(name="Payments")
     private List<Integer> payments;
 
-    @ElementCollection
-    @Column(name="interest")
-    private List<Double> interest;
+    private double interest;
 
     public Loan() {}
 
 
 
-    public Loan(String name, double maxAmount, List<Integer> payments, List<Double> interest) {
+    public Loan(String name, double maxAmount, List<Integer> payments, double interest) {
         this.name = name;
         this.maxAmount = maxAmount;
         this.payments = payments;
@@ -78,11 +76,11 @@ public List<Integer> getPayments() {return payments;}
         clientLoans.add(clientLoan);
     }
 
-    public List<Double> getInterest() {
+    public double getInterest() {
         return interest;
     }
 
-    public void setInterest(List<Double> interest) {
+    public void setInterest(double interest) {
         this.interest = interest;
     }
 

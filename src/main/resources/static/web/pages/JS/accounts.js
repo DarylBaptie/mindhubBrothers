@@ -7,7 +7,13 @@ createApp({
       show: true,
       loans: [],
       accounts: [],
+      accountsActive: [],
       accountId: null,
+      showAlert: false,
+      errorMessage: "",
+      errorMessageNewAccount: "",
+      showAlertNewAccount: false,
+      accountType: "CURRENT",
     };
   },
   created() {
@@ -22,6 +28,7 @@ createApp({
       .then((response) => {
         this.data.push(response.data)
         this.accounts = response.data.accounts
+        this.accountsActive = this.accounts.filter(account => account.isActive)
         this.loans = response.data.clientloans.filter(loan => loan.active == true)
         this.changeDate(this.accounts)
         this.sortAccounts(this.data)
@@ -74,11 +81,16 @@ createApp({
 
     },
     newAccount() {
-    axios.post('/api/clients/current/accounts')
+    axios.post('/api/clients/current/accounts',`accountType=${this.accountType}`, {headers:{'content-type':'application/x-www-form-urlencoded'}})
     .then(response => {
     console.log(response)
     })
-    .catch(error => console.log(error));
+    .catch(error => {
+    console.log(error)
+    this.showAlertNewAccount = true;
+    this.errorMessageNewAccount = error.response.data;
+    }
+    );
 
     },
             deactivateAccount() {
@@ -88,6 +100,8 @@ createApp({
             })
             .catch((error) => {
                 console.log(error);
+                this.showAlert = true;
+                this.errorMessage = error.response.data;
                 })
             },
 

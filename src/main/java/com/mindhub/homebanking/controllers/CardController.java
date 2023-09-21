@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 
@@ -70,12 +69,12 @@ public class CardController {
             return new ResponseEntity<>("Card color is missing", HttpStatus.FORBIDDEN);
         }
 
-     if (!client.getCards().stream().filter(card -> card.getCardType().equals(CardType.valueOf(type)) && card.getCardColor().equals(CardColor.valueOf(color))).collect(Collectors.toSet()).isEmpty())
+     if (!client.getCards().stream().filter(card -> card.getCardType().equals(CardType.valueOf(type)) && card.getIsActive() && card.getCardColor().equals(CardColor.valueOf(color))).collect(Collectors.toSet()).isEmpty())
         {
             return new ResponseEntity<>("Apologies, you already have this card", HttpStatus.FORBIDDEN);
         } else {
                 String clientName = client.getFirstName() + " " + client.getLastName();
-                Card newCard = new Card(clientName, CardType.valueOf(type), CardColor.valueOf(color), cardNumber, cvv, cardEmissionDate,cardExpiryDate, isActive);
+                Card newCard = new Card(clientName, CardType.valueOf(type), CardColor.valueOf(color), cardNumber, cvv, cardEmissionDate, cardExpiryDate, isActive);
                 client.addCard(newCard);
                 cardService.saveCard(newCard);
                 return new ResponseEntity<>("Card created", HttpStatus.CREATED);
@@ -87,14 +86,14 @@ public class CardController {
     public ResponseEntity<Object> disableCard(@RequestParam long id, Authentication authentication){
         Card card = cardService.findById(id);
         Client client = clientService.findClientByEmail(authentication.getName());
-        Boolean existCard = client.getCards().contains(card);
+        Boolean cardIsClients = client.getCards().contains(card);
         if(card == null){
             return  new ResponseEntity<>("This card does not exist", HttpStatus.FORBIDDEN);
         }
-        if (!existCard){
+        if (!cardIsClients){
             return  new ResponseEntity<>("This card does not belong to this client", HttpStatus.FORBIDDEN);
         }
-        if(card.getIsActive() == false){
+        if(!card.getIsActive()){
             return new ResponseEntity<>("This card is already deactivated", HttpStatus.FORBIDDEN);
         }
         card.isActive(false);

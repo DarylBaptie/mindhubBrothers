@@ -98,15 +98,23 @@ const { createApp } = Vue
                        })
     },
     calculateInstallments() {
+    loanName = this.loanName;
+    loans = this.loans;
     amount = this.loanAmount;
     installments = this.paymentOption;
-    installmentCalculation = amount * 1.20 / installments;
+    percentInterest = 0;
+    for(loan of loans) {
+    if(loan.name == loanName) {
+     percentInterest = loan.interest / 100;
+    }
+    installmentCalculation = (Number((percentInterest * amount)) + Number(amount)) / installments;
+    }
     this.installmentAmountShow = installmentCalculation.toLocaleString("en-US", {
                                                                   style: "currency",
                                                                   currency: "USD",
                                                                   maximumFractionDigits: 0,
     });
-    this.installmentAmount = installmentCalculation.toFixed(2);
+    this.installmentAmount = installmentCalculation
     },
     reloadPage() {
         window.location = "/web/accounts.html";

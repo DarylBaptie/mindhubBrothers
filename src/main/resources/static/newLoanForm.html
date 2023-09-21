@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="newLoanForm.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <title>New Loan Form</title>
+</head>
+<body>
+<div id="app">
+    <div class="w-100 d-flex justify-content-between mt-3">
+        <a href="manager.html">
+            <button type="button"  class="btn btn-success ms-3">ClientManager</button>
+        </a>
+        <button type="button" class="btn btn-danger me-3" @click="logout">Log Out</button>
+    </div>
+    <div class="container d-flex flex-wrap">
+        <div class="d-flex flex-column justify-content-center text-center align-items-center my-3 pb-3 col-6 rounded" id="formDiv">
+            <h1>New Loan Form</h1>
+            <form>
+                <div class="mb-3">
+                    <label for="loanName" class="form-label">Loan Name</label>
+                    <input type="text" v-model="loanName" class="form-control" id="loanName"
+                           aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                    <label for="maxAmount" class="form-label">Max Amount</label>
+                    <input type="number" v-model="maxAmount" class="form-control" id="maxAmount"
+                           aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                    <label for="interest" class="form-label">Interest Rate</label>
+                    <input type="number" v-model="interestRate" class="form-control" id="interest"
+                           aria-describedby="emailHelp">
+                </div>
+                <div>
+                    <label class="form-label">Installment Options</label>
+                    <div class="mb-3 gap-3">
+                        <input type="checkbox" id="six" value="6" v-model="checkedInstallments">
+                        <label class="me-2 ms-1" for="six">6</label>
+                        <input type="checkbox" id="twelve" value="12" v-model="checkedInstallments">
+                        <label class="me-2 ms-1" for="twelve">12</label>
+                        <input type="checkbox" id="eighteen" value="18" v-model="checkedInstallments">
+                        <label class="me-2 ms-1" for="eighteen">18</label>
+                    </div>
+                    <div class="mb-3">
+                        <input type="checkbox" id="twentyfour" value="24" v-model="checkedInstallments">
+                        <label class="me-2 ms-1" for="twentyfour">24</label>
+                        <input type="checkbox" id="fortyeight" value="48" v-model="checkedInstallments">
+                        <label class="me-2 ms-1" for="fortyeight">48</label>
+                        <input type="checkbox" id="sixty" value="60" v-model="checkedInstallments">
+                        <label class="me-2 ms-1" for="sixty">60</label>
+                    </div>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-success" @click="postLoan" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Submit</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="d-flex flex-column col-6 align-items-start ps-5 justify-content-center " >
+          <span>
+           <h2>New Loan Review</h2>
+            <h4>Loan Name: {{loanName}}</h4>
+            <h4>Max Amount: {{maxAmount}}</h4>
+            <h4>Interest Rate: {{interestRate}}</h4>
+            <h4>Installment Options: {{checkedInstallments}}</h4>
+              </span>
+        </div>
+    </div>
+
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <template v-if="showAlert == true">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Please Review Loan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {{errorMessage}}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+                </template>
+                <template v-else>
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Loan Creation Successful</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        The new loan has been created
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="cleanForm">Close</button>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="newLoanForm.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"
+            integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa"
+            crossorigin="anonymous"></script>
+</div>
+</body>
+</html>

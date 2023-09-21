@@ -28,16 +28,6 @@ background-color: #fefae0  !important;
 background-color: #ccd5ae !important;}
 
 
-.nav-link:hover, .navbar-brand:hover,  {
-opacity: 1 !important;
-text-decoration: underline !important;
-transition: 0.3s !important;
-transform: scale(1.10) !important;
-}
-
-
-
-
 h1 {
  font-style: italic;
 }
@@ -50,6 +40,11 @@ h1 {
 background-size: 100% 100%;
  }
 
+
+.Business {
+  background-image: url('../images/forest.jpg') !important;
+  background-size: 100% 100%;
+ }
 
 .Personal {
   background-image: url('../images/personal.jpg') !important;
@@ -113,10 +108,18 @@ cursor: pointer;
 
 
 
-.cardAccount:hover, .quickLinkCard:hover, nav-link:hover, .cardLoan:hover, button:hover, .newLoanBtn:hover {
+.cardAccount:hover, .quickLinkCard:hover, .cardLoan:hover, button:hover, .newLoanBtn:hover, .aButton:hover {
 transition: 0.3s !important;
 transform: scale(1.15) !important;
 }
+
+.nav-link:hover, .navbar-brand:hover  {
+opacity: 1 !important;
+text-decoration: underline !important;
+transition: 0.3s !important;
+transform: scale(1.10) !important;
+}
+
 
 .quickLinkCard {
 height: 8rem !important}

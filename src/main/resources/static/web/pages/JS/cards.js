@@ -17,6 +17,8 @@ const { createApp } = Vue
       cardId: null,
       dateNow: new Date().toISOString().slice(0, 10),
       eliminateCardNumber: "",
+      errorMessageDeleteCard: "",
+      showAlertDeleteCard: false,
       }
     },
         created() {
@@ -119,9 +121,9 @@ const { createApp } = Vue
     },
     debitCreditCards(cards) {
     for (card of cards) {
-        if (card.cardType == "DEBIT") {
+        if (card.cardType == "DEBIT" && card.isActive == true) {
         this.debitCards++;
-        } else if (card.cardType == "CREDIT") {
+        } else if (card.cardType == "CREDIT" && card.isActive == true) {
         this.creditCards++
         }
     }
@@ -143,6 +145,8 @@ const { createApp } = Vue
             console.log(response)
         })
         .catch((error) => {
+            this.showAlertDeleteCard = true;
+            this.errorMessageDeleteCard = error.response.data;
             console.log(error);
             })
         },

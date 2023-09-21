@@ -183,4 +183,37 @@ public class LoanController {
         }
 
     }
+
+
+    @PostMapping("/api/createLoan")
+    public ResponseEntity createLoan(@RequestBody Loan loan) {
+
+        if(loan.getName().isBlank()) {
+            return new ResponseEntity<>("Loan name required", HttpStatus.FORBIDDEN);
+        }
+        if(loan.getMaxAmount() <= 0) {
+            return new ResponseEntity<>("Valid max amount required", HttpStatus.FORBIDDEN);
+        }
+        if(loan.getInterest() <= 0) {
+            return new ResponseEntity<>("Valid interest rate required", HttpStatus.FORBIDDEN);
+        }
+        if(loan.getPayments().isEmpty()) {
+            return new ResponseEntity<>("Valid installments required", HttpStatus.FORBIDDEN);
+        }
+
+        if(loanService.findLoanByName(loan.getName()) != null) {
+            return new ResponseEntity<>("Loan already exists", HttpStatus.FORBIDDEN);
+        }
+
+        else {
+            loanService.saveLoan(loan);
+            return new ResponseEntity<>("New loan created", HttpStatus.CREATED);
+        }
+
+
+
+    }
+
+
+
 }

@@ -1,3 +1,4 @@
+
 html {
 height: 100%
 }
@@ -7,68 +8,143 @@ padding:0 !important;
 margin:0 !important;
 box-sizing: border-box;
 height: 100% !important;
-background-image: url('../images/indexBackgroundNew.avif');
-background-size: 100% 100%;
-background-repeat: no-repeat;
+background-color: #e9f5db;
 font-family: 'Playfair Display', serif !important;
 }
 
-
-form {
-background-color: #fdf0d5  !important;
+.quickLink {
+text-decoration: none;
+color: black !important;
 }
 
-#loginForm {
-background-image: url('../images/loginFormBackground.jpg');
-  background-size: 100% 100%;
+.lightBg {
+background-color: #cfe1b9 !important;
 }
 
-
-
-#loginBtn {
-background-color: #89c2d9 !important;
+.modal-content {
+background-color: #FFFFF0 !important;
 }
 
-
-
-#loginBtn:hover {
-background-color: #cae9ff !important;
+.nav-link:hover, .navbar-brand:hover  {
+opacity: 1 !important;
+text-decoration: underline !important;
 transition: 0.3s !important;
-transform: scale(1.1) !important;
+transform: scale(1.10) !important;
+}
+
+
+h1 {
+ font-style: italic;
 }
 
 #logo {
 position:relative;
-top:-4px
+top:-2px
 }
 
-#clientRegistrationLink {
-color: black;
+
+#carouselPic {
+height: 20rem;
+opacity: 0.7;
+object-fit: cover;
+object-position: 60% 10%;
 }
 
-#clientRegistrationLink:hover {
-color: white;
+#homeBodyPhoto, #homeBodyPhoto2 {
+height: 100%;
+width: 100%;
+}
+
+.carouselImg1, .carouselImg2, .carouselImg3
+   {
+    width: 100%;
+    height: 15rem;
+    object-fit: cover;
+}
+
+.carouselImg1 {
+    object-position: 60% 10%;
+}
+
+.carouselImg2 {
+    object-position: 60% 30%;
+}
+
+.carouselImg3 {
+    object-position: 60% 2.5%;
+}
+
+.socialsLinks {
+text-decoration: none !important;
+color: black !important;
+}
+
+.socialsLinks:hover {
 transition: 0.3s !important;
-transform: scale(1.1) !important;
+transform: scale(1.10) !important;
 }
 
-.alert {
---bs-alert-padding-x: 0 !important;
---bs-alert-margin-bottom: 0 !important;
---bs-alert-padding-y: 0 !important;
-color: black;
+
+.quickLinkCard {
+background-color:#b5c99a !important;
 }
 
-@media only screen and (min-width:320px) and (max-width:767px) {
-body {
-background-image: none;
-background: hsla(207, 79%, 68%, 1);
-
-background: linear-gradient(180deg, hsla(207, 79%, 68%, 1) 69%, hsla(197, 100%, 63%, 1) 100%);
-
-background: -moz-linear-gradient(180deg, hsla(207, 79%, 68%, 1) 69%, hsla(197, 100%, 63%, 1) 100%);
-
-background: -webkit-linear-gradient(180deg, hsla(207, 79%, 68%, 1) 69%, hsla(197, 100%, 63%, 1) 100%);
-
-filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#6CB4EE", endColorstr="#40C9FF", GradientType=1 );
+#investment {
+ background-image: url('../images/investment.jpg') !important;
+background-size: 100% 100%;
+color: white;
 }
+
+#payment {
+ background-image: url('../images/payment.jpg') !important;
+background-size: 100% 100%;
+color: white;
+}
+
+#transfer {
+ background-image: url('../images/transfer.jpg') !important;
+background-size: 100% 100%;
+color: white;
+}
+
+#openAccounts {
+ background-image: url('../images/accounts.jpg') !important;
+background-size: 100% 100%;
+color: white;
+--bs-card-title-spacer-y: 0 !important;
+}
+
+.divBgColor {
+background-color: #b5c99a;
+}
+
+.quickLinkCard {
+transition: all 0.5s;
+}
+
+.quickLinkCard:hover {
+transform: scale(1.05);
+}
+
+  @media only screen and (min-width:768px) {
+.pText {
+width: 75% !important}
+}
+
+  @media only screen and (min-width:320px) and (max-width:767px)  {
+
+  #copyright{
+  padding-bottom: 1rem !important;
+  }
+
+  #carouselPic {
+  height: 10rem;
+  object-position: 40% 40%;
+  margin-top: 1rem;
+  }
+
+  .carouselImg1, .carouselImg2, .carouselImg3 {
+  height: 10rem;}
+
+
+  }

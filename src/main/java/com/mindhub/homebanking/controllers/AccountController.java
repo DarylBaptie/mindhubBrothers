@@ -2,6 +2,7 @@ package com.mindhub.homebanking.controllers;
 
 import com.mindhub.homebanking.dtos.AccountDTO;
 import com.mindhub.homebanking.models.Account;
+import com.mindhub.homebanking.models.AccountType;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.services.AccountService;
 import com.mindhub.homebanking.services.ClientService;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
+import java.util.stream.Stream;
 
 
 @RestController
@@ -66,11 +67,14 @@ public class AccountController {
     @PostMapping("/api/clients/current/accounts")
 
 
-    public ResponseEntity<Object> createAccount(Authentication authentication
+    public ResponseEntity<Object> createAccount(@RequestParam String accountType, Authentication authentication
     )  {
-        if(clientService.findClientByEmail(authentication.getName()).getAccounts().size() < 3) {
+        Client client = clientService.findClientByEmail(authentication.getName());
+        Stream<Account> accounts = client.getAccounts().stream().filter(Account::getIsActive);
+
+        if(accounts.count() < 3) {
             Boolean isActive = true;
-            Account newAccount = new Account(randomNumber(), LocalDateTime.now(), 0, isActive);
+            Account newAccount = new Account(randomNumber(), LocalDateTime.now(), 0, isActive, AccountType.valueOf(accountType));
         clientService.findClientByEmail(authentication.getName()).addAccount(newAccount);
         accountService.saveAccount(newAccount);
         return new ResponseEntity<>("New account created", HttpStatus.CREATED);
@@ -94,11 +98,17 @@ public class AccountController {
             return  new ResponseEntity<>("This account does not belong to this client", HttpStatus.FORBIDDEN);
         }
         if(account.getIsActive() == false){
-            return new ResponseEntity<>("This card is already deactivated", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("This account is already deactivated", HttpStatus.FORBIDDEN);
         }
         if(account.getBalance() != 0.0) {
-            return new ResponseEntity<>("The account balance must be 0 for deletion", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("The account balance must be zero for closure", HttpStatus.FORBIDDEN);
         }
+
+        if(client.getAccounts().size() <= 1) {
+            return new ResponseEntity<>("Client's must have at least one account", HttpStatus.FORBIDDEN);
+        }
+
+
 
         account.getTransactions().forEach(transaction -> {transaction.setIsActive(false); transactionService.saveTransaction(transaction);});
 

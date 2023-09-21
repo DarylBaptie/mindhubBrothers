@@ -23,14 +23,18 @@ import javax.servlet.http.HttpSession;
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
+
+
         http.authorizeRequests()
 
-                .antMatchers("/index.html", "/clientRegistration.html", "/clientRegistration.css", "/clientRegistration.js", "/pages/images/**", "/images/**", "/index.js", "/indexStyles.css").permitAll()
+                .antMatchers("/index.html", "/clientRegistration.html", "/clientRegistration.css", "/clientRegistration.js", "/pages/images/**", "/images/**", "/index.js", "/indexStyles.css", "/login.html", "/login.js", "/login.css").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/clients").permitAll()
-                .antMatchers("/rest/**", "/admin/**", "/api/login", "/api/clients", "/h2-console", "/manager.html", "/manager.js").hasAuthority("ADMIN")
-                .antMatchers("/web/**", "/api/login", "/api/clients/current/cards", "/api/clients/current", "/api/accounts/**", "/api/loans").hasAuthority("CLIENT")
+                .antMatchers(HttpMethod.POST, "/api/createLoan").hasAuthority("ADMIN")
+                .antMatchers("/rest/**", "/admin/**", "/api/login", "/api/clients", "/h2-console", "/manager.html", "/manager.js", "/newLoanForm.html", "/newLoanForm.css", "/newLoanForm.js").hasAuthority("ADMIN")
+                .antMatchers("/web/**", "/api/login", "/api/clients/current/cards", "/api/clients/current", "/api/accounts/**", "/api/loans", "/api/clients/current/transactions/pdf").hasAuthority("CLIENT")
                 .antMatchers(HttpMethod.POST, "/api/clients/current/accounts", "/api/clients/current/cards", "/api/clients/current/transactions", "/api/loans").hasAuthority("CLIENT")
                 .antMatchers(HttpMethod.PATCH, "/api/clients/current/cards/deactivate", "/api/clients/current/accounts/close", "/api/clients/current/loans/loanPayment").hasAuthority("CLIENT")
+                .antMatchers(HttpMethod.POST, "/api/card/transactions").permitAll()
                 .anyRequest().denyAll();
 
 
@@ -49,6 +53,7 @@ import javax.servlet.http.HttpSession;
 
         http.headers().frameOptions().disable();
 
+        http.cors();
 
         http.exceptionHandling().authenticationEntryPoint((req, res, exc) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED));
 

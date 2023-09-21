@@ -72,6 +72,11 @@ object-position: 60% 10%;
 background-size: 100% 100%;
  }
 
+ .Business {
+   background-image: url('../images/business.avif') !important;
+   background-size: 100% 100%;
+  }
+
 .Personal {
   background-image: url('../images/personal.jpg') !important;
   background-size: 100% 100%;

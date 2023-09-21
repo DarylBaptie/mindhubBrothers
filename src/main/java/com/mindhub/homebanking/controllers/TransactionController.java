@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 import static com.mindhub.homebanking.models.TransactionType.CREDIT;
 import static com.mindhub.homebanking.models.TransactionType.DEBIT;
@@ -52,13 +53,13 @@ public class TransactionController {
         @RequestParam double amount,
         @RequestParam String description,
         @RequestParam String accountNumberOrigin,
-        @RequestParam String accountNumberDestination
+        @RequestParam String accountNumberDestination,
+        @RequestParam String accountDestinationType
 
-) {
+        ) {
 
     Account originAccount = accountService.findAccountByNumber(accountNumberOrigin);
     Account destinationAccount = accountService.findAccountByNumber(accountNumberDestination);
-
 
         if(amount <= 0 ) {
             return new ResponseEntity<>("Amount is not valid", HttpStatus.FORBIDDEN);
@@ -98,6 +99,10 @@ public class TransactionController {
 
     if(accountService.findAccountByNumber(accountNumberDestination) == null) {
         return new ResponseEntity<>("Provided destination account number does not exist", HttpStatus.FORBIDDEN);
+    }
+
+    if(Objects.equals(accountDestinationType, "personal") && !destinationAccount.getIsActive()) {
+        return new ResponseEntity<>("This account has been closed", HttpStatus.FORBIDDEN);
     }
 
     boolean isActive = true;

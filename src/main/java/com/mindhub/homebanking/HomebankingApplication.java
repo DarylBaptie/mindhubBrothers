@@ -8,6 +8,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 
 import java.time.LocalDate;
@@ -38,10 +40,6 @@ public class HomebankingApplication {
 	private List<Integer> payments3 = Arrays.asList(6,12,24,36);
 
 
-	private List<Double> interestCar = Arrays.asList(4.5, 6.5, 8.5);
-	private List<Double> interestMortgage = Arrays.asList(4.5, 6.5, 8.5);
-
-	private List<Double> interestPersonal = Arrays.asList(4.0, 6.0, 8.0);
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -55,22 +53,22 @@ public class HomebankingApplication {
 	@Bean
 	public CommandLineRunner initData(ClientRepository repositoryClient, AccountRepository repositoryAccount, TransactionRepository repositoryTransaction, LoanRepository repositoryLoan, ClientLoanRepository repositoryClientLoan, CardRepository repositoryCard) {
 		return (args) -> {
-			Account firstAccount = new Account("VIN001", this.localDateTime, 5000, true);
-			Account secondAccount = new Account("VIN002", this.localDateTimeNextDay, 7500, true);
-			Account thirdAccount = new Account("VIN003", this.localDateTimeTwoDays, 8500, true);
-			Account fourthAccount = new Account("VIN004", this.localDateTimeThreeDays, 900, true);
+			Account firstAccount = new Account("VIN001", this.localDateTime, 5000, true, AccountType.CURRENT);
+			Account secondAccount = new Account("VIN002", this.localDateTimeNextDay, 7500, true, AccountType.SAVINGS);
+			Account thirdAccount = new Account("VIN003", this.localDateTimeTwoDays, 8500, true, AccountType.CURRENT);
+			Account fourthAccount = new Account("VIN004", this.localDateTimeThreeDays, 900, true, AccountType.SAVINGS);
 			Client melbaMorel = new Client("Melba", "Morel", "melba@mindhub.com", passwordEncoder.encode("AlbaGuBrath"));
 			Client darylBaptie = new Client("Daryl", "Baptie", "darylBaptie@gmail.com", passwordEncoder.encode("Hibs1875"));
 			Client adminAdmin = new Client("Admin", "admin", "admin@mindhub.com", passwordEncoder.encode("admin2006"));
 			Transaction transaction1 = new Transaction(TransactionType.CREDIT, this.localDateTime, 3000, "salary", firstAccount.getBalance()+3000, true);
-			Transaction transaction2 = new Transaction(TransactionType.DEBIT, this.localDateTime, 80, "hotel", firstAccount.getBalance() + transaction1.getAmount()- 1500, true);
-			Transaction transaction3 = new Transaction(TransactionType.DEBIT, this.localDateTime, 25, "flights", firstAccount.getBalance()+transaction1.getAmount()- 3000, true);
+			Transaction transaction2 = new Transaction(TransactionType.DEBIT, this.localDateTime, -80, "hotel", firstAccount.getBalance() + transaction1.getAmount()- 1500, true);
+			Transaction transaction3 = new Transaction(TransactionType.DEBIT, this.localDateTime, -25, "flights", firstAccount.getBalance()+transaction1.getAmount()- 3000, true);
 			Transaction transaction4 = new Transaction(TransactionType.CREDIT, this.localDateTime, 2250, "salary", secondAccount.getBalance()+2250, true);
-			Transaction transaction5 = new Transaction(TransactionType.DEBIT, this.localDateTime, 35.75, "car payment", secondAccount.getBalance()+transaction3.getBalance()-1125, true);
-			Transaction transaction6 = new Transaction(TransactionType.DEBIT, this.localDateTime, 125, "Student loan", secondAccount.getBalance()+transaction3.getBalance()- 2250, true);
-			Loan mortgage = new Loan("Mortgage", 500000, this.payments1, this.interestCar);
-			Loan personal = new Loan("Personal", 100000, this.payments2, this.interestPersonal);
-			Loan car = new Loan("Car", 300000, this.payments3, this.interestCar);
+			Transaction transaction5 = new Transaction(TransactionType.DEBIT, this.localDateTime, -35.75, "car payment", secondAccount.getBalance()+transaction4.getBalance()-1125, true);
+			Transaction transaction6 = new Transaction(TransactionType.DEBIT, this.localDateTime, -125, "Student loan", secondAccount.getBalance()+transaction4.getBalance()- 2250, true);
+			Loan mortgage = new Loan("Mortgage", 500000, this.payments1, 4.5);
+			Loan personal = new Loan("Personal", 100000, this.payments2, 5);
+			Loan car = new Loan("Car", 300000, this.payments3, 6.0);
 			ClientLoan clientLoanMortgage = new ClientLoan(400000, 60, 6666.66, true);
 			ClientLoan clientLoanPersonal = new ClientLoan(50000, 12, 416.66, true);
 			ClientLoan clientLoanPersonal2 = new ClientLoan(100000, 24, 4166.66, true);
@@ -114,7 +112,7 @@ public class HomebankingApplication {
 			repositoryClientLoan.save(clientLoanPersonal2);
 			repositoryClientLoan.save(clientLoanCar);
 
-			Card card1 = new Card(melbaMorel.getFirstName() + " " + melbaMorel.getLastName(), DEBIT, GOLD, "4582 8954 3594 3458", 567, this.cardEmissionDate, this.cardExpiryDate, true);
+			Card card1 = new Card(melbaMorel.getFirstName() + " " + melbaMorel.getLastName(), DEBIT, GOLD, "4582 8954 3594 3458", 567,this.cardEmissionDate, this.cardExpiryDate, true);
 			melbaMorel.addCard(card1);
 			repositoryCard.save(card1);
 
@@ -139,11 +137,6 @@ public class HomebankingApplication {
 		};
 
 	}
-
-
-
-
-
 
 
 }

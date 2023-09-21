@@ -1,0 +1,16 @@
+html {
+height: 100%
+}
+
+body {
+padding:0 !important;
+margin:0 !important;
+box-sizing: border-box;
+height: 100% !important;
+font-family: 'Playfair Display', serif !important;
+}
+
+#formDiv {
+background-color: #e9edc9 !important;
+}
+
